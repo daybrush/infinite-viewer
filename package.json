@@ -1,0 +1,68 @@
+{
+  "name": "infinite-viewer",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./dist/infinite-viewer.cjs.js",
+  "module": "./dist/infinite-viewer.esm.js",
+  "sideEffects": false,
+  "types": "declaration/index.d.ts",
+  "scripts": {
+    "start": "rollup -c -w",
+    "build": "rollup -c && npm run declaration && print-sizes ./dist",
+    "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
+    "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
+    "prerelease": "npm run build && prerelease --dirs=dist,doc",
+    "release": "npm run build && release --dirs=dist,doc",
+    "release:init": "npm run build && release -i --dirs=dist,doc",
+    "deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
+    "deploy:init": "gh-pages -d ./demo --dest=./ --remote origin",
+    "packages": "npm run packages:update && npm run packages:build && npm run packages:publish",
+    "packages:update": "pvu --update=react-infinite-viewer,ngx-infinite-viewer/projects/ngx-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer",
+    "packages:build": "pvu --build=react-infinite-viewer,ngx-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer",
+    "packages:publish": "pvu --publish=react-infinite-viewer,ngx-infinite-viewer/dist/ngx-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daybrush/infinite-viewer.git"
+  },
+  "keywords": [
+    "scroll",
+    "scroller",
+    "viewer",
+    "infinite",
+    "moveable"
+  ],
+  "author": "Daybrush",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daybrush/infinite-viewer/issues"
+  },
+  "homepage": "https://github.com/daybrush/infinite-viewer#readme",
+  "dependencies": {
+    "@daybrush/drag": "^0.12.0",
+    "@daybrush/utils": "^0.10.1",
+    "@egjs/children-differ": "^1.0.0",
+    "@egjs/component": "^2.1.2",
+    "css-styled": "^0.1.7",
+    "framework-utils": "^0.3.4",
+    "keycon": "^0.8.0"
+  },
+  "peerDependencies": {
+    "framework-utils": ">=0.3.3",
+    "keycon": ">=0.8.0",
+    "css-styled": ">=0.1.7",
+    "@daybrush/drag": ">=0.12.0"
+  },
+  "devDependencies": {
+    "@daybrush/builder": "^0.1.2",
+    "@daybrush/jsdoc": "^0.3.7",
+    "@daybrush/release": "^0.2.4",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
+    "daybrush-jsdoc-template": "^1.6.0",
+    "print-sizes": "^0.1.0",
+    "pvu": "^0.3.1",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.4"
+  }
+}

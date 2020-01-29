@@ -1,0 +1,37 @@
+
+{
+    "plugins": [],
+	"recurseDepth": 10,
+	"opts": {
+		"template": "./node_modules/daybrush-jsdoc-template",
+		"destination": "./doc/"
+    },
+    "source": {
+		"include": ["./src", "README.md", "node_modules/@egjs/component/src/Component.js"],
+        "includePattern": "(.+\\.js(doc|x)?|.+\\.ts(doc|x)?)$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "sourceType": "module",
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    },
+    "linkMap": {
+        "IObject": "http://daybrush.com/utils/release/latest/doc/global.html#ObjectInterface",
+        "OnDragStart": "https://daybrush.com/drag/release/latest/doc/Dragger.html#.OnDragStart"
+    },
+    "docdash": {
+        "menu": {
+            "Github repo": {
+                "href": "https://github.com/daybrush/infinite-viewer",
+                "target": "_blank",
+                "class": "menu-item",
+                "id": "repository"
+            }
+        }
+    }
+}

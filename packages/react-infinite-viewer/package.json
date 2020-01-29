@@ -1,0 +1,61 @@
+{
+  "name": "react-infinite-viewer",
+  "version": "0.0.10",
+  "description": "",
+  "main": "./dist/infinite-viewer.cjs.js",
+  "module": "./dist/infinite-viewer.esm.js",
+  "sideEffects": false,
+  "types": "declaration/index.d.ts",
+  "scripts": {
+    "lint": "tslint -c tslint.json 'src/react-infinite-viewer/**/*.ts' 'src/react-infinite-viewer/**/*.tsx'",
+    "start": "react-scripts start",
+    "build": "rollup -c && npm run declaration && print-sizes ./dist ",
+    "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
+    "packages": "pvu --path=../ --update=preact-infinite-viewer --build=preact-infinite-viewer --publish=preact-infinite-viewer"
+  },
+  "keywords": [
+    "infinite-viewer",
+    "scroll",
+    "scroller",
+    "viewer",
+    "infinite",
+    "moveable",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daybrush/infinite-viewer/blob/master/packages/react-infinite-viewer"
+  },
+  "author": "Daybrush",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daybrush/infinite-viewer/issues"
+  },
+  "homepage": "https://daybrush.com/infinite-viewer",
+  "devDependencies": {
+    "@daybrush/builder": "^0.1.2",
+    "@types/react-dom": "^16.9.4",
+    "print-sizes": "0.0.4",
+    "pvu": "^0.3.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^3.0.1",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "infinite-viewer": "0.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
