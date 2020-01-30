@@ -116,10 +116,9 @@ class InfiniteViewer extends Component {
 
             const scrollArea = this.scrollArea;
 
-            scrollArea.style.cssText = `position:absolute;top:0;left:0;width:calc(100% + 400px);height:calc(100% + 400px);`;
             container.insertBefore(scrollArea, container.firstChild);
         }
-
+        this.scrollArea.style.cssText += `position:absolute;top:0;left:0;`;
         this.injectResult = injector.inject(container);
 
         this.dragger = new Dragger(container, {

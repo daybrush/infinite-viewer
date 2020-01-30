@@ -1,6 +1,6 @@
 {
   "name": "infinite-viewer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "main": "./dist/infinite-viewer.cjs.js",
   "module": "./dist/infinite-viewer.esm.js",
@@ -17,9 +17,9 @@
     "deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
     "deploy:init": "gh-pages -d ./demo --dest=./ --remote origin",
     "packages": "npm run packages:update && npm run packages:build && npm run packages:publish",
-    "packages:update": "pvu --update=react-infinite-viewer,ngx-infinite-viewer/projects/ngx-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer",
-    "packages:build": "pvu --build=react-infinite-viewer,ngx-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer",
-    "packages:publish": "pvu --publish=react-infinite-viewer,ngx-infinite-viewer/dist/ngx-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer"
+    "packages:update": "pvu --update=react-infinite-viewer",
+    "packages:build": "pvu --build=react-infinite-viewer",
+    "packages:publish": "pvu --publish=react-infinite-viewer"
   },
   "repository": {
     "type": "git",
