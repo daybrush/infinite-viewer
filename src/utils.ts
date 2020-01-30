@@ -27,3 +27,6 @@ export function getDestPos(speed: number[], a: number) {
         speed[1] / 2 * duration,
     ];
 }
+export function minmax(value: number, min: number, max: number) {
+    return Math.min(max, Math.max(min, value));
+}

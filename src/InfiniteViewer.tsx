@@ -5,7 +5,7 @@ import { Properties } from "framework-utils";
 import {  camelize, IObject, addEvent, removeEvent, addClass } from "@daybrush/utils";
 import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents } from "./types";
 import { PROPERTIES, injector, CLASS_NAME } from "./consts";
-import { measureSpeed, getDuration, getDestPos } from "./utils";
+import { measureSpeed, getDuration, getDestPos, minmax } from "./utils";
 
 @Properties(PROPERTIES as any, (prototype, property) => {
     const attributes: IObject<any> = {
@@ -93,10 +93,9 @@ class InfiniteViewer extends Component {
         this.scrollTo(this.getScrollLeft() + deltaX, this.getScrollTop() + deltaY);
     }
     public scrollTo(scrollLeft: number, scrollTop: number) {
-        const margin = this.margin;
-
-        this.loopX = Math.floor((margin + scrollLeft) / margin);
-        this.loopY = Math.floor((margin + scrollTop) / margin);
+        const { rangeX, rangeY, margin } = this;
+        this.loopX = minmax(Math.floor((margin + scrollLeft) / margin), rangeX[0], rangeX[1]);
+        this.loopY = minmax(Math.floor((margin + scrollTop) / margin), rangeY[0], rangeY[1]);
         this.offsetX = (this.loopX - 1) * margin - scrollLeft + this.scrollLeft;
         this.offsetY = (this.loopY - 1) * margin - scrollTop + this.scrollTop;
 

@@ -1,6 +1,6 @@
 {
   "name": "infinite-viewer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "./dist/infinite-viewer.cjs.js",
   "module": "./dist/infinite-viewer.esm.js",
@@ -47,7 +47,6 @@
   },
   "peerDependencies": {
     "framework-utils": ">=0.3.3",
-    "keycon": ">=0.8.0",
     "css-styled": ">=0.1.7",
     "@daybrush/drag": ">=0.12.0"
   },
