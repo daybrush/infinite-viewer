@@ -199,13 +199,14 @@ class InfiniteViewer extends Component {
                 --nextLoopY;
             }
         } else if (scrollTop > endThreshold) {
-            if (nextLoopY > rangeY[1]) {
+            if (nextLoopY < rangeY[1]) {
                 nextScrollTop = scrollTop - margin;
                 ++nextLoopY;
             }
         }
         const isChangeScroll = this.scrollLeft !== nextScrollLeft || this.scrollTop !== nextScrollTop;
         const isChangeLoop = loopX !== nextLoopX || loopY !== nextLoopY;
+
         this.scrollLeft = nextScrollLeft;
         this.scrollTop = nextScrollTop;
         this.loopX = nextLoopX;
