@@ -18,7 +18,6 @@ export default class InfiniteViewer extends React.PureComponent<Partial<Infinite
     private infiniteViewer!: VanillaInfiniteViewer;
     private container!: HTMLElement;
     private scrollArea!: HTMLElement;
-    private viewport!: HTMLElement;
     public render() {
         const className = this.props.className;
 

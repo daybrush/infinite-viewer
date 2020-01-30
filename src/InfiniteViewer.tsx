@@ -55,6 +55,7 @@ class InfiniteViewer extends Component {
             scrollArea: null,
             ...options,
         };
+        this.scrollArea = this.options.scrollArea;
         this.init();
     }
     /**

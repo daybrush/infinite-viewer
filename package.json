@@ -1,6 +1,6 @@
 {
   "name": "infinite-viewer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "./dist/infinite-viewer.cjs.js",
   "module": "./dist/infinite-viewer.esm.js",
@@ -41,11 +41,9 @@
   "dependencies": {
     "@daybrush/drag": "^0.12.0",
     "@daybrush/utils": "^0.10.1",
-    "@egjs/children-differ": "^1.0.0",
     "@egjs/component": "^2.1.2",
     "css-styled": "^0.1.7",
-    "framework-utils": "^0.3.4",
-    "keycon": "^0.8.0"
+    "framework-utils": "^0.3.4"
   },
   "peerDependencies": {
     "framework-utils": ">=0.3.3",
