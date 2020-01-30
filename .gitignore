@@ -16,4 +16,3 @@ rollup-plugin-visualizer/
 statistics/
 .scene_cache
 *.mp4
-test/

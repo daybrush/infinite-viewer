@@ -52,6 +52,8 @@ class InfiniteViewer extends Component {
             margin: 500,
             threshold: 100,
             zoom: 1,
+            rangeX: [-Infinity, Infinity],
+            rangeY: [-Infinity, Infinity],
             scrollArea: null,
             ...options,
         };
@@ -72,11 +74,19 @@ class InfiniteViewer extends Component {
         this.container = null;
         this.options = null;
     }
-    public getScrollTop() {
-        return this.scrollTop + (this.loopY - 1) * this.margin - this.offsetY;
+    public getScrollTop(isAbsolute?: boolean) {
+        return this.scrollTop + (this.loopY - 1) * this.margin - this.offsetY
+            + (isAbsolute ? (-this.rangeY[0] + 1) * this.margin : 1);
     }
-    public getScrollLeft() {
-        return this.scrollLeft + (this.loopX - 1) * this.margin - this.offsetX;
+    public getScrollLeft(isAbsolute?: boolean) {
+        return this.scrollLeft + (this.loopX - 1) * this.margin - this.offsetX
+            + (isAbsolute ? (-this.rangeX[0] + 1) * this.margin : 0);
+    }
+    public getScrollWidth() {
+        return this.container.offsetWidth + this.margin * (this.rangeX[1] - this.rangeX[0] + 2);
+    }
+    public getScrollHeight() {
+        return this.container.offsetHeight + this.margin * (this.rangeY[1] - this.rangeY[0] + 2);
     }
     public scrollBy(deltaX: number, deltaY: number) {
 
@@ -163,7 +173,10 @@ class InfiniteViewer extends Component {
             margin,
             threshold,
             loopX,
-            loopY, } = this;
+            loopY,
+            rangeX,
+            rangeY,
+        } = this;
         const endThreshold = margin * 2 - threshold;
         let nextLoopX = loopX;
         let nextLoopY = loopY;
@@ -172,28 +185,41 @@ class InfiniteViewer extends Component {
         let nextScrollTop = scrollTop;
 
         if (scrollLeft < threshold) {
-            nextScrollLeft = scrollLeft + margin;
-            --nextLoopX;
+            if (nextLoopX > rangeX[0]) {
+                nextScrollLeft = scrollLeft + margin;
+                --nextLoopX;
+            }
         } else if (scrollLeft > endThreshold) {
-            nextScrollLeft = scrollLeft - margin;
-            ++nextLoopX;
+            if (nextLoopX < rangeX[1]) {
+                nextScrollLeft = scrollLeft - margin;
+                ++nextLoopX;
+            }
         }
         if (scrollTop < threshold) {
-            nextScrollTop = scrollTop + margin;
-            --nextLoopY;
+            if (nextLoopY > rangeY[0]) {
+                nextScrollTop = scrollTop + margin;
+                --nextLoopY;
+            }
         } else if (scrollTop > endThreshold) {
-            nextScrollTop = scrollTop - margin;
-            ++nextLoopY;
+            if (nextLoopY > rangeY[1]) {
+                nextScrollTop = scrollTop - margin;
+                ++nextLoopY;
+            }
         }
+        const isChangeScroll = this.scrollLeft !== nextScrollLeft || this.scrollTop !== nextScrollTop;
+        const isChangeLoop = loopX !== nextLoopX || loopY !== nextLoopY;
         this.scrollLeft = nextScrollLeft;
         this.scrollTop = nextScrollTop;
         this.loopX = nextLoopX;
         this.loopY = nextLoopY;
 
         this.render();
-        this.trigger("scroll");
 
-        if (scrollLeft !== nextScrollLeft || scrollTop !== nextScrollTop) {
+        if (isChangeLoop || isChangeScroll) {
+            this.trigger("scroll");
+        }
+
+        if (isChangeScroll) {
             this.move(nextScrollLeft, nextScrollTop);
         }
     }

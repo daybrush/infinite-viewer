@@ -6,6 +6,8 @@ export interface InfiniteViewerOptions {
     threshold: number;
     zoom: number;
     scrollArea: HTMLElement;
+    rangeX: number[];
+    rangeY: number[];
 }
 
 export interface InfiniteViewerEvents {

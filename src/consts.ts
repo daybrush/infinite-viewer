@@ -26,6 +26,8 @@ export const OPTIONS = [
     "threshold",
     "zoom",
     "scrollArea",
+    "rangeX",
+    "rangeY",
 ] as const;
 
 /**
@@ -35,6 +37,8 @@ export const PROPERTIES = [
     "margin",
     "threshold",
     "zoom",
+    "rangeX",
+    "rangeY",
 ] as const;
 
 export const OPTION_TYPES: { [key in keyof InfiniteViewerOptions]: any } = {
@@ -42,6 +46,8 @@ export const OPTION_TYPES: { [key in keyof InfiniteViewerOptions]: any } = {
     threshold: Number,
     zoom: Number,
     scrollArea: Object,
+    rangeX: Array,
+    rangeY: Array,
 };
 
 /**
@@ -57,6 +63,8 @@ export const EVENTS = [
 export const METHODS = [
     "getScrollLeft",
     "getScrollTop",
+    "getScrollWidth",
+    "getScrollHeight",
     "scrollTo",
     "scrollBy",
 ] as const;

@@ -1,0 +1,53 @@
+<style>
+
+.container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.viewport {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    background: #f5e0e0;
+}
+.scrollbar {
+    position: relative;
+    border-radius: 5px;
+    height: 10px;
+    width: 100%;
+    background: #eee;
+}
+.thumb {
+    position: absolute;
+    border-radius: 5px;
+    height: 10px;
+    width: 100%;
+    background: #f55;
+}
+</style>
+<div class="scrollbar"><div class="thumb"></div></div>
+<div class="container">
+    <div class="viewport">
+        VIEWPORT
+    </div>
+</div>
+<script src="../dist/infinite-viewer.pkgd.js"></script>
+<script>
+    const viewer = new InfiniteViewer(
+        document.querySelector(".container"),
+        document.querySelector(".viewport"),
+        {
+            rangeX: [0, 0],
+            rangeY: [0, 0],
+        }
+    );
+    const offsetWidth = document.querySelector(".container").offsetWidth;
+    const scrollWdith = viewer.getScrollWidth();
+    const scrollHeight = viewer.getScrollHeight();
+
+    document.querySelector(".thumb").style.width = `${offsetWidth / scrollWdith * 100}%`;
+    viewer.on("scroll", () => {
+        document.querySelector(".thumb").style.left = `${viewer.getScrollLeft(true) / scrollWdith * 100}%`;
+    });
+</script>

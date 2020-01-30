@@ -4,7 +4,7 @@ name: react-infinite-viewer
 license: MIT
 author: Daybrush
 repository: https://github.com/daybrush/infinite-viewer/blob/master/packages/react-infinite-viewer
-version: 0.0.1
+version: 0.1.1
 */
 'use strict';
 
