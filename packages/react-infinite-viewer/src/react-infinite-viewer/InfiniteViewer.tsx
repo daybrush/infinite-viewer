@@ -68,6 +68,9 @@ export default class InfiniteViewer extends React.PureComponent<Partial<Infinite
     public componentWillUnmount() {
         this.infiniteViewer.destroy();
     }
+    public getElement() {
+        return this.container;
+    }
 }
 // tslint:disable-next-line: max-line-length
 export default interface InfiniteViewer extends MethodInterface<InfiniteViewerMethods, VanillaInfiniteViewer, InfiniteViewer> {}
