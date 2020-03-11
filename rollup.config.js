@@ -6,26 +6,15 @@ export default builder([
         name: "InfiniteViewer",
         input: "src/index.umd.ts",
         output: "./dist/infinite-viewer.js",
+        resolve: true,
     },
     {
         name: "InfiniteViewer",
         input: "src/index.umd.ts",
         output: "./dist/infinite-viewer.min.js",
+        resolve: true,
         uglify: true,
 
-    },
-    {
-        name: "InfiniteViewer",
-        input: "src/index.umd.ts",
-        output: "./dist/infinite-viewer.pkgd.js",
-        resolve: true,
-    },
-    {
-        name: "InfiniteViewer",
-        input: "src/index.umd.ts",
-        output: "./dist/infinite-viewer.pkgd.min.js",
-        resolve: true,
-        uglify: true,
     },
     {
         input: "src/index.ts",
