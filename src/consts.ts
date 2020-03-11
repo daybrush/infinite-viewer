@@ -20,12 +20,10 @@ export const CLASS_NAME = injector.className;
 /**
  * @memberof InfiniteViewer
  */
-export const OPTIONS = [
-    // ignore target, container,
+export const PROPERTIES = [
     "margin",
     "threshold",
     "zoom",
-    "scrollArea",
     "rangeX",
     "rangeY",
 ] as const;
@@ -33,12 +31,10 @@ export const OPTIONS = [
 /**
  * @memberof InfiniteViewer
  */
-export const PROPERTIES = [
-    "margin",
-    "threshold",
-    "zoom",
-    "rangeX",
-    "rangeY",
+export const OPTIONS = [
+    // ignore target, container,
+    ...PROPERTIES,
+    "scrollArea",
 ] as const;
 
 export const OPTION_TYPES: { [key in keyof InfiniteViewerOptions]: any } = {
@@ -67,4 +63,5 @@ export const METHODS = [
     "getScrollHeight",
     "scrollTo",
     "scrollBy",
+    "scrollCenter",
 ] as const;

@@ -1,6 +1,10 @@
 import { PROPERTIES, METHODS } from "./consts";
 import InfiniteViewer from "./InfiniteViewer";
 
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
 export interface InfiniteViewerOptions {
     margin: number;
     threshold: number;

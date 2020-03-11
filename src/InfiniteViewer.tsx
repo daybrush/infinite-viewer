@@ -2,7 +2,7 @@ import Component from "@egjs/component";
 import Dragger from "@daybrush/drag";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
-import {  camelize, IObject, addEvent, removeEvent, addClass } from "@daybrush/utils";
+import { camelize, IObject, addEvent, removeEvent, addClass } from "@daybrush/utils";
 import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents } from "./types";
 import { PROPERTIES, injector, CLASS_NAME } from "./consts";
 import { measureSpeed, getDuration, getDestPos, minmax } from "./utils";
@@ -27,6 +27,9 @@ import { measureSpeed, getDuration, getDestPos, minmax } from "./utils";
     }
     Object.defineProperty(prototype, property, attributes);
 })
+/**
+ * @sort 1
+ */
 class InfiniteViewer extends Component {
     public options: InfiniteViewerOptions;
     private injectResult!: InjectResult;
@@ -40,7 +43,7 @@ class InfiniteViewer extends Component {
     private scrollTop = 0;
     private timer = 0;
     /**
-     *
+     * @sort 1
      */
     constructor(
         private container: HTMLElement,
@@ -74,24 +77,66 @@ class InfiniteViewer extends Component {
         this.container = null;
         this.options = null;
     }
+    /**
+     * Gets the number of pixels that an element's content is scrolled vertically.
+     * @param - Get absolute top position
+     */
     public getScrollTop(isAbsolute?: boolean) {
         return this.scrollTop + (this.loopY - 1) * this.margin - this.offsetY
             + (isAbsolute ? (-this.rangeY[0] + 1) * this.margin : 1);
     }
+    /**
+     * Gets the number of pixels that an element's content is scrolled vertically.
+     * @param - Get absolute left position
+     */
     public getScrollLeft(isAbsolute?: boolean) {
         return this.scrollLeft + (this.loopX - 1) * this.margin - this.offsetX
             + (isAbsolute ? (-this.rangeX[0] + 1) * this.margin : 0);
     }
+    /**
+     * Gets measurement of the width of an element's content with overflow
+     */
     public getScrollWidth() {
         return this.container.offsetWidth + this.margin * (this.rangeX[1] - this.rangeX[0] + 2);
     }
+    /**
+     * Gets measurement of the height of an element's content with overflow
+     */
     public getScrollHeight() {
         return this.container.offsetHeight + this.margin * (this.rangeY[1] - this.rangeY[0] + 2);
     }
-    public scrollBy(deltaX: number, deltaY: number) {
 
-        this.scrollTo(this.getScrollLeft() + deltaX, this.getScrollTop() + deltaY);
+    /**
+     * Scroll the element to the center
+     */
+    public scrollCenter() {
+        const {
+            offsetWidth: containerWidth,
+            offsetHeight: containerHeight,
+        } = this.container;
+        const {
+            offsetWidth: viewportWidth,
+            offsetHeight: viewportHeight,
+        } = this.viewport;
+        const zoom = this.zoom;
+        const left = -(containerWidth - viewportWidth * zoom) / 2;
+        const top = -(containerHeight - viewportHeight * zoom) / 2;
+
+        return this.scrollTo(left, top);
     }
+    /**
+     * Scrolls the container by the given amount.
+     * @param deltaX
+     * @param deltaY
+     */
+    public scrollBy(deltaX: number, deltaY: number) {
+        return this.scrollTo(this.getScrollLeft() + deltaX, this.getScrollTop() + deltaY);
+    }
+    /**
+     * Scrolls the container to set of coordinates.
+     * @param scrollLeft
+     * @param scrollTop
+     */
     public scrollTo(scrollLeft: number, scrollTop: number) {
         const { rangeX, rangeY, margin } = this;
         this.loopX = minmax(Math.floor((margin + scrollLeft) / margin), rangeX[0], rangeX[1]);
@@ -101,6 +146,7 @@ class InfiniteViewer extends Component {
 
         this.render();
         this.trigger("scroll");
+        return this;
     }
     private init() {
         // infinite-viewer(container)
@@ -116,9 +162,9 @@ class InfiniteViewer extends Component {
 
             const scrollArea = this.scrollArea;
 
+            scrollArea.style.cssText += `position:absolute;top:0;left:0;`;
             container.insertBefore(scrollArea, container.firstChild);
         }
-        this.scrollArea.style.cssText += `position:absolute;top:0;left:0;`;
         this.injectResult = injector.inject(container);
 
         this.dragger = new Dragger(container, {
