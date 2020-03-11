@@ -1,0 +1,44 @@
+{
+    "name": "vue-infinite-viewer",
+    "version": "0.0.1",
+    "types": "declaration/index.d.ts",
+    "main": "dist/infinite-viewer.cjs.js",
+    "module": "dist/infinite-viewer.esm.js",
+    "sideEffects": false,
+    "scripts": {
+        "serve": "vue-cli-service serve demo",
+        "build": "rm -rf dist && rollup -c && npm run declaration",
+        "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
+        "lint": "vue-cli-service lint --no-fix"
+    },
+    "keywords": [
+        "scroll",
+        "scroller",
+        "viewer",
+        "infinite",
+        "moveable",
+        "vue"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/daybrush/infinite-viewer/blob/master/packages/vue-infinite-viewer"
+    },
+    "author": "Daybrush",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daybrush/infinite-viewer/issues"
+    },
+    "homepage": "https://daybrush.com/infinite-viewer",
+    "dependencies": {
+        "infinite-viewer": "^0.1.3",
+        "vue-property-decorator": "^8.1.0"
+    },
+    "devDependencies": {
+        "@daybrush/builder": "^0.1.2",
+        "@vue/cli-plugin-typescript": "^3.12.0",
+        "@vue/cli-service": "^3.12.0",
+        "typescript": "^3.4.3",
+        "vue": "^2.6.11",
+        "vue-template-compiler": "^2.6.11"
+    }
+}
