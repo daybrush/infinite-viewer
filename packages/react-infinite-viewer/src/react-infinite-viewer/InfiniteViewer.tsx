@@ -31,7 +31,7 @@ export default class InfiniteViewer extends React.PureComponent<Partial<Infinite
         const options: Partial<InfiniteViewerOptions> = {};
 
         OPTIONS.forEach(name => {
-            if (name in props) {
+            if (name in props && typeof props[name] !== "undefined") {
                 (options as any)[name] = props[name];
             }
         });
@@ -60,7 +60,7 @@ export default class InfiniteViewer extends React.PureComponent<Partial<Infinite
         const infiniteViewer = this.infiniteViewer;
 
         PROPERTIES.forEach(name => {
-            if (prevProps[name] !== props[name]) {
+            if (name in props && infiniteViewer[name] !== props[name]) {
                 (infiniteViewer as any)[name] = props[name];
             }
         });
