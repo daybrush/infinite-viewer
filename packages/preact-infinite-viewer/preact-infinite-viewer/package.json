@@ -1,0 +1,45 @@
+{
+    "name": "preact-infinite-viewer",
+    "version": "0.0.2",
+    "description": "A Preact Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.",
+    "main": "./dist/infinite-viewer.cjs.js",
+    "module": "./dist/infinite-viewer.esm.js",
+    "sideEffects": false,
+    "types": "declaration/index.d.ts",
+    "scripts": {
+        "lint": "tslint -c tslint.json 'src/**/*.ts'",
+        "start": "open ./demo/index.html && rollup -c rollup.config.demo.js -w",
+        "build": "rollup -c && npm run declaration && print-sizes ./dist ",
+        "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json && npm run declaration:cp",
+        "declaration:cp": "cp src/preact-infinite-viewer/InfiniteViewer.d.ts declaration/InfiniteViewer.d.ts"
+    },
+    "keywords": [
+        "scroll",
+        "scroller",
+        "viewer",
+        "infinite",
+        "moveable"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/daybrush/infinite-viewer/blob/master/packages/preact-infinite-viewer"
+    },
+    "author": "Daybrush",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daybrush/infinite-viewer/issues"
+    },
+    "homepage": "https://daybrush.com/infinite-viewer",
+    "devDependencies": {
+        "@daybrush/builder": "^0.1.0",
+        "preact": "^10.1.1",
+        "print-sizes": "^0.1.0",
+        "rollup-plugin-css-bundle": "^1.0.4",
+        "rollup-plugin-preact": "^0.5.2",
+        "tslint": "^5.16.0",
+        "typescript": "^3.4.5"
+    },
+    "dependencies": {
+        "react-infinite-viewer": "^0.1.5"
+    }
+}
