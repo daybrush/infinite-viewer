@@ -1,0 +1,49 @@
+{
+  "name": "svelte-infinite-viewer",
+  "version": "0.0.14",
+  "description": "Svelte Infinite Viewer is Document Viewer Component with infinite scrolling.",
+  "main": "./dist/infinite-viewer.cjs.js",
+  "module": "./dist/infinite-viewer.esm.js",
+  "types": "src/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "rollup -c rollup.build.config.js && print-sizes ./dist",
+    "dev": "rollup -c -w",
+    "start": "sirv public",
+    "build:dev": "rollup -c"
+  },
+  "keywords": [
+    "scroll",
+    "scroller",
+    "viewer",
+    "infinite",
+    "moveable",
+    "svelte"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daybrush/infinite-viewer/blob/master/packages/svelte-infinite-viewer"
+  },
+  "author": "Daybrush",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daybrush/infinite-viewer/issues"
+  },
+  "homepage": "https://daybrush.com/infinite-viewer",
+  "devDependencies": {
+    "@daybrush/builder": "^0.1.2",
+    "print-sizes": "^0.1.0",
+    "rollup": "^1.20.0",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-livereload": "^1.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-svelte": "^5.0.3",
+    "rollup-plugin-terser": "^5.1.2",
+    "sirv-cli": "^0.4.5",
+    "svelte": "^3.16.7",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "infinite-viewer": "^0.1.3"
+  }
+}
