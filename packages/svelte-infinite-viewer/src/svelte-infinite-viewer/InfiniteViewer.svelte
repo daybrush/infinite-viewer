@@ -39,7 +39,7 @@
     const options = {};
 
     PROPERTIES.forEach(name => {
-      if (name in $$props) {
+      if (name in $$props && typeof $$props[name] !== "undefined") {
         options[name] = $$props[name];
       }
     });
@@ -52,8 +52,6 @@
         scrollArea,
       },
     );
-
-    console.log(options, infiniteViewer);
 
     EVENTS.forEach((name, i) => {
       infiniteViewer.on(name, e => {

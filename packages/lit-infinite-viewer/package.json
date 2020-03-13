@@ -1,0 +1,40 @@
+{
+    "name": "lit-infinite-viewer",
+    "version": "0.0.7",
+    "types": "declaration/index.d.ts",
+    "main": "dist/infinite-viewer.cjs.js",
+    "module": "dist/infinite-viewer.esm.js",
+    "sideEffects": false,
+    "keywords": [
+        "select",
+        "infinite-viewer",
+        "selection",
+        "selectable",
+        "moveable",
+        "preact"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/daybrush/infinite-viewer/blob/master/packages/preact-infinite-viewer"
+    },
+    "author": "Daybrush",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daybrush/infinite-viewer/issues"
+    },
+    "homepage": "https://daybrush.com/infinite-viewer",
+    "scripts": {
+        "start": "rollup -c rollup.demo.config.js -w",
+        "build": "rollup -c && npm run declaration",
+        "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json"
+    },
+    "devDependencies": {
+        "@daybrush/builder": "^0.1.2",
+        "lit-element": "^2.2.1",
+        "tslint": "^5.20.1",
+        "typescript": "3.6.4"
+    },
+    "dependencies": {
+        "infinite-viewer": "^0.1.3"
+    }
+}
