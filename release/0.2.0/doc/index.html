@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/daybrush.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="description" content="Home - Documentation"/>
+
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h2 class="custom"><a href="https://github.com/daybrush/infinite-viewer" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><div class="search"><div class="input-area"><input type="text"/></div><button></button></div><ul class="classes"><li file="infiniteviewer" class="parent"><a href="InfiniteViewer.html">InfiniteViewer</a><h4><a href="InfiniteViewer.html#static members">Static Members</a></h4><ul class='static members'><li data-type='member'><a href="InfiniteViewer.html#.CLASS_NAME">CLASS_NAME</a></li><li data-type='member'><a href="InfiniteViewer.html#.EVENTS">EVENTS</a></li><li data-type='member'><a href="InfiniteViewer.html#.METHODS">METHODS</a></li><li data-type='member'><a href="InfiniteViewer.html#.OPTIONS">OPTIONS</a></li><li data-type='member'><a href="InfiniteViewer.html#.PROPERTIES">PROPERTIES</a></li></ul><h4><a href="InfiniteViewer.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="InfiniteViewer.html#destroy">destroy</a></li><li data-type='method'><a href="InfiniteViewer.html#getScrollHeight">getScrollHeight</a></li><li data-type='method'><a href="InfiniteViewer.html#getScrollLeft">getScrollLeft</a></li><li data-type='method'><a href="InfiniteViewer.html#getScrollTop">getScrollTop</a></li><li data-type='method'><a href="InfiniteViewer.html#getScrollWidth">getScrollWidth</a></li><li data-type='method'><a href="InfiniteViewer.html#scrollBy">scrollBy</a></li><li data-type='method'><a href="InfiniteViewer.html#scrollCenter">scrollCenter</a></li><li data-type='method'><a href="InfiniteViewer.html#scrollTo">scrollTo</a></li></ul><h4><a href="InfiniteViewer.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="InfiniteViewer.html#.InfiniteViewerOptions">InfiniteViewerOptions</a></li></ul></li><li file="component" class="parent"><a href="eg.Component.html">eg.Component</a><h4><a href="eg.Component.html#static members">Static Members</a></h4><ul class='static members'><li data-type='member'><a href="eg.Component.html#.VERSION">VERSION</a></li></ul><h4><a href="eg.Component.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="eg.Component.html#hasOn">hasOn</a></li><li data-type='method'><a href="eg.Component.html#off">off</a></li><li data-type='method'><a href="eg.Component.html#on">on</a></li><li data-type='method'><a href="eg.Component.html#once">once</a></li><li data-type='method'><a href="eg.Component.html#trigger">trigger</a></li></ul></li></ul><ul class="global"><li file="global"  class="parent"><a href="global.html">Global</a><h4><a href="global.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="global.html#isUndefined">isUndefined</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><p align="middle" ><img src="./demo/images/logo.png" /></p>
+<h2 align="middle">Infinite Viewer</h2>
+<p align="middle">
+<a href="https://www.npmjs.com/package/infinite-viewer" target="_blank"><img src="https://img.shields.io/npm/v/infinite-viewer.svg?style=flat-square&color=007acc&label=version" alt="npm version" /></a>
+<img src="https://img.shields.io/badge/language-typescript-blue.svg?style=flat-square"/>
+<a href="https://github.com/daybrush/infinite-viewer/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/daybrush/infinite-viewer.svg?style=flat-square&label=license&color=08CE5D"/></a>
+<a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/react-infinite-viewer" target="_blank"><img alt="React" src="https://img.shields.io/static/v1.svg?label=&message=React&style=flat-square&color=61daeb"></a>
+<a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/preact-infinite-viewer" target="_blank"><img alt="Preact" src="https://img.shields.io/static/v1.svg?label=&message=Preact&style=flat-square&color=673ab8"></a>
+<a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/ngx-infinite-viewer" target="_blank"><img alt="Angular" src="https://img.shields.io/static/v1.svg?label=&message=Angular&style=flat-square&color=C82B38"></a>
+<a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/vue-infinite-viewer" target="_blank"><img
+    alt="Vue"
+    src="https://img.shields.io/static/v1.svg?label=&message=Vue&style=flat-square&color=3fb984"></a>
+<a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/svelte-infinite-viewer" target="_blank"><img
+    alt="Svelte"
+    src="https://img.shields.io/static/v1.svg?label=&message=Svelte&style=flat-square&color=C82B38"></a>
+<a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/lit-infinite-viewer" target="_blank"><img
+    alt="Lit"
+    src="https://img.shields.io/static/v1.svg?label=&message=Lit&style=flat-square&color=4E8EE0"></a>
+</p>
+<p align="middle">Infinite Viewer is Document Viewer Component with infinite scrolling.
+</p>
+<p align="middle">
+    <a href="https://daybrush.com/infinite-viewer" target="_blank"><strong>Demo</strong></a> /
+    <a href="https://daybrush.com/infinite-viewer/release/latest/doc/" target="_blank"><strong>API</strong></a> /
+    <a href="https://github.com/daybrush/scena" target="_blank"><strong>Main Project</strong></a>
+</p>
+<h2>⚙️ Installation</h2>
+<h3>npm</h3>
+<pre class="prettyprint source lang-bash"><code>$ npm install infinite-viewer
+</code></pre>
+<h3>scripts</h3>
+<pre class="prettyprint source lang-html"><code>&lt;script src=&quot;//daybrush.com/infinite-viewer/release/latest/dist/infinite-viewer.min.js&quot;>&lt;/script>
+</code></pre>
+<h2>🚀 How to use</h2>
+<pre class="prettyprint source lang-html"><code>&lt;div class=&quot;viewer&quot;>
+    &lt;div class=&quot;viewport&quot;>
+        AAAA
+    &lt;/div>
+&lt;/div>
+</code></pre>
+<pre class="prettyprint source lang-js"><code>import InfiniteViewer from &quot;infinite-viewer&quot;;
+
+const infiniteViewer = new InfiniteViewer(
+    document.querySelector(&quot;.viewer&quot;),
+    document.querySelector(&quot;.viewport&quot;),
+    {
+        margin: 0,
+        threshold: 0, 
+        zoom: 1,
+        rangeX: [0, 0],
+        rangeY: [0, 0],
+    },
+);
+
+infiniteViewer.on(&quot;scroll&quot;, () => {
+    console.log(infiniteViewer.getScrollLeft(), infiniteViewer.getScrollTop());
+});
+</code></pre>
+<h2>📦 Packages</h2>
+<table>
+<thead>
+<tr>
+<th>Package Name</th>
+<th> Version </th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/react-infinite-viewer"><strong>react-infinite-viewer</strong></a></td>
+<td><a href="https://npmjs.com/package/react-infinite-viewer"><img src="https://img.shields.io/npm/v/react-infinite-viewer.svg?style=flat-square" alt=""></a></td>
+<td>A React Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/ngx-infinite-viewer"><strong>ngx-infinite-viewer</strong></a></td>
+<td><a href="https://npmjs.com/package/ngx-infinite-viewer"><img src="https://img.shields.io/npm/v/ngx-infinite-viewer.svg?style=flat-square" alt=""></a></td>
+<td>An Angular Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/vue-infinite-viewer"><strong>vue-infinite-viewer</strong></a></td>
+<td><a href="https://npmjs.com/package/vue-infinite-viewer"><img src="https://img.shields.io/npm/v/vue-infinite-viewer.svg?style=flat-square" alt=""></a></td>
+<td>A Vue Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/preact-infinite-viewer"><strong>preact-infinite-viewer</strong></a></td>
+<td><a href="https://npmjs.com/package/preact-infinite-viewer"><img src="https://img.shields.io/npm/v/preact-infinite-viewer.svg?style=flat-square" alt=""></a></td>
+<td>A Preact Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/svelte-infinite-viewer"><strong>svelte-infinite-viewer</strong></a></td>
+<td><a href="https://npmjs.com/package/svelte-infinite-viewer"><img src="https://img.shields.io/npm/v/svelte-infinite-viewer.svg?style=flat-square" alt=""></a></td>
+<td>A Svelte Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/lit-infinite-viewer"><strong>lit-infinite-viewer</strong></a></td>
+<td><a href="https://npmjs.com/package/lit-infinite-viewer"><img src="https://img.shields.io/npm/v/lit-infinite-viewer.svg?style=flat-square" alt=""></a></td>
+<td>A Lit Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.</td>
+</tr>
+</tbody>
+</table>
+<h2>⭐️ Show Your Support</h2>
+<p>Please give a ⭐️ if this project helped you!</p>
+<h2>👏 Contributing</h2>
+<p>If you have any questions or requests or want to contribute to <code>infinite-viewer</code> or other packages, please write the <a href="https://github.com/daybrush/infinite-viewer/issues">issue</a> or give me a Pull Request freely.</p>
+<h2>🐞 Bug Report</h2>
+<p>If you find a bug, please report to us opening a new <a href="https://github.com/daybrush/infinite-viewer/issues">Issue</a> on GitHub.</p>
+<h2>📝 License</h2>
+<p>This project is <a href="https://github.com/daybrush/infinite-viewer/blob/master/LICENSE">MIT</a> licensed.</p>
+<pre class="prettyprint source"><code>MIT License
+
+Copyright (c) 2020 Daybrush
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</code></pre></article>
+    </section>
+
+
+
+
+
+
+
+<style>
+
+nav>.search+ul li:first-child:after {
+    display: none;
+}
+nav>.search+ul li:first-child h4, nav>.search+ul li:first-child ul {
+    display: block;
+}
+
+
+nav li[file="home"]:after {
+    display: none;
+}
+nav li[file="home"] h4, nav li[file="home"] ul {
+    display: block;
+}
+</style>
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/daybrush/jsdoc">JSDoc 0.3.7</a> on Sat Mar 14 2020 05:11:00 GMT+0900 (GMT+09:00) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/utils.min.js"></script>
+<script src="scripts/search.js"></script>
+<script src="scripts/custom.js"></script>
+</body>
+</html>
