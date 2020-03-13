@@ -1,4 +1,60 @@
 
+<p align="middle" ><img src="https://github.com/daybrush/infinite-viewer/raw/master/demo/images/logo.png" /></p>
+<h2 align="middle">React Infinite Viewer</h2>
+<p align="middle">
+<a href="https://www.npmjs.com/package/react-infinite-viewer" target="_blank"><img src="https://img.shields.io/npm/v/react-infinite-viewer.svg?style=flat-square&color=007acc&label=version" alt="npm version" /></a>
+<img src="https://img.shields.io/badge/language-typescript-blue.svg?style=flat-square"/>
+<a href="https://github.com/daybrush/infinite-viewer/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/daybrush/infinite-viewer.svg?style=flat-square&label=license&color=08CE5D"/></a>
+<a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/react-infinite-viewer" target="_blank"><img alt="React" src="https://img.shields.io/static/v1.svg?label=&message=React&style=flat-square&color=61daeb"></a>
+<a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/preact-infinite-viewer" target="_blank"><img alt="Preact" src="https://img.shields.io/static/v1.svg?label=&message=Preact&style=flat-square&color=673ab8"></a>
+<a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/ngx-infinite-viewer" target="_blank"><img alt="Angular" src="https://img.shields.io/static/v1.svg?label=&message=Angular&style=flat-square&color=C82B38"></a>
+<a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/vue-infinite-viewer" target="_blank"><img
+    alt="Vue"
+    src="https://img.shields.io/static/v1.svg?label=&message=Vue&style=flat-square&color=3fb984"></a>
+<a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/svelte-infinite-viewer" target="_blank"><img
+    alt="Svelte"
+    src="https://img.shields.io/static/v1.svg?label=&message=Svelte&style=flat-square&color=C82B38"></a>
+<a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/lit-infinite-viewer" target="_blank"><img
+    alt="Lit"
+    src="https://img.shields.io/static/v1.svg?label=&message=Lit&style=flat-square&color=4E8EE0"></a>
+</p>
+<p align="middle">React Infinite Viewer is Document Viewer Component with infinite scrolling.
+</p>
+
+<p align="middle">
+    <a href="https://daybrush.com/infinite-viewer" target="_blank"><strong>Demo</strong></a> /
+    <a href="https://daybrush.com/infinite-viewer/release/latest/doc/" target="_blank"><strong>API</strong></a> /
+    <a href="https://github.com/daybrush/scena" target="_blank"><strong>Main Project</strong></a>
+</p>
+
+## ⚙️ Installation
+### npm
+```bash
+$ npm install react-infinite-viewer
+```
+
+## 🚀 How to use
+
+```jsx
+import InfiniteViewer from "react-infinite-viewer";
+
+<InfiniteViewer
+    className="viewer"
+    margin={0}
+    threshold={0}
+    rangeX={[0, 0]}
+    rangeY={[0, 0]}
+    onScroll={e => {
+        console.log(e);
+    }}
+    >
+    <div className="viewport">
+        Target
+    </div>
+</InfiniteViewer>
+```
+
+
 ## ⚙️ Developments
 ### `npm start`
 
@@ -9,10 +65,8 @@ The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
 
-
 ## ⭐️ Show Your Support
 Please give a ⭐️ if this project helped you!
-
 
 ## 👏 Contributing
 
@@ -30,7 +84,7 @@ This project is [MIT](https://github.com/daybrush/infinite-viewer/blob/master/LI
 ```
 MIT License
 
-Copyright (c) 2019 Daybrush
+Copyright (c) 2020 Daybrush
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

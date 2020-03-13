@@ -1,8 +1,8 @@
 
 <p align="middle" ><img src="https://github.com/daybrush/infinite-viewer/raw/master/demo/images/logo.png" /></p>
-<h2 align="middle">Vue Infinite Viewer</h2>
+<h2 align="middle">Svelte Infinite Viewer</h2>
 <p align="middle">
-<a href="https://www.npmjs.com/package/vue-infinite-viewer" target="_blank"><img src="https://img.shields.io/npm/v/vue-infinite-viewer.svg?style=flat-square&color=007acc&label=version" alt="npm version" /></a>
+<a href="https://www.npmjs.com/package/svelte-infinite-viewer" target="_blank"><img src="https://img.shields.io/npm/v/svelte-infinite-viewer.svg?style=flat-square&color=007acc&label=version" alt="npm version" /></a>
 <img src="https://img.shields.io/badge/language-typescript-blue.svg?style=flat-square"/>
 <a href="https://github.com/daybrush/infinite-viewer/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/daybrush/infinite-viewer.svg?style=flat-square&label=license&color=08CE5D"/></a>
 <a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/react-infinite-viewer" target="_blank"><img alt="React" src="https://img.shields.io/static/v1.svg?label=&message=React&style=flat-square&color=61daeb"></a>
@@ -18,7 +18,7 @@
     alt="Lit"
     src="https://img.shields.io/static/v1.svg?label=&message=Lit&style=flat-square&color=4E8EE0"></a>
 </p>
-<p align="middle">Vue Infinite Viewer is Document Viewer Component with infinite scrolling.
+<p align="middle">Svelte Infinite Viewer is Document Viewer Component with infinite scrolling.
 </p>
 
 <p align="middle">
@@ -36,27 +36,33 @@ $ npm install svelte-infinite-viewer
 ## 🚀 How to use
 
 ```html
-<template>
-  <vue-infinite-viewer class="viewer">
-    <div class="viewport">AA</div>
-  </vue-infinite-viewer>
-</template>
 <script>
-import { VueInfiniteViewer } from "vue-infinite-viewer";
-
-export default {
-  components: {
-    VueInfiniteViewer
-  },
-};
+import InfiniteViewer from "svelte-infinite-viewer";
 </script>
 ```
-
+```jsx
+<InfiniteViewer
+    className="viewer"
+    margin={0}
+    threshold={0}
+    rangeX={[0, 0]}
+    rangeY={[0, 0]}
+    onScroll={e => {
+        console.log(e);
+    }}
+    >
+    <div class="viewport">
+        Target
+    </div>
+</InfiniteViewer>
+```
 
 ## ⚙️ Developments
 ### `npm run dev`
 
-Compiles and hot-reloads for development
+Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
+
+By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
 
 
 ## ⭐️ Show Your Support

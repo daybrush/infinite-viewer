@@ -57,6 +57,8 @@ const infiniteViewer = new InfiniteViewer(
         margin: 0,
         threshold: 0, 
         zoom: 1,
+        rangeX: [0, 0],
+        rangeY: [0, 0],
     },
 );
 

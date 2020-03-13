@@ -1,7 +1,7 @@
 {
     "name": "preact-infinite-viewer",
     "version": "0.0.2",
-    "description": "A Preact Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.",
+    "description": "Preact Infinite Viewer is Document Viewer Component with infinite scrolling.",
     "main": "./dist/infinite-viewer.cjs.js",
     "module": "./dist/infinite-viewer.esm.js",
     "sideEffects": false,
@@ -18,7 +18,8 @@
         "scroller",
         "viewer",
         "infinite",
-        "moveable"
+        "moveable",
+        "preact"
     ],
     "repository": {
         "type": "git",
