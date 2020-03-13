@@ -138,7 +138,11 @@ class InfiniteViewer extends Component {
      * @param scrollTop
      */
     public scrollTo(scrollLeft: number, scrollTop: number) {
-        const { rangeX, rangeY, margin } = this;
+        const {
+            rangeX = [0, 0],
+            rangeY = [0, 0],
+            margin = 0,
+        } = this;
         this.loopX = minmax(Math.floor((margin + scrollLeft) / margin), rangeX[0], rangeX[1]);
         this.loopY = minmax(Math.floor((margin + scrollTop) / margin), rangeY[0], rangeY[1]);
         this.offsetX = (this.loopX - 1) * margin - scrollLeft + this.scrollLeft;
@@ -190,12 +194,12 @@ class InfiniteViewer extends Component {
     }
     private render() {
         const {
-            margin,
+            margin = 0,
             loopX,
             loopY,
             offsetX,
             offsetY,
-            zoom,
+            zoom = 1,
         } = this;
         const size = `calc(100% + ${margin * 2}px)`;
         const nextOffsetX = (1 - loopX) * margin + offsetX;
@@ -214,12 +218,12 @@ class InfiniteViewer extends Component {
         const container = this.container;
         const { scrollLeft, scrollTop } = container;
         const {
-            margin,
-            threshold,
+            margin = 0,
+            threshold = 0,
             loopX,
             loopY,
-            rangeX,
-            rangeY,
+            rangeX = [0, 0],
+            rangeY = [0, 0],
         } = this;
         const endThreshold = margin * 2 - threshold;
         let nextLoopX = loopX;

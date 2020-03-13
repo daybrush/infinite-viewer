@@ -1,6 +1,6 @@
 {
   "name": "infinite-viewer",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Infinite Viewer is Document Viewer Component with infinite scrolling.",
   "main": "./dist/infinite-viewer.cjs.js",
   "module": "./dist/infinite-viewer.esm.js",
@@ -11,15 +11,16 @@
     "build": "rollup -c && npm run declaration && print-sizes ./dist",
     "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
     "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
-    "prerelease": "npm run build && prerelease --dirs=dist",
-    "release": "npm run build && release --dirs=dist",
-    "release:init": "npm run build && release -i --dirs=dist",
+    "prerelease": "npm run build && npm run doc && prerelease --dirs=dist,doc",
+    "release": "npm run build && npm run doc && release --dirs=dist,doc",
+    "release:init": "npm run build && npm run doc && release -i --dirs=dist,doc",
     "deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
     "deploy:init": "gh-pages -d ./demo --dest=./ --remote origin",
     "packages": "npm run packages:update && npm run packages:build && npm run packages:publish",
-    "packages:update": "pvu --update=react-infinite-viewer",
-    "packages:build": "pvu --build=react-infinite-viewer",
-    "packages:publish": "pvu --publish=react-infinite-viewer"
+    "packages:update": "pvu --update=react-infinite-viewer,vue-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer/projects/ngx-infinite-viewer",
+    "packages:build": "pvu --build=react-infinite-viewer,vue-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer/projects/ngx-infinite-viewer",
+    "packages:publish": "pvu --publish=react-infinite-viewer,vue-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer/projects/ngx-infinite-viewer",
+    "packages:preact": "pvu --base=./packages/react-infinite-viewer/ --update=preact-infinite-viewer --build=preact-infinite-viewer --publish=preact-infinite-viewer"
   },
   "repository": {
     "type": "git",
@@ -58,7 +59,7 @@
     "@types/react-dom": "^16.9.4",
     "daybrush-jsdoc-template": "^1.6.0",
     "print-sizes": "^0.1.0",
-    "pvu": "^0.3.1",
+    "pvu": "^0.4.0",
     "tslint": "^5.20.1",
     "typescript": "^3.7.4"
   }
