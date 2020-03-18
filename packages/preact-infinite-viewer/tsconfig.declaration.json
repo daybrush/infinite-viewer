@@ -10,6 +10,6 @@
         "declarationDir": "declaration"
     },
     "include": [
-        "./src/preact-selecto/**/*"
+        "./src/preact-infinite-viewer/**/*"
     ]
 }

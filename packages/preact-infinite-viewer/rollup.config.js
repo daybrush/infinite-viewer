@@ -35,7 +35,7 @@ const defaultOptions = {
 export default builder([
     {
         ...defaultOptions,
-        input: "src/preact-/index.esm.ts",
+        input: "src/preact-infinite-viewer/index.esm.ts",
         output: "./dist/infinite-viewer.esm.js",
         format: "es",
     },

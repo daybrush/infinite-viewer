@@ -205,7 +205,7 @@ class InfiniteViewer extends Component {
         const nextOffsetX = (1 - loopX) * margin + offsetX;
         const nextOffsetY = (1 - loopY) * margin + offsetY;
 
-        this.scrollArea.style.cssText += `width:${size};height:${size};`;
+        this.scrollArea.style.cssText += `position:absolute;top:0;left:0;width:${size};height:${size};`;
         this.viewport.style.transform = `translate(${nextOffsetX}px, ${nextOffsetY}px) scale(${zoom})`;
     }
     private move(scrollLeft: number, scrollTop: number) {
