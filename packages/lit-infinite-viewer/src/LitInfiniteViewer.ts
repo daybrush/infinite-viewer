@@ -11,7 +11,11 @@ import { camelize } from "@daybrush/utils";
 })
 @customElement("lit-infinite-viewer")
 export class LitInfiniteViewer extends LitElement {
-    @withMethods(METHODS as any, { click: "clickInfiniteViewer" })
+    @withMethods(METHODS as any, {
+        click: "clickViewer",
+        scrollTo: "scrollToViewer",
+        scrollByt: "scrollByViewer",
+    })
     private infiniteViewer!: VanillaInfiniteViewer;
     public firstUpdated() {
         const options: Partial<InfiniteViewerProperties> = {};
@@ -65,6 +69,7 @@ export class LitInfiniteViewer extends LitElement {
 }
 export interface LitInfiniteViewer extends InfiniteViewerProperties,
     MethodInterface<InfiniteViewerMethods, VanillaInfiniteViewer, LitInfiniteViewer, {
+        "click": "clickViewer",
         "scrollTo": "scrollToViewer",
         "scrollBy": "scrollByViewer",
     }> { }

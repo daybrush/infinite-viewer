@@ -64,6 +64,18 @@ class InfiniteViewer extends Component {
         this.init();
     }
     /**
+     * Get Container Element
+     */
+    public getContainer(): HTMLElement {
+        return this.container;
+    }
+    /**
+     * Get Viewport Element
+     */
+    public getViewport(): HTMLElement {
+        return this.viewport;
+    }
+    /**
      * Destroy elements, properties, and events.
      */
     public destroy(): void {

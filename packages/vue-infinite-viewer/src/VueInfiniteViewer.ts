@@ -1,9 +1,10 @@
 import VanillaInfiniteViewer, {
-    InfiniteViewerOptions, OPTIONS, EVENTS, PROPERTIES, CLASS_NAME,
+    InfiniteViewerOptions, OPTIONS, EVENTS, PROPERTIES, CLASS_NAME, METHODS,
+    InfiniteViewerProperties, InfiniteViewerMethods,
 } from 'infinite-viewer';
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { CreateElement } from 'vue';
-import { Properties } from 'framework-utils';
+import { Properties, withMethods, MethodInterface } from 'framework-utils';
 
 
 @Component({})
@@ -11,6 +12,7 @@ import { Properties } from 'framework-utils';
     Prop()(prototype, name);
 })
 export default class VueInfiniteViewer extends Vue {
+    @withMethods(METHODS as any)
     private infiniteViewer!: VanillaInfiniteViewer;
     public render(h: CreateElement) {
         const props = this.$props;
@@ -65,3 +67,5 @@ export default class VueInfiniteViewer extends Vue {
         this.infiniteViewer.destroy();
     }
 }
+export default interface VueInfiniteViewer extends InfiniteViewerProperties,
+    MethodInterface<InfiniteViewerMethods, VanillaInfiniteViewer, VueInfiniteViewer> { }

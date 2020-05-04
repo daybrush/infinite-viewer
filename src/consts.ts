@@ -64,4 +64,6 @@ export const METHODS = [
     "scrollTo",
     "scrollBy",
     "scrollCenter",
+    "getContainer",
+    "getViewport",
 ] as const;
