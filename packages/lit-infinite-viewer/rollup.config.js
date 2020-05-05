@@ -9,20 +9,20 @@ export default buildHelper([
   {
     ...defaultOptions,
     format: "es",
-    output: "./dist/selecto.esm.js",
+    output: "./dist/infinite-viewer.esm.js",
     exports: "named",
   },
   {
     ...defaultOptions,
     format: "cjs",
-    output: "./dist/selecto.cjs.js",
+    output: "./dist/infinite-viewer.cjs.js",
     exports: "named",
   },
   {
     ...defaultOptions,
     format: "umd",
     name: "UMD",
-    output: "./dist/selecto.umd.js",
+    output: "./dist/infinite-viewer.umd.js",
     exports: "named",
     resolve: true,
   },
