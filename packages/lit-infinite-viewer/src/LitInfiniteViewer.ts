@@ -14,7 +14,7 @@ export class LitInfiniteViewer extends LitElement {
     @withMethods(METHODS as any, {
         click: "clickViewer",
         scrollTo: "scrollToViewer",
-        scrollByt: "scrollByViewer",
+        scrollBy: "scrollByViewer",
     })
     private infiniteViewer!: VanillaInfiniteViewer;
     public firstUpdated() {
