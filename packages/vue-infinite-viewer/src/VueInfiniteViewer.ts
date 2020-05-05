@@ -5,7 +5,7 @@ import VanillaInfiniteViewer, {
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { CreateElement } from 'vue';
 import { Properties, withMethods, MethodInterface } from 'framework-utils';
-
+import { isUndefined } from '@daybrush/utils';
 
 @Component({})
 @Properties(OPTIONS as any, (prototype, name) => {
@@ -29,11 +29,12 @@ export default class VueInfiniteViewer extends Vue {
         const options: Partial<InfiniteViewerOptions> = {};
         const props = this.$props;
         OPTIONS.forEach((name) => {
-            if (name in props && typeof props[name] !== 'undefined') {
+            const value = props[name];
+
+            if (!isUndefined(value)) {
                 options[name] = props[name];
             }
         });
-
         const refs = this.$refs;
 
         this.infiniteViewer = new VanillaInfiniteViewer(
@@ -58,7 +59,9 @@ export default class VueInfiniteViewer extends Vue {
         const infiniteViewer = this.infiniteViewer;
 
         PROPERTIES.forEach((name) => {
-            if (name in props && infiniteViewer[name] !== props[name]) {
+            const value = props[name];
+
+            if (infiniteViewer[name] !== value && !isUndefined(value)) {
                 (infiniteViewer as any)[name] = props[name];
             }
         });
