@@ -95,7 +95,7 @@ class InfiniteViewer extends Component {
      */
     public getScrollTop(isAbsolute?: boolean) {
         return this.scrollTop + (this.loopY - 1) * this.margin - this.offsetY
-            + (isAbsolute ? (-this.rangeY[0] + 1) * this.margin : 1);
+            + (isAbsolute ? (-this.rangeY[0] + 1) * this.margin : 0);
     }
     /**
      * Gets the number of pixels that an element's content is scrolled vertically.
