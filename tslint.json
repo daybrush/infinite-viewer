@@ -25,7 +25,7 @@
 			true,
 			{
 				"limit": 120,
-				"ignore-pattern": "(\\* @)|//"
+				"ignore-pattern": "\\*|//"
 			}
 		],
 		"trailing-comma": [

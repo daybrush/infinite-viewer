@@ -26,6 +26,8 @@ export const PROPERTIES = [
     "zoom",
     "rangeX",
     "rangeY",
+    "usePinch",
+    "pinchThreshold",
 ] as const;
 
 /**

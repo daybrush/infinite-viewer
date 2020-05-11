@@ -1,6 +1,6 @@
 {
   "name": "infinite-viewer",
-  "version": "0.3.0",
+  "version": "0.4.2",
   "description": "Infinite Viewer is Document Viewer Component with infinite scrolling.",
   "main": "./dist/infinite-viewer.cjs.js",
   "module": "./dist/infinite-viewer.esm.js",
@@ -12,8 +12,9 @@
     "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
     "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
     "prerelease": "npm run build && npm run doc && prerelease --dirs=dist,doc",
+    "storybook": "cd storybook/ && npm run build && cd ../",
     "release": "npm run build && npm run doc && release --dirs=dist,doc",
-    "release:init": "npm run build && npm run doc && release -i --dirs=dist,doc",
+    "release:init": "npm run build && npm run doc && npm run storybook && release -i --dirs=dist,doc",
     "deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
     "deploy:init": "gh-pages -d ./demo --dest=./ --remote origin",
     "packages": "npm run packages:update && npm run packages:build && npm run packages:publish",
@@ -40,8 +41,8 @@
   },
   "homepage": "https://github.com/daybrush/infinite-viewer#readme",
   "dependencies": {
-    "@daybrush/drag": "^0.14.0",
-    "@daybrush/utils": "^0.10.3",
+    "@daybrush/drag": "^0.15.0",
+    "@daybrush/utils": "^0.10.4",
     "@egjs/component": "^2.1.2",
     "css-styled": "^0.1.7",
     "framework-utils": "^0.3.4"
@@ -49,15 +50,13 @@
   "peerDependencies": {
     "framework-utils": ">=0.3.4",
     "css-styled": ">=0.1.7",
-    "@daybrush/drag": ">=0.14.0",
-    "@daybrush/utils": ">=0.10.3"
+    "@daybrush/drag": ">=0.15.0",
+    "@daybrush/utils": ">=0.10.4"
   },
   "devDependencies": {
     "@daybrush/builder": "^0.1.2",
     "@daybrush/jsdoc": "^0.3.7",
     "@daybrush/release": "^0.2.4",
-    "@types/react": "^16.9.17",
-    "@types/react-dom": "^16.9.4",
     "daybrush-jsdoc-template": "^1.6.0",
     "print-sizes": "^0.1.0",
     "pvu": "^0.4.1",

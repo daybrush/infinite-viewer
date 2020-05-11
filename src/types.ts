@@ -1,4 +1,4 @@
-import { PROPERTIES, METHODS } from "./consts";
+import { PROPERTIES, METHODS, OPTIONS } from "./consts";
 import InfiniteViewer from "./InfiniteViewer";
 
 /**
@@ -69,6 +69,7 @@ export interface InfiniteViewerEvents {
     dragStart: OnDragStart;
     drag: OnDrag;
     dragEnd: OnDragEnd;
+    pinch: OnPinch;
 }
 export type InfiniteViewerProperties = { [P in typeof PROPERTIES[number]]: InfiniteViewerOptions[P] };
 export type InfiniteViewerMethods = { [P in typeof METHODS[number]]: InfiniteViewer[P] };

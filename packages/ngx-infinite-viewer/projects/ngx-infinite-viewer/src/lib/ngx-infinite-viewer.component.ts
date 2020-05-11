@@ -3,7 +3,7 @@ import {
   AfterViewInit, OnDestroy, OnChanges, SimpleChanges, ViewChild, Input, Output, OnInit, EventEmitter,
 } from '@angular/core';
 import VanillaInfiniteViewer, {
-  CLASS_NAME, OPTIONS, PROPERTIES, EVENTS, InfiniteViewerProperties,
+  PROPERTIES, EVENTS, InfiniteViewerProperties, InfiniteViewerOptions, OPTIONS,
 } from 'infinite-viewer';
 import { NgxInfiniteViewerInterface } from './ngx-infinite-viewer.interface';
 import { NgxInfiniteViewerEvents } from './types';
@@ -26,7 +26,14 @@ export class NgxInfiniteViewerComponent
   @Input() zoom: InfiniteViewerProperties['zoom'];
   @Input() rangeX: InfiniteViewerProperties['rangeX'];
   @Input() rangeY: InfiniteViewerProperties['rangeY'];
+  @Input() pinchThreshold: InfiniteViewerProperties['pinchThreshold'];
+  @Input() usePinch: InfiniteViewerProperties['usePinch'];
   @Output() scroll: NgxInfiniteViewerEvents['scroll'];
+  @Output() dragStart: NgxInfiniteViewerEvents['dragStart'];
+  @Output() drag: NgxInfiniteViewerEvents['drag'];
+  @Output() dragEnd: NgxInfiniteViewerEvents['dragEnd'];
+  @Output() pinch: NgxInfiniteViewerEvents['pinch'];
+  @Output() abortPinch: NgxInfiniteViewerEvents['abortPinch'];
 
   constructor(public containerRef: ElementRef) {
     super();
