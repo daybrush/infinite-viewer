@@ -44,6 +44,8 @@ export const OPTION_TYPES: { [key in keyof InfiniteViewerOptions]: any } = {
     scrollArea: Object,
     rangeX: Array,
     rangeY: Array,
+    pinchThreshold: Number,
+    usePinch: Boolean,
 };
 
 /**
@@ -51,6 +53,10 @@ export const OPTION_TYPES: { [key in keyof InfiniteViewerOptions]: any } = {
  */
 export const EVENTS = [
     "scroll",
+    "abortPinch",
+    "dragStart",
+    "dragEnd",
+    "pinch",
 ] as const;
 
 /**

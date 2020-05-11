@@ -12,10 +12,63 @@ export interface InfiniteViewerOptions {
     scrollArea: HTMLElement;
     rangeX: number[];
     rangeY: number[];
+    usePinch: boolean;
+    pinchThreshold: number;
 }
 
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface OnScroll {
+    scrollLeft: number;
+    scrollTop: number;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface OnAbortPinch {
+    inputEvent: any;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface OnDragStart {
+    inputEvent: any;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface OnDrag {
+    inputEvent: any;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface OnDragEnd {
+    isDrag: boolean;
+    inputEvent: any;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface OnPinch {
+    distance: number;
+    scale: number;
+    zoom: number;
+    inputEvent: any;
+}
 export interface InfiniteViewerEvents {
-    scroll: {};
+    scroll: OnScroll;
+    abortPinch: OnAbortPinch;
+    dragStart: OnDragStart;
+    drag: OnDrag;
+    dragEnd: OnDragEnd;
 }
 export type InfiniteViewerProperties = { [P in typeof PROPERTIES[number]]: InfiniteViewerOptions[P] };
 export type InfiniteViewerMethods = { [P in typeof METHODS[number]]: InfiniteViewer[P] };

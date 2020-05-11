@@ -42,6 +42,7 @@ class InfiniteViewer extends Component {
     private scrollLeft = 0;
     private scrollTop = 0;
     private timer = 0;
+    private dragFlag = false;
     /**
      * @sort 1
      */
@@ -58,6 +59,8 @@ class InfiniteViewer extends Component {
             rangeX: [-Infinity, Infinity],
             rangeY: [-Infinity, Infinity],
             scrollArea: null,
+            usePinch: false,
+            pinchThreshold: 30,
             ...options,
         };
         this.scrollArea = this.options.scrollArea;
@@ -94,16 +97,16 @@ class InfiniteViewer extends Component {
      * @param - Get absolute top position
      */
     public getScrollTop(isAbsolute?: boolean) {
-        return this.scrollTop + (this.loopY - 1) * this.margin - this.offsetY
-            + (isAbsolute ? (-this.rangeY[0] + 1) * this.margin : 0);
+        return (this.scrollTop + (this.loopY - 1) * this.margin - this.offsetY
+            + (isAbsolute ? (-this.rangeY[0] + 1) * this.margin : 0)) / this.zoom;
     }
     /**
      * Gets the number of pixels that an element's content is scrolled vertically.
      * @param - Get absolute left position
      */
     public getScrollLeft(isAbsolute?: boolean) {
-        return this.scrollLeft + (this.loopX - 1) * this.margin - this.offsetX
-            + (isAbsolute ? (-this.rangeX[0] + 1) * this.margin : 0);
+        return (this.scrollLeft + (this.loopX - 1) * this.margin - this.offsetX
+            + (isAbsolute ? (-this.rangeX[0] + 1) * this.margin : 0)) / this.zoom;
     }
     /**
      * Gets measurement of the width of an element's content with overflow
@@ -142,7 +145,8 @@ class InfiniteViewer extends Component {
      * @param deltaY
      */
     public scrollBy(deltaX: number, deltaY: number) {
-        return this.scrollTo(this.getScrollLeft() + deltaX, this.getScrollTop() + deltaY);
+        const zoom = this.zoom;
+        return this.scrollTo(this.getScrollLeft() * zoom + deltaX, this.getScrollTop() * zoom + deltaY);
     }
     /**
      * Scrolls the container to set of coordinates.
@@ -155,14 +159,44 @@ class InfiniteViewer extends Component {
             rangeY = [0, 0],
             margin = 0,
         } = this;
+
         this.loopX = minmax(Math.floor((margin + scrollLeft) / margin), rangeX[0], rangeX[1]);
         this.loopY = minmax(Math.floor((margin + scrollTop) / margin), rangeY[0], rangeY[1]);
         this.offsetX = (this.loopX - 1) * margin - scrollLeft + this.scrollLeft;
         this.offsetY = (this.loopY - 1) * margin - scrollTop + this.scrollTop;
 
         this.render();
-        this.trigger("scroll");
+        /**
+         * The `scroll` event fires when the document view or an element has been scrolled.
+         * @memberof InfiniteViewer
+         * @event scroll
+         * @param {InfiniteViewer.OnScroll} - Parameters for the scroll event
+         * @example
+         * import InfiniteViewer from "infinite-viewer";
+         *
+         * const viewer = new InfiniteViewer(
+         *   document.querySelector(".container"),
+         *   document.querySelector(".viewport"),
+         * ).on("scroll", () => {
+         *   console.log(viewer.getScrollLeft(), viewer.getScrollTop());
+         * });
+         */
+        this.trigger("scroll", {
+            scrollLeft: this.getScrollLeft(),
+            scrollTop: this.getScrollTop(),
+        });
         return this;
+    }
+    public setZoom(zoom: number) {
+        const viewport = this.viewport;
+        const offsetWidth = viewport.offsetWidth;
+        const offsetHeight = viewport.offsetHeight;
+        const offsetZoom = (zoom - this.zoom);
+
+        this.options.zoom = zoom;
+
+        this.scrollBy(offsetWidth * offsetZoom / 2, offsetHeight * offsetZoom / 2);
+        this.render();
     }
     private init() {
         // infinite-viewer(container)
@@ -182,20 +216,136 @@ class InfiniteViewer extends Component {
             container.insertBefore(scrollArea, container.firstChild);
         }
         this.injectResult = injector.inject(container);
-
+        /**
+         * the `dragStart` event fires when `touchstart` does occur.
+         * @memberof InfiniteViewer
+         * @event dragStart
+         * @param {InfiniteViewer.OnDragStart} - Parameters for the `dragStart` event
+         * @example
+         * import InfiniteViewer from "infinite-viewer";
+         *
+         * const viewer = new InfiniteViewer(
+         *   document.querySelector(".container"),
+         *   document.querySelector(".viewport"),
+         * ).on("dragStart", e => {
+         *   console.log(e.inputEvent);
+         * });
+         */
+        /**
+         * the `drag` event fires when `touch` does occur.
+         * @memberof InfiniteViewer
+         * @event drag
+         * @param {InfiniteViewer.OnDrag} - Parameters for the `drag` event
+         * @example
+         * import InfiniteViewer from "infinite-viewer";
+         *
+         * const viewer = new InfiniteViewer(
+         *   document.querySelector(".container"),
+         *   document.querySelector(".viewport"),
+         * ).on("drag", e => {
+         *   console.log(e.inputEvent);
+         * });
+         */
+        /**
+         * the `dragEnd` event fires when `touchend` does occur.
+         * @memberof InfiniteViewer
+         * @event dragEnd
+         * @param {InfiniteViewer.OnDragEnd} - Parameters for the `dragEnd` event
+         * @example
+         * import InfiniteViewer from "infinite-viewer";
+         *
+         * const viewer = new InfiniteViewer(
+         *   document.querySelector(".container"),
+         *   document.querySelector(".viewport"),
+         * ).on("dragEnd", e => {
+         *   console.log(e.inputEvent);
+         * });
+         */
+        /**
+         * the `pinchAbort` event fires when `pinch` event does not occur by dragging a certain area.
+         * @memberof InfiniteViewer
+         * @event pinchAbort
+         * @param {InfiniteViewer.OnAbortPinch} - Parameters for the abortPinch event
+         * @example
+         * import InfiniteViewer from "infinite-viewer";
+         *
+         * const viewer = new InfiniteViewer(
+         *   document.querySelector(".container"),
+         *   document.querySelector(".viewport"),
+         *   {
+         *     usePinch: true,
+         *   }
+         * ).on("pinchAbort", e => {
+         *   console.log(e.inputEvent);
+         * });
+         */
+        /**
+         * the `pinch` event fires when two points pinch the viewer
+         * @memberof InfiniteViewer
+         * @event pinch
+         * @param {InfiniteViewer.OnPinch} - Parameters for the `pinch` event
+         * @example
+         * import InfiniteViewer from "infinite-viewer";
+         *
+         * const viewer = new InfiniteViewer(
+         *   document.querySelector(".container"),
+         *   document.querySelector(".viewport"),
+         *   {
+         *     usePinch: true,
+         *   }
+         * ).on("pinch", e => {
+         *   console.log(e.zoom, e.inputEvent);
+         * });
+         */
         this.dragger = new Dragger(container, {
             container: document.body,
             events: ["touch"],
             dragstart: ({ inputEvent }) => {
                 inputEvent.preventDefault();
                 this.pauseAnimation();
+                this.dragFlag = false;
+
+                return this.trigger("dragStart", {
+                    inputEvent,
+                });
             },
             drag: e => {
-                measureSpeed(e);
-                this.scrollBy(-e.deltaX, -e.deltaY);
+                const options = this.options;
+                if (!options.usePinch || e.isPinch) {
+                    this.trigger("drag", {
+                        inputEvent: e.inputEvent,
+                    });
+                    measureSpeed(e);
+                    this.scrollBy(-e.deltaX, -e.deltaY);
+                } else if (!this.dragFlag && e.movement > options.pinchThreshold) {
+                    this.dragFlag = true;
+
+                    this.trigger("abortPinch", {
+                        inputEvent: e.inputEvent,
+                    });
+                }
             },
             dragend: e => {
+                this.trigger("dragEnd", {
+                    isDrag: e.isDrag,
+                    inputEvent: e.inputEvent,
+                });
                 this.startAnimation(e.datas.speed);
+            },
+            pinchstart: ({ inputEvent, datas }) => {
+                inputEvent.preventDefault();
+                this.pauseAnimation();
+                datas.startZoom = this.zoom;
+            },
+            pinch: e => {
+                // e.distance;
+                // e.scale
+                this.trigger("pinch", {
+                    distance: e.distance,
+                    scale: e.scale,
+                    zoom: e.datas.startZoom * e.scale,
+                    inputEvent: e.inputEvent,
+                });
             },
         });
         const margin = this.margin;
@@ -218,7 +368,7 @@ class InfiniteViewer extends Component {
         const nextOffsetY = (1 - loopY) * margin + offsetY;
 
         this.scrollArea.style.cssText += `position:absolute;top:0;left:0;width:${size};height:${size};`;
-        this.viewport.style.transform = `translate(${nextOffsetX}px, ${nextOffsetY}px) scale(${zoom})`;
+        this.viewport.style.cssText = `transform-origin: 0 0;transform:translate(${nextOffsetX}px, ${nextOffsetY}px) scale(${zoom});`;
     }
     private move(scrollLeft: number, scrollTop: number) {
         const container = this.container;
@@ -277,7 +427,10 @@ class InfiniteViewer extends Component {
         this.render();
 
         if (isChangeLoop || isChangeScroll) {
-            this.trigger("scroll");
+            this.trigger("scroll", {
+                scrollLeft: this.getScrollLeft(),
+                scrollTop: this.getScrollTop(),
+            });
         }
 
         if (isChangeScroll) {
