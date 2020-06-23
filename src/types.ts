@@ -37,6 +37,7 @@ export interface OnAbortPinch {
  */
 export interface OnDragStart {
     inputEvent: any;
+    stop(): void;
 }
 /**
  * @typedef

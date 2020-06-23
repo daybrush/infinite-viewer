@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@scena/react-guides": "^0.6.1",
+    "keycon": "^0.8.0",
     "moveable-helper": "0.0.2",
     "raw-loader": "^4.0.0",
     "react-infinite-viewer": "^0.4.0",
