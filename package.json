@@ -17,7 +17,7 @@
         "release:init": "npm run build && npm run doc && npm run storybook && release -i --dirs=dist,doc",
         "deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
         "deploy:init": "gh-pages -d ./demo --dest=./ --remote origin",
-        "packages": "npm run packages:update && npm run packages:build && npm run packages:publish",
+        "packages": "npm run packages:update && npm run packages:build && npm run packages:publish && npm run packages:preact",
         "packages:update": "pvu --update=react-infinite-viewer,vue-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer/projects/ngx-infinite-viewer",
         "packages:build": "pvu --build=react-infinite-viewer,vue-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer",
         "packages:publish": "pvu --publish=react-infinite-viewer,vue-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer/dist/ngx-infinite-viewer",
