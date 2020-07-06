@@ -1,66 +1,66 @@
 {
-  "name": "infinite-viewer",
-  "version": "0.4.3",
-  "description": "Infinite Viewer is Document Viewer Component with infinite scrolling.",
-  "main": "./dist/infinite-viewer.cjs.js",
-  "module": "./dist/infinite-viewer.esm.js",
-  "sideEffects": false,
-  "types": "declaration/index.d.ts",
-  "scripts": {
-    "start": "rollup -c -w",
-    "build": "rollup -c && npm run declaration && print-sizes ./dist",
-    "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
-    "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
-    "prerelease": "npm run build && npm run doc && prerelease --dirs=dist,doc",
-    "storybook": "cd storybook/ && npm run build && cd ../",
-    "release": "npm run build && npm run doc && release --dirs=dist,doc",
-    "release:init": "npm run build && npm run doc && npm run storybook && release -i --dirs=dist,doc",
-    "deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
-    "deploy:init": "gh-pages -d ./demo --dest=./ --remote origin",
-    "packages": "npm run packages:update && npm run packages:build && npm run packages:publish",
-    "packages:update": "pvu --update=react-infinite-viewer,vue-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer/projects/ngx-infinite-viewer",
-    "packages:build": "pvu --build=react-infinite-viewer,vue-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer",
-    "packages:publish": "pvu --publish=react-infinite-viewer,vue-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer/dist/ngx-infinite-viewer",
-    "packages:preact": "pvu --base=./packages/react-infinite-viewer/ --update=preact-infinite-viewer --build=preact-infinite-viewer --publish=preact-infinite-viewer"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/daybrush/infinite-viewer.git"
-  },
-  "keywords": [
-    "scroll",
-    "scroller",
-    "viewer",
-    "infinite",
-    "moveable"
-  ],
-  "author": "Daybrush",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/daybrush/infinite-viewer/issues"
-  },
-  "homepage": "https://github.com/daybrush/infinite-viewer#readme",
-  "dependencies": {
-    "@daybrush/drag": "^0.15.0",
-    "@daybrush/utils": "^0.10.4",
-    "@egjs/component": "^2.1.2",
-    "css-styled": "^0.1.7",
-    "framework-utils": "^0.3.4"
-  },
-  "peerDependencies": {
-    "framework-utils": ">=0.3.4",
-    "css-styled": ">=0.1.7",
-    "@daybrush/drag": ">=0.15.0",
-    "@daybrush/utils": ">=0.10.4"
-  },
-  "devDependencies": {
-    "@daybrush/builder": "^0.1.2",
-    "@daybrush/jsdoc": "^0.3.7",
-    "@daybrush/release": "^0.2.4",
-    "daybrush-jsdoc-template": "^1.6.0",
-    "print-sizes": "^0.1.0",
-    "pvu": "^0.4.1",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.4"
-  }
+    "name": "infinite-viewer",
+    "version": "0.4.4",
+    "description": "Infinite Viewer is Document Viewer Component with infinite scrolling.",
+    "main": "./dist/infinite-viewer.cjs.js",
+    "module": "./dist/infinite-viewer.esm.js",
+    "sideEffects": false,
+    "types": "declaration/index.d.ts",
+    "scripts": {
+        "start": "rollup -c -w",
+        "build": "rollup -c && npm run declaration && print-sizes ./dist",
+        "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
+        "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
+        "prerelease": "npm run build && npm run doc && prerelease --dirs=dist,doc",
+        "storybook": "cd storybook/ && npm run build && cd ../",
+        "release": "npm run build && npm run doc && release --dirs=dist,doc",
+        "release:init": "npm run build && npm run doc && npm run storybook && release -i --dirs=dist,doc",
+        "deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
+        "deploy:init": "gh-pages -d ./demo --dest=./ --remote origin",
+        "packages": "npm run packages:update && npm run packages:build && npm run packages:publish",
+        "packages:update": "pvu --update=react-infinite-viewer,vue-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer/projects/ngx-infinite-viewer",
+        "packages:build": "pvu --build=react-infinite-viewer,vue-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer",
+        "packages:publish": "pvu --publish=react-infinite-viewer,vue-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer/dist/ngx-infinite-viewer",
+        "packages:preact": "pvu --base=./packages/react-infinite-viewer/ --update=preact-infinite-viewer --build=preact-infinite-viewer --publish=preact-infinite-viewer"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/daybrush/infinite-viewer.git"
+    },
+    "keywords": [
+        "scroll",
+        "scroller",
+        "viewer",
+        "infinite",
+        "moveable"
+    ],
+    "author": "Daybrush",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daybrush/infinite-viewer/issues"
+    },
+    "homepage": "https://github.com/daybrush/infinite-viewer#readme",
+    "dependencies": {
+        "@daybrush/drag": "^0.18.6",
+        "@daybrush/utils": "^0.10.5",
+        "@egjs/component": "^2.1.2",
+        "css-styled": "^0.1.7",
+        "framework-utils": "^0.3.4"
+    },
+    "peerDependencies": {
+        "framework-utils": ">=0.3.4",
+        "css-styled": ">=0.1.7",
+        "@daybrush/drag": ">=0.18.6",
+        "@daybrush/utils": ">=0.10.5"
+    },
+    "devDependencies": {
+        "@daybrush/builder": "^0.1.2",
+        "@daybrush/jsdoc": "^0.3.7",
+        "@daybrush/release": "^0.2.4",
+        "daybrush-jsdoc-template": "^1.6.0",
+        "print-sizes": "^0.1.0",
+        "pvu": "^0.4.1",
+        "tslint": "^5.20.1",
+        "typescript": "^3.7.4"
+    }
 }
