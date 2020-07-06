@@ -262,9 +262,9 @@ class InfiniteViewer extends Component {
          * });
          */
         /**
-         * the `pinchAbort` event fires when `pinch` event does not occur by dragging a certain area.
+         * the `abortPinch` event fires when `pinch` event does not occur by dragging a certain area.
          * @memberof InfiniteViewer
-         * @event pinchAbort
+         * @event abortPinch
          * @param {InfiniteViewer.OnAbortPinch} - Parameters for the abortPinch event
          * @example
          * import InfiniteViewer from "infinite-viewer";
@@ -275,7 +275,7 @@ class InfiniteViewer extends Component {
          *   {
          *     usePinch: true,
          *   }
-         * ).on("pinchAbort", e => {
+         * ).on("abortPinch", e => {
          *   console.log(e.inputEvent);
          * });
          */
@@ -300,11 +300,12 @@ class InfiniteViewer extends Component {
         this.dragger = new Dragger(container, {
             container: document.body,
             events: ["touch"],
-            dragstart: ({ inputEvent }) => {
+            dragstart: ({ inputEvent, datas }) => {
                 inputEvent.preventDefault();
                 this.pauseAnimation();
                 this.dragFlag = false;
 
+                datas.startEvent = inputEvent;
                 return this.trigger("dragStart", {
                     inputEvent,
                 });
@@ -321,13 +322,14 @@ class InfiniteViewer extends Component {
                     this.dragFlag = true;
 
                     this.trigger("abortPinch", {
-                        inputEvent: e.inputEvent,
+                        inputEvent: e.datas.startEvent || e.inputEvent,
                     });
                 }
             },
             dragend: e => {
                 this.trigger("dragEnd", {
                     isDrag: e.isDrag,
+                    isDouble: e.isDouble,
                     inputEvent: e.inputEvent,
                 });
                 this.startAnimation(e.datas.speed);

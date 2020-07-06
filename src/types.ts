@@ -52,6 +52,7 @@ export interface OnDrag {
  */
 export interface OnDragEnd {
     isDrag: boolean;
+    isDouble: boolean;
     inputEvent: any;
 }
 /**
