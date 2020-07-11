@@ -14,6 +14,7 @@ export interface InfiniteViewerOptions {
     rangeY: number[];
     usePinch: boolean;
     pinchThreshold: number;
+    cspNonce: string;
 }
 
 /**

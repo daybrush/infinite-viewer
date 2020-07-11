@@ -36,6 +36,7 @@ export const PROPERTIES = [
 export const OPTIONS = [
     // ignore target, container,
     ...PROPERTIES,
+    "cspNonce",
     "scrollArea",
 ] as const;
 
@@ -48,6 +49,7 @@ export const OPTION_TYPES: { [key in keyof InfiniteViewerOptions]: any } = {
     rangeY: Array,
     pinchThreshold: Number,
     usePinch: Boolean,
+    cspNonce: String,
 };
 
 /**

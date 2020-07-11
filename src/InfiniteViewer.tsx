@@ -61,6 +61,7 @@ class InfiniteViewer extends Component {
             scrollArea: null,
             usePinch: false,
             pinchThreshold: 30,
+            cspNonce: "",
             ...options,
         };
         this.scrollArea = this.options.scrollArea;
@@ -215,7 +216,9 @@ class InfiniteViewer extends Component {
             scrollArea.style.cssText += `position:absolute;top:0;left:0;`;
             container.insertBefore(scrollArea, container.firstChild);
         }
-        this.injectResult = injector.inject(container);
+        this.injectResult = injector.inject(container, {
+            nonce: this.options.cspNonce,
+        });
         /**
          * the `dragStart` event fires when `touchstart` does occur.
          * @memberof InfiniteViewer
