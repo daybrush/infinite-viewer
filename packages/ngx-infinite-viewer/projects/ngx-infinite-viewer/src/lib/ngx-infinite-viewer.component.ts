@@ -29,6 +29,7 @@ export class NgxInfiniteViewerComponent
   @Input() pinchThreshold: InfiniteViewerProperties['pinchThreshold'];
   @Input() usePinch: InfiniteViewerProperties['usePinch'];
   @Input() cspNonce: InfiniteViewerOptions['cspNonce'];
+  @Input() wheelScale: InfiniteViewerOptions['wheelScale'];
   @Output() scroll: NgxInfiniteViewerEvents['scroll'];
   @Output() dragStart: NgxInfiniteViewerEvents['dragStart'];
   @Output() drag: NgxInfiniteViewerEvents['drag'];

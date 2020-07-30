@@ -4,7 +4,7 @@ import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { camelize, IObject, addEvent, removeEvent, addClass } from "@daybrush/utils";
 import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents } from "./types";
-import { PROPERTIES, injector, CLASS_NAME } from "./consts";
+import { PROPERTIES, injector, CLASS_NAME, TINY_NUM } from "./consts";
 import { measureSpeed, getDuration, getDestPos, minmax } from "./utils";
 
 @Properties(PROPERTIES as any, (prototype, property) => {
@@ -43,6 +43,7 @@ class InfiniteViewer extends Component {
     private scrollTop = 0;
     private timer = 0;
     private dragFlag = false;
+    private tempScale = 1;
     /**
      * @sort 1
      */
@@ -62,6 +63,7 @@ class InfiniteViewer extends Component {
             usePinch: false,
             pinchThreshold: 30,
             cspNonce: "",
+            wheelScale: 0.01,
             ...options,
         };
         this.scrollArea = this.options.scrollArea;
@@ -86,7 +88,12 @@ class InfiniteViewer extends Component {
         this.off();
         this.dragger.unset();
         this.injectResult.destroy();
-        removeEvent(this.container, "scroll", this.onScroll);
+        const container = this.container;
+
+        removeEvent(container, "scroll", this.onScroll);
+        removeEvent(container, "wheel", this.onWheel);
+        removeEvent(container, "gesturestart", this.onGestureStart);
+        removeEvent(container, "gesturechange", this.onGestureChange);
 
         this.dragger = null;
         this.injectResult = null;
@@ -346,6 +353,7 @@ class InfiniteViewer extends Component {
                 // e.distance;
                 // e.scale
                 this.trigger("pinch", {
+                    rotation: e.rotation,
                     distance: e.distance,
                     scale: e.scale,
                     zoom: e.datas.startZoom * e.scale,
@@ -356,6 +364,16 @@ class InfiniteViewer extends Component {
         const margin = this.margin;
 
         addEvent(container, "scroll", this.onScroll);
+        addEvent(container, "wheel", this.onWheel, {
+            passive: false,
+        });
+
+        addEvent(container, "gesturestart", this.onGestureStart, {
+            passive: false,
+        });
+        addEvent(container, "gesturechange", this.onGestureChange, {
+            passive: false,
+        });
         this.render();
         this.move(margin, margin);
     }
@@ -441,6 +459,45 @@ class InfiniteViewer extends Component {
         if (isChangeScroll) {
             this.move(nextScrollLeft, nextScrollTop);
         }
+    }
+    private onWheel = (e: WheelEvent) => {
+        const ctrlKey = e.ctrlKey;
+
+        if (ctrlKey) {
+            const distance = -e.deltaY;
+            const scale = Math.max(1 + distance * (this.options.wheelScale || 0.01), TINY_NUM);
+
+            this.trigger("pinch", {
+                distance,
+                scale,
+                rotation: 0,
+                zoom: this.zoom * scale,
+                inputEvent: e,
+            });
+        } else {
+            this.scrollBy(e.deltaX, e.deltaY);
+        }
+        e.preventDefault();
+    }
+    private onGestureStart = (e: any) => {
+        this.tempScale = this.zoom;
+        e.preventDefault();
+    }
+    private onGestureChange = (e: any) => {
+        e.preventDefault();
+        if (this.dragger.isFlag() || !this.tempScale) {
+            this.tempScale = 0;
+            return;
+        }
+        const scale = e.scale;
+
+        this.trigger("pinch", {
+            distance: 0,
+            scale,
+            rotation: e.rotation,
+            zoom: this.tempScale * scale,
+            inputEvent: e,
+        });
     }
     private startAnimation(speed: number[]) {
         if (!speed || (!speed[0] && !speed[1])) {

@@ -28,6 +28,7 @@ export const PROPERTIES = [
     "rangeY",
     "usePinch",
     "pinchThreshold",
+    "wheelScale",
 ] as const;
 
 /**
@@ -50,6 +51,7 @@ export const OPTION_TYPES: { [key in keyof InfiniteViewerOptions]: any } = {
     pinchThreshold: Number,
     usePinch: Boolean,
     cspNonce: String,
+    wheelScale: Number,
 };
 
 /**
@@ -77,3 +79,5 @@ export const METHODS = [
     "getContainer",
     "getViewport",
 ] as const;
+
+export const TINY_NUM = 0.000001;

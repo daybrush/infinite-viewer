@@ -262,6 +262,8 @@
         verticalGuides.scroll(e.scrollTop);
         verticalGuides.scrollGuides(e.scrollLeft);
     }).on("pinch", e => {
+        console.log(e.inputEvent.rotation);
+        document.querySelector(".description").innerHTML = e.inputEvent.type;
         const zoom = e.zoom;
         verticalGuides.zoom = zoom;
         horizontalGuides.zoom = zoom;
