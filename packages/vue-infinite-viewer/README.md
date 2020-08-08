@@ -30,7 +30,7 @@
 ## ⚙️ Installation
 ### npm
 ```bash
-$ npm install svelte-infinite-viewer
+$ npm install vue-infinite-viewer
 ```
 
 ## 🚀 How to use
