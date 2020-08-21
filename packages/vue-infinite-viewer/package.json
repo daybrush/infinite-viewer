@@ -1,6 +1,6 @@
 {
     "name": "vue-infinite-viewer",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "types": "declaration/index.d.ts",
     "main": "dist/infinite-viewer.cjs.js",
     "module": "dist/infinite-viewer.esm.js",
@@ -30,7 +30,7 @@
     },
     "homepage": "https://daybrush.com/infinite-viewer",
     "dependencies": {
-        "infinite-viewer": "^0.6.0",
+        "infinite-viewer": "^0.6.1",
         "vue-property-decorator": "^8.1.0"
     },
     "devDependencies": {

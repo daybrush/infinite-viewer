@@ -1,6 +1,6 @@
 {
     "name": "infinite-viewer",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "description": "Infinite Viewer is Document Viewer Component with infinite scrolling.",
     "main": "./dist/infinite-viewer.cjs.js",
     "module": "./dist/infinite-viewer.esm.js",
@@ -41,17 +41,16 @@
     },
     "homepage": "https://github.com/daybrush/infinite-viewer#readme",
     "dependencies": {
-        "@daybrush/drag": "^0.19.1",
-        "@daybrush/utils": "^0.10.5",
+        "@daybrush/drag": "^0.19.3",
+        "@daybrush/utils": "^1.0.0",
         "@egjs/component": "^2.1.2",
-        "css-styled": "^0.2.1",
+        "css-styled": "^0.2.3",
         "framework-utils": "^0.3.4"
     },
     "peerDependencies": {
         "framework-utils": ">=0.3.4",
-        "css-styled": ">=0.2.1",
-        "@daybrush/drag": ">=0.19.1",
-        "@daybrush/utils": ">=0.10.5"
+        "css-styled": ">=0.2.3",
+        "@daybrush/drag": ">=0.19.3"
     },
     "devDependencies": {
         "@daybrush/builder": "^0.1.2",
