@@ -1,17 +1,98 @@
 import styled from "css-styled";
 import { InfiniteViewerOptions } from "./types";
+import getAgent from "@egjs/agent";
+import { prefixCSS } from "framework-utils";
 
-export const injector = styled(`
+export const agent = getAgent();
+export const IS_SAFARI = agent.browser.name === "safari";
+export const PREFIX = "infinite-viewer-";
+export const injector = styled(prefixCSS(PREFIX, `
 {
     position: relative;
-    display: block;
-    overflow: auto;
 }
-:host::-webkit-scrollbar {
+.wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    top: 0;
+    left: 0;
+    will-change: scroll-position;
+}
+.wrapper::-webkit-scrollbar {
     display: none;
 }
-`);
+.scroll-area {
+    position:absolute;
+    top:0;
+    left:0;
+}
+.scroll-bar {
+    position:absolute;
+    width: 10px;
+    height: 10px;
+    box-sizing: border-box;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+.horizontal-scroll-bar {
+    width: 100%;
+    height: 14px;
+}
+.vertical-scroll-bar {
+    height: 100%;
+    width: 14px;
+}
+.scroll-thumb {
+    position:relative;
+    opacity: 0.7;
+    background: #333;
+    border-radius: 3px;
+    left: 0px;
+    top: 0px;
+    z-index: 10;
+    width: 6px;
+    height: 6px;
+    transition: all ease 0.2s;
+}
+.horizontal-scroll-bar .scroll-thumb {
+    margin: 4px 0px;
+    transition-property: margin, height, border-radius;
+}
+.vertical-scroll-bar .scroll-thumb {
+    margin: 0px 4px;
+    transition-property: margin, width, border-radius;
+}
+.horizontal-scroll-bar:hover .scroll-thumb {
+    height: 10px;
+    margin: 2px 0px;
+    border-radius: 5px;
+}
+.vertical-scroll-bar:hover .scroll-thumb {
+    width: 10px;
+    margin: 0px 2px;
+    border-radius: 5px;
+}
+`));
 
+export const DEFAULT_OPTIONS = {
+    margin: 500,
+    threshold: 100,
+    zoom: 1,
+    rangeX: [-Infinity, Infinity],
+    rangeY: [-Infinity, Infinity],
+    wrapperElement: null,
+    scrollAreaElement: null,
+    horizontalScrollElement: null,
+    verticalScrollElement: null,
+    usePinch: false,
+    pinchThreshold: 30,
+    cspNonce: "",
+    wheelScale: 0.01,
+    displayHorizontalScroll: true,
+    displayVerticalScroll: true,
+};
 /**
  * @memberof InfiniteViewer
  */
@@ -29,6 +110,8 @@ export const PROPERTIES = [
     "usePinch",
     "pinchThreshold",
     "wheelScale",
+    "displayVerticalScroll",
+    "displayHorizontalScroll",
 ] as const;
 
 /**
@@ -38,20 +121,27 @@ export const OPTIONS = [
     // ignore target, container,
     ...PROPERTIES,
     "cspNonce",
-    "scrollArea",
+    "wrapperElement",
+    "scrollAreaElement",
+    "verticalScrollElement",
+    "horizontalScrollElement",
 ] as const;
-
 export const OPTION_TYPES: { [key in keyof InfiniteViewerOptions]: any } = {
     margin: Number,
     threshold: Number,
     zoom: Number,
-    scrollArea: Object,
+    wrapperElement: Object,
+    scrollAreaElement: Object,
+    verticalScrollElement: Object,
+    horizontalScrollElement: Object,
     rangeX: Array,
     rangeY: Array,
     pinchThreshold: Number,
     usePinch: Boolean,
     cspNonce: String,
     wheelScale: Number,
+    displayHorizontalScroll: Boolean,
+    displayVerticalScroll: Boolean,
 };
 
 /**

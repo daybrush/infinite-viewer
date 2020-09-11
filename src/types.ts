@@ -9,13 +9,19 @@ export interface InfiniteViewerOptions {
     margin: number;
     threshold: number;
     zoom: number;
-    scrollArea: HTMLElement;
     rangeX: number[];
     rangeY: number[];
     usePinch: boolean;
     pinchThreshold: number;
     wheelScale: number;
     cspNonce: string;
+    displayVerticalScroll: boolean;
+    displayHorizontalScroll: boolean;
+
+    wrapperElement: HTMLElement;
+    scrollAreaElement: HTMLElement;
+    verticalScrollElement: HTMLElement;
+    horizontalScrollElement: HTMLElement;
 }
 
 /**

@@ -1,4 +1,4 @@
-import { OnDrag } from "@daybrush/drag";
+import { OnDrag } from "gesto";
 
 export function measureSpeed(e: OnDrag) {
     const { deltaX, deltaY, datas } = e;
@@ -29,4 +29,8 @@ export function getDestPos(speed: number[], a: number) {
 }
 export function minmax(value: number, min: number, max: number) {
     return Math.min(max, Math.max(min, value));
+}
+
+export function abs(v: number) {
+    return Math.abs(v);
 }
