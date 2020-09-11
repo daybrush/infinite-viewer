@@ -181,7 +181,8 @@
 </div>
 <script src="../dist/infinite-viewer.js"></script>
 <script src="https://daybrush.com/keycon/release/latest/dist/keycon.pkgd.js"></script>
-<script src="https://daybrush.com/selecto/release/latest/dist/selecto.js"></script>
+<script src="../../selecto/dist/selecto.js"></script>
+<!-- <script src="https://daybrush.com/selecto/release/latest/dist/selecto.js"></script> -->
 <script src="https://daybrush.com/guides/release/latest/dist/guides.js"></script>
 <script src="https://daybrush.com/moveable/release/latest/dist/moveable.js"></script>
 <script src="https://daybrush.com/moveable-helper/release/latest/dist/moveable-helper.js"></script>
@@ -238,7 +239,7 @@
         {
             usePinch: true,
             pinchThreshold: 50,
-            rangeX: [-1000, 1000],
+            rangeX: [0, 0],
         }
     ).on("dragStart", e => {
         const target = e.inputEvent.target;
@@ -254,6 +255,7 @@
             selecto.clickTarget(e.inputEvent);
         }
     }).on("abortPinch", e => {
+        console.log("abort", e.inputEvent);
         selecto.triggerDragStart(e.inputEvent);
     }).on("scroll", e => {
         horizontalGuides.scroll(e.scrollLeft);
@@ -292,10 +294,11 @@
         const target = inputEvent.target;
         if (
             target.nodeName === "A"
-            || inputEvent.type === "touchstart"
+            || (inputEvent.type === "touchstart" && e.isTrusted)
             || moveable.isMoveableElement(target)
             || targets.some(t => t === target || t.contains(target))
         ) {
+            console.log("?", inputEvent.type);
             e.stop();
         }
     }).on("scroll", ({ direction }) => {

@@ -4,6 +4,7 @@
 		"tslint:recommended"
 	],
 	"rules": {
+		"space-before-function-paren": false,
 		"jsdoc-format": false,
 		"forin": false,
 		"no-console": false,
