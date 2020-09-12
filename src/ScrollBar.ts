@@ -9,7 +9,6 @@ import Component from "@egjs/component";
 export default class ScrollBar extends Component {
     public isAppend: boolean = false;
     public thumbElement!: HTMLElement;
-    public barElement!: HTMLElement;
     private gesto!: Gesto;
     private pos: number = 0;
     private size: number = 0;
@@ -17,7 +16,7 @@ export default class ScrollBar extends Component {
     private isHorizontal = false;
     constructor(
         private type: "horizontal" | "vertical",
-        barElement?: HTMLElement,
+        private barElement?: HTMLElement,
     ) {
         super();
         const isHorizontal = type === "horizontal";
@@ -41,7 +40,7 @@ export default class ScrollBar extends Component {
             this.thumbElement = thumbElement;
             this.isAppend = true;
         } else {
-            this.thumbElement = this.barElement.querySelector(SCROLL_THUMB_CLASS_NAME);
+            this.thumbElement = barElement.querySelector(`.${SCROLL_THUMB_CLASS_NAME}`);
         }
         this.gesto = new Gesto(this.barElement, {
             container: window,
@@ -103,7 +102,7 @@ export default class ScrollBar extends Component {
             += `${sizeName}: ${size * size / scrollSize}px;`
             + `transform: translate${dirName1}(${pos / scrollSize * size}px)`;
     }
-    public unset() {
+    public destroy() {
         removeEvent(this.barElement, "wheel", this.onWheel);
         this.gesto.off();
         this.off();

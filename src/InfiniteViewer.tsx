@@ -94,11 +94,13 @@ class InfiniteViewer extends Component {
     public destroy(): void {
         this.off();
         this.gesto.unset();
+        this.verticalScrollbar.destroy();
+        this.horizontalScrollbar.destroy();
         this.injectResult.destroy();
         const containerElement = this.containerElement;
 
         removeEvent(window, "resize", this.resize);
-        removeEvent(containerElement, "scroll", this.onScroll);
+        removeEvent(this.wrapperElement, "scroll", this.onScroll);
         removeEvent(containerElement, "wheel", this.onWheel);
         removeEvent(containerElement, "tgesturestart", this.onGestureStart);
         removeEvent(containerElement, "gesturechange", this.onGestureChange);
