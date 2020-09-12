@@ -16,7 +16,7 @@ export default class ScrollBar extends Component {
     private isHorizontal = false;
     constructor(
         private type: "horizontal" | "vertical",
-        private barElement?: HTMLElement,
+        public barElement?: HTMLElement,
     ) {
         super();
         const isHorizontal = type === "horizontal";

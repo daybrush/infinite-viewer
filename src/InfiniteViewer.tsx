@@ -562,7 +562,7 @@ class InfiniteViewer extends Component {
         });
         this.resize();
         this.render();
-        this.move(this.rangeX[0] ? margin : 0, this.rangeY[0] ? margin : 0);
+        this.scrollTo(0, 0);
     }
     private render() {
         const {
