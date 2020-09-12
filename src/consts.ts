@@ -26,6 +26,7 @@ export const injector = styled(prefixCSS(PREFIX, `
     position:absolute;
     top:0;
     left:0;
+    transform-origin: 0 0;
 }
 .scroll-bar {
     position:absolute;

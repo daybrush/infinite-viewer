@@ -211,7 +211,7 @@
         .on("rotateGroupStart", helper.onRotateGroupStart)
         .on("rotateGroup", helper.onRotateGroup)
         .on("snap", e => {
-            console.log(e);
+            // console.log(e);
         });
 
 
@@ -239,7 +239,6 @@
         {
             usePinch: true,
             pinchThreshold: 50,
-            rangeX: [0, 0],
         }
     ).on("dragStart", e => {
         const target = e.inputEvent.target;
@@ -255,18 +254,19 @@
             selecto.clickTarget(e.inputEvent);
         }
     }).on("abortPinch", e => {
-        console.log("abort", e.inputEvent);
+        // console.log("abort", e.inputEvent);
         selecto.triggerDragStart(e.inputEvent);
     }).on("scroll", e => {
+        // console.log(e.scrollLeft);
         horizontalGuides.scroll(e.scrollLeft);
         horizontalGuides.scrollGuides(e.scrollTop);
 
         verticalGuides.scroll(e.scrollTop);
         verticalGuides.scrollGuides(e.scrollLeft);
     }).on("pinch", e => {
-        console.log(e.inputEvent.rotation);
         document.querySelector(".description").innerHTML = e.inputEvent.type;
-        const zoom = e.zoom;
+        const zoom = Math.max(0.1, e.zoom);
+
         verticalGuides.zoom = zoom;
         horizontalGuides.zoom = zoom;
         viewer.zoom = zoom;
@@ -298,7 +298,7 @@
             || moveable.isMoveableElement(target)
             || targets.some(t => t === target || t.contains(target))
         ) {
-            console.log("?", inputEvent.type);
+            // console.log("?", inputEvent.type);
             e.stop();
         }
     }).on("scroll", ({ direction }) => {
@@ -325,15 +325,6 @@
         verticalGuides.resize();
     });
 
-    keycon.global;
-    window.addEventListener("wheel", e => {
-        if (keycon.global.altKey) {
-            viewer.zoom = Math.max(0.1, viewer.zoom + e.deltaY / 300);
-            e.preventDefault();
-        }
-    }, {
-        passive: false,
-    });
     document.querySelector(".reset").addEventListener("click", () => {
         viewer.scrollCenter();
     });

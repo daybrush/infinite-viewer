@@ -1,19 +1,17 @@
 import Gesto from "gesto";
 import { PREFIX } from "./consts";
-import { addClass } from "@daybrush/utils";
+import { addClass, removeEvent, addEvent } from "@daybrush/utils";
 import Component from "@egjs/component";
 
 export default class ScrollBar extends Component {
     public isAppend: boolean = false;
-    private thumbElement!: HTMLElement;
-    private barElement!: HTMLElement;
+    public thumbElement!: HTMLElement;
+    public barElement!: HTMLElement;
     private gesto!: Gesto;
     private pos: number = 0;
-    private min: number = 0;
-    private max: number = 0;
     private size: number = 0;
+    private scrollSize: number = 0;
     private isHorizontal = false;
-    private viewportSize = 0;
     constructor(
         private type: "horizontal" | "vertical",
         barElement?: HTMLElement,
@@ -57,8 +55,8 @@ export default class ScrollBar extends Component {
                             return;
                         }
                         const size = this.size;
-                        const totalSize = this.getTotalsize();
-                        const delta = size * size / totalSize;
+                        const delta = size * size / this.scrollSize;
+
                         this.scrollBy(pos1 < clientPos ? delta : -delta);
                     });
                 }, 100);
@@ -73,38 +71,43 @@ export default class ScrollBar extends Component {
             }
             this.scrollBy(this.isHorizontal ? e.deltaX : e.deltaY);
         });
+        addEvent(this.barElement, "wheel", this.onWheel, {
+            passive: false,
+        });
     }
     public scrollBy(delta: number) {
-        const totalSize = (this.min + this.max + this.size);
         const ratio = delta / this.size;
 
         this.trigger("scroll", {
-            delta: totalSize * ratio,
+            delta: this.scrollSize * ratio,
         });
     }
-    public getBar() {
-        return this.barElement!;
-    }
-    public getTotalsize() {
-        return this.min + this.max + this.size;
-    }
-    public render(isDisplay: boolean, pos: number, min: number, max: number, size: number) {
+    public render(isDisplay: boolean, pos: number, size: number, scrollSize: number) {
         this.pos = pos;
-        this.min = min;
-        this.max = max;
         this.size = size;
+        this.scrollSize = scrollSize;
 
-        const totalSize = this.getTotalsize();
-        const translate = (min + pos) / totalSize * size;
-        const display = isDisplay && (min + max) ? "block" : "none";
+        const display = isDisplay && (scrollSize > size) ? "block" : "none";
         const [dirName1, sizeName] = this.isHorizontal ? ["X", "width"] : ["Y", "height"];
+
         this.barElement.style.cssText = `display: ${display};`;
         this.thumbElement.style.cssText
-            += `${sizeName}: ${size * size / totalSize}px;`
-            + `transform: translate${dirName1}(${translate}px)`;
+            += `${sizeName}: ${size * size / scrollSize}px;`
+            + `transform: translate${dirName1}(${pos / scrollSize * size}px)`;
     }
     public unset() {
+        removeEvent(this.barElement, "wheel", this.onWheel);
         this.gesto.off();
         this.off();
+    }
+    private onWheel = (e: WheelEvent) => {
+        const delta = this.isHorizontal ? e.deltaX : e.deltaY;
+
+        if (delta) {
+            e.preventDefault();
+        }
+        this.trigger("scroll", {
+            delta,
+        });
     }
 }

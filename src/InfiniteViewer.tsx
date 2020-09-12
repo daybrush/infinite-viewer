@@ -5,7 +5,7 @@ import { Properties } from "framework-utils";
 import { camelize, IObject, addEvent, removeEvent, addClass } from "@daybrush/utils";
 import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents } from "./types";
 import { PROPERTIES, injector, CLASS_NAME, TINY_NUM, IS_SAFARI, DEFAULT_OPTIONS, PREFIX } from "./consts";
-import { measureSpeed, getDuration, getDestPos, minmax, abs } from "./utils";
+import { measureSpeed, getDuration, getDestPos, abs, getRange } from "./utils";
 import ScrollBar from "./ScrollBar";
 
 @Properties(PROPERTIES as any, (prototype, property) => {
@@ -39,8 +39,6 @@ class InfiniteViewer extends Component {
     private horizontalScrollbar: ScrollBar;
     private verticalScrollbar: ScrollBar;
     private gesto!: Gesto;
-    private loopX = 0;
-    private loopY = 0;
     private offsetX = 0;
     private offsetY = 0;
     private containerWidth = 0;
@@ -113,30 +111,32 @@ class InfiniteViewer extends Component {
      * @param - Get absolute top position
      */
     public getScrollTop(isAbsolute?: boolean) {
-        return (this.scrollTop + this.loopY * this.margin - this.offsetY
-            + (isAbsolute ? abs(this.rangeY[0]) * this.margin : 0)) / this.zoom;
+        return this.scrollTop / this.zoom + this.offsetY
+            + (isAbsolute ? abs(this.getRangeY()[0]) : 0);
     }
     /**
      * Gets the number of pixels that an element's content is scrolled vertically.
      * @param - Get absolute left position
      */
     public getScrollLeft(isAbsolute?: boolean) {
-        return (this.scrollLeft + this.loopX * this.margin - this.offsetX
-            + (isAbsolute ? abs(this.rangeX[0]) * this.margin : 0)) / this.zoom;
+        return this.scrollLeft / this.zoom + this.offsetX
+            + (isAbsolute ? abs(this.getRangeX()[0]) : 0);
     }
     /**
      * Gets measurement of the width of an element's content with overflow
-     * scrollWidth = container width + margin * (abs(range[1]) + abs(range[0]))
      */
-    public getScrollWidth() {
-        return this.containerWidth + this.margin * (abs(this.rangeX[1]) + abs(this.rangeX[0]));
+    public getScrollWidth(isZoom?: boolean) {
+        const range = this.getRangeX(isZoom);
+
+        return this.containerWidth + abs(range[0]) + abs(range[1]);
     }
     /**
      * Gets measurement of the height of an element's content with overflow
-     * scrollHeight = container height + margin * (abs(range[1]) + abs(range[0]))
      */
-    public getScrollHeight() {
-        return this.containerHeight + this.margin * (abs(this.rangeY[1]) + abs(this.rangeY[0]));
+    public getScrollHeight(isZoom?: boolean) {
+        const range = this.getRangeY(isZoom);
+
+        return this.containerHeight + abs(range[0]) + abs(range[1]);
     }
 
     /**
@@ -174,59 +174,77 @@ class InfiniteViewer extends Component {
      * Scrolls the container by the given amount.
      */
     public scrollBy(deltaX: number, deltaY: number) {
-        const zoom = this.zoom;
-        return this.scrollTo(this.getScrollLeft() * zoom + deltaX, this.getScrollTop() * zoom + deltaY);
+        return this.scrollTo(this.getScrollLeft() + deltaX, this.getScrollTop() + deltaY);
     }
     /**
      * Scrolls the container to set of coordinates.
      * @param scrollLeft
      * @param scrollTop
      */
-    public scrollTo(scrollLeft: number, scrollTop: number) {
+    public scrollTo(x: number, y: number) {
         const {
-            rangeX = DEFAULT_OPTIONS.rangeX,
-            rangeY = DEFAULT_OPTIONS.rangeY,
+            zoom = DEFAULT_OPTIONS.zoom,
             margin = DEFAULT_OPTIONS.margin,
+            threshold = DEFAULT_OPTIONS.threshold,
+            scrollLeft: prevScrollLeft,
+            scrollTop: prevScrollTop,
         } = this;
 
-        this.loopX = minmax(Math.floor((margin + scrollLeft) / margin), rangeX[0], rangeX[1]);
-        this.loopY = minmax(Math.floor((margin + scrollTop) / margin), rangeY[0], rangeY[1]);
-        this.offsetX = this.loopX * margin - scrollLeft + this.scrollLeft;
-        this.offsetY = this.loopY * margin - scrollTop + this.scrollTop;
+        const [minX, maxX] = this.getRangeX(true, true);
+        const [minY, maxY] = this.getRangeY(true, true);
 
-        const limitX1 = this.rangeX[0] * margin;
-        const limitX2 = this.rangeX[1] * margin;
-        const limitY1 = this.rangeY[0] * margin;
-        const limitY2 = this.rangeY[1] * margin;
-        let moveX = 0;
-        let moveY = 0;
+        let scrollLeft = prevScrollLeft;
+        let scrollTop = prevScrollTop;
 
-        if (this.offsetX > -limitX1) {
-            moveX = this.offsetX + limitX1;
-            this.offsetX = -limitX1;
-        } else if (this.offsetX < -limitX2) {
-            moveX = this.offsetX + limitX2;
-            this.offsetX = -limitX2;
+        const scrollAreaWidth = this.getScrollAreaWidth();
+        const scrollAreaHeight = this.getScrollAreaHeight();
+        const zoomX = x * zoom;
+        const zoomY = y * zoom;
+
+        if (zoomX - threshold <= minX) {
+            const minThreshold = Math.max(0, zoomX - minX);
+
+            scrollLeft = minThreshold;
+            x = (minX + minThreshold) / zoom;
+        } else if (zoomX + threshold >= maxX) {
+            const maxThreshold = Math.max(0, maxX - zoomX);
+
+            scrollLeft = scrollAreaWidth - maxThreshold;
+            x = (maxX - maxThreshold) / zoom;
+        } else if (scrollLeft < threshold) {
+            scrollLeft += margin;
+        } else if (scrollLeft > scrollAreaWidth - threshold) {
+            scrollLeft -= margin;
         }
-        if (this.offsetY > -limitY1) {
-            moveY = this.offsetY + limitY1;
-            this.offsetY = -limitY1;
-        } else if (this.offsetY < -limitY2) {
-            moveY = this.offsetY + limitY2;
-            this.offsetY = -limitY2;
-        }
 
-        const marginX = (rangeX[0] ? 1 : 0) + (rangeX[1] ? 1 : 0);
-        const marginY = (rangeY[0] ? 1 : 0) + (rangeY[1] ? 1 : 0);
+        if (zoomY - threshold <= minY) {
+            const minThreshold = Math.max(0, zoomY - minY);
 
-        moveX = minmax(this.scrollLeft - moveX, 0, marginX * margin);
-        moveY = minmax(this.scrollTop - moveY, 0, marginY * margin);
-        if (moveX !== this.scrollLeft || moveY !== this.scrollTop) {
-            this.move(moveX, moveY);
-            return;
-        } else {
-            this.render();
+            scrollTop = minThreshold;
+            y = (minY + minThreshold) / zoom;
+        } else if (zoomY + threshold >= maxY) {
+            const maxThreshold = Math.max(0, maxY - zoomY);
+
+            scrollTop = scrollAreaHeight - maxThreshold;
+            y = (maxY - maxThreshold) / zoom;
+        } else if (scrollTop < threshold) {
+            scrollTop += margin;
+        } else if (scrollTop > scrollAreaHeight - threshold) {
+            scrollTop -= margin;
         }
+        scrollLeft = Math.round(scrollLeft);
+        scrollTop = Math.round(scrollTop);
+
+        this.scrollLeft = scrollLeft;
+        this.scrollTop = scrollTop;
+
+        this.offsetX = x - scrollLeft / zoom;
+        this.offsetY = y - scrollTop / zoom;
+
+        this.render();
+        const nextX = this.getScrollLeft();
+        const nextY = this.getScrollTop();
+
         /**
          * The `scroll` event fires when the document view or an element has been scrolled.
          * @memberof InfiniteViewer
@@ -243,20 +261,88 @@ class InfiniteViewer extends Component {
          * });
          */
         this.trigger("scroll", {
-            scrollLeft: this.getScrollLeft(),
-            scrollTop: this.getScrollTop(),
+            scrollLeft: nextX,
+            scrollTop: nextY,
         });
-        return this;
+        if (prevScrollLeft !== Math.round(scrollLeft) || prevScrollTop !== scrollTop) {
+            this.move(scrollLeft, scrollTop);
+            return false;
+        }
+        return true;
     }
+    /**
+     * Set viewer zoom
+     */
     public setZoom(zoom: number) {
-        const offsetWidth = this.viewportWidth;
-        const offsetHeight = this.viewportHeight;
-        const offsetZoom = (zoom - this.zoom);
+        const {
+            containerWidth,
+            containerHeight,
+            zoom: prevZoom,
+        } = this;
+
+        const scrollLeft = this.getScrollLeft();
+        const scrollTop = this.getScrollTop();
 
         this.options.zoom = zoom;
 
-        this.scrollBy(offsetWidth * offsetZoom / 2, offsetHeight * offsetZoom / 2);
+        const nextScrollLeft = this.getScrollLeft();
+        const nextScrollTop = this.getScrollTop();
+
+        const centerX = scrollLeft + containerWidth / prevZoom / 2;
+        const centerY = scrollTop + containerHeight / prevZoom / 2;
+
+        const nextCenterX = nextScrollLeft + containerWidth / zoom / 2;
+        const nextCenterY = nextScrollTop + containerHeight / zoom / 2;
+
+        this.scrollBy(centerX - nextCenterX, centerY - nextCenterY);
         this.render();
+    }
+    public getRangeX(isZoom?: boolean, isReal?: boolean) {
+        const {
+            rangeX = DEFAULT_OPTIONS.rangeX,
+            margin = DEFAULT_OPTIONS.margin,
+            zoom = DEFAULT_OPTIONS.zoom,
+            threshold,
+        } = this;
+
+        const range = getRange(
+            this.getScrollLeft(),
+            margin,
+            rangeX,
+            threshold,
+            isReal,
+        );
+
+        if (!isZoom) {
+            return range;
+        }
+        return [
+            range[0] * zoom,
+            Math.max(this.viewportWidth * zoom - this.containerWidth, range[1] * zoom),
+        ];
+    }
+    public getRangeY(isZoom?: boolean, isReal?: boolean) {
+        const {
+            rangeY = DEFAULT_OPTIONS.rangeY,
+            margin = DEFAULT_OPTIONS.margin,
+            zoom = DEFAULT_OPTIONS.zoom,
+            threshold,
+        } = this;
+
+        const range = getRange(
+            this.getScrollTop(),
+            margin,
+            rangeY,
+            threshold,
+            isReal,
+        );
+        if (!isZoom) {
+            return range;
+        }
+        return [
+            range[0] * zoom,
+            Math.max(this.viewportHeight * zoom - this.containerHeight, range[1] * zoom),
+        ];
     }
     private init() {
         // infinite-viewer(container)
@@ -292,18 +378,18 @@ class InfiniteViewer extends Component {
         this.verticalScrollbar = new ScrollBar("vertical", this.options.verticalScrollElement);
 
         this.horizontalScrollbar.on("scroll", e => {
-            this.scrollBy(e.delta, 0);
+            this.scrollBy(e.delta / this.zoom, 0);
         });
 
         this.verticalScrollbar.on("scroll", e => {
-            this.scrollBy(0, e.delta);
+            this.scrollBy(0, e.delta / this.zoom);
         });
 
         if (this.horizontalScrollbar.isAppend) {
-            containerElement.insertBefore(this.horizontalScrollbar.getBar(), null);
+            containerElement.insertBefore(this.horizontalScrollbar.barElement, null);
         }
         if (this.verticalScrollbar.isAppend) {
-            containerElement.insertBefore(this.verticalScrollbar.getBar(), null);
+            containerElement.insertBefore(this.verticalScrollbar.barElement, null);
         }
         addClass(containerElement, CLASS_NAME);
         this.injectResult = injector.inject(containerElement, {
@@ -409,7 +495,8 @@ class InfiniteViewer extends Component {
                     inputEvent: e.inputEvent,
                 });
                 measureSpeed(e);
-                this.scrollBy(-e.deltaX, -e.deltaY);
+                const zoom = this.zoom;
+                this.scrollBy(-e.deltaX / zoom, -e.deltaY / zoom);
             } else if (!this.dragFlag && e.movement > options.pinchThreshold) {
                 this.dragFlag = true;
 
@@ -459,59 +546,41 @@ class InfiniteViewer extends Component {
     }
     private render() {
         const {
-            loopX,
-            loopY,
             offsetX,
             offsetY,
-            margin = DEFAULT_OPTIONS.margin,
-            rangeX = DEFAULT_OPTIONS.rangeX,
-            rangeY = DEFAULT_OPTIONS.rangeY,
             zoom = DEFAULT_OPTIONS.zoom,
         } = this;
-        const marginX = (rangeX[0] ? 1 : 0) + (rangeX[1] ? 1 : 0);
-        const marginY = (rangeY[0] ? 1 : 0) + (rangeY[1] ? 1 : 0);
-        const nextOffsetX = -loopX * margin + offsetX;
-        const nextOffsetY = -loopY * margin + offsetY;
+        const nextOffsetX = -offsetX * zoom;
+        const nextOffsetY = -offsetY * zoom;
 
         this.scrollAreaElement.style.cssText
-            = `width:calc(100% + ${margin * marginX}px);height:calc(100% + ${margin * marginY}px);`;
+            = `width:calc(100% + ${this.getScrollAreaWidth()}px);`
+            + `height:calc(100% + ${this.getScrollAreaHeight()}px);`;
         this.viewportElement.style.cssText += `transform-origin: 0 0;transform:translate(${nextOffsetX}px, ${nextOffsetY}px) scale(${zoom});`;
         this.renderScroll();
     }
     private renderScroll() {
         const {
-            margin = DEFAULT_OPTIONS.margin,
-            rangeX = DEFAULT_OPTIONS.rangeX,
-            rangeY = DEFAULT_OPTIONS.rangeY,
-            zoom = DEFAULT_OPTIONS.zoom,
-            loopX,
-            loopY,
             containerWidth,
             containerHeight,
+            zoom,
         } = this;
-
-        const minX = abs(isFinite(rangeX[0]) ? rangeX[0] : Math.min(loopX - 1, -1)) * margin;
-        const minY = abs(isFinite(rangeY[0]) ? rangeY[0] : Math.min(loopY - 1, -1)) * margin;
-        const maxX = Math.max(
-            abs(isFinite(rangeX[1]) ? rangeX[1] : Math.max(loopX + 1, 1)) * margin,
-            this.viewportWidth * zoom - containerWidth,
-        );
-        const maxY = Math.max(
-            abs(isFinite(rangeY[1]) ? rangeY[1] : Math.max(loopY + 1, 1)) * margin,
-            this.viewportHeight * zoom - containerHeight,
-        );
-        const scrollLeft = this.getScrollLeft();
-        const scrollTop = this.getScrollTop();
+        const scrollLeft = this.getScrollLeft(true) * zoom;
+        const scrollTop = this.getScrollTop(true) * zoom;
+        const scrollWidth = this.getScrollWidth(true);
+        const scrollHeight = this.getScrollHeight(true);
 
         this.horizontalScrollbar.render(
             this.displayHorizontalScroll,
-            scrollLeft * this.zoom, minX, maxX,
+            scrollLeft,
             containerWidth,
+            scrollWidth,
         );
         this.verticalScrollbar.render(
             this.displayVerticalScroll,
-            scrollTop * this.zoom, minY, maxY,
+            scrollTop,
             containerHeight,
+            scrollHeight,
         );
     }
     private move(scrollLeft: number, scrollTop: number) {
@@ -523,63 +592,19 @@ class InfiniteViewer extends Component {
     private onScroll = () => {
         const { scrollLeft, scrollTop } = this.wrapperElement;
         const {
-            margin = 0,
-            threshold = 0,
-            loopX,
-            loopY,
-            rangeX = [0, 0],
-            rangeY = [0, 0],
+            zoom = DEFAULT_OPTIONS.zoom,
         } = this;
-        const endThresholdX = ((rangeX[0] ? 1 : 0) + (rangeX[1] ? 1 : 0)) * margin - threshold;
-        const endThresholdY = ((rangeY[0] ? 1 : 0) + (rangeY[1] ? 1 : 0)) * margin - threshold;
-        let nextLoopX = loopX;
-        let nextLoopY = loopY;
+        const deltaX = scrollLeft - this.scrollLeft;
+        const deltaY = scrollTop - this.scrollTop;
+        const viewerScrollLeft = this.getScrollLeft();
+        const viewerScrollTop = this.getScrollTop();
 
-        let nextScrollLeft = scrollLeft;
-        let nextScrollTop = scrollTop;
-
-        if (scrollLeft < threshold && rangeX[0]) {
-            if (nextLoopX > rangeX[0] + 1) {
-                nextScrollLeft = scrollLeft + margin;
-                --nextLoopX;
-            }
-        } else if (scrollLeft > endThresholdX && rangeX[1]) {
-            if (nextLoopX < rangeX[1] - 1) {
-                nextScrollLeft = scrollLeft - margin;
-                ++nextLoopX;
-            }
-        }
-        if (scrollTop < threshold && rangeY[0]) {
-            if (nextLoopY > rangeY[0] + 1) {
-                nextScrollTop = scrollTop + margin;
-                --nextLoopY;
-            }
-        } else if (scrollTop > endThresholdY && rangeY[1]) {
-            if (nextLoopY < rangeY[1] - 1) {
-                nextScrollTop = scrollTop - margin;
-                ++nextLoopY;
-            }
-        }
-        const isChangeScroll = this.scrollLeft !== nextScrollLeft || this.scrollTop !== nextScrollTop;
-        const isChangeLoop = loopX !== nextLoopX || loopY !== nextLoopY;
-
-        this.scrollLeft = nextScrollLeft;
-        this.scrollTop = nextScrollTop;
-        this.loopX = nextLoopX;
-        this.loopY = nextLoopY;
-
-        this.render();
-
-        if (isChangeLoop || isChangeScroll) {
-            this.trigger("scroll", {
-                scrollLeft: this.getScrollLeft(),
-                scrollTop: this.getScrollTop(),
-            });
-        }
-
-        if (isChangeScroll) {
-            this.move(nextScrollLeft, nextScrollTop);
-        }
+        this.scrollLeft = scrollLeft;
+        this.scrollTop = scrollTop;
+        this.scrollTo(
+            viewerScrollLeft + deltaX / zoom,
+            viewerScrollTop + deltaY / zoom,
+        );
     }
     private onWheel = (e: WheelEvent) => {
         const ctrlKey = e.ctrlKey;
@@ -598,7 +623,8 @@ class InfiniteViewer extends Component {
         } else if (!IS_SAFARI) {
             return;
         } else {
-            this.scrollBy(e.deltaX, e.deltaY);
+            const zoom = this.zoom;
+            this.scrollBy(e.deltaX / zoom, e.deltaY / zoom);
         }
         e.preventDefault();
     }
@@ -659,6 +685,14 @@ class InfiniteViewer extends Component {
     }
     private pauseAnimation() {
         cancelAnimationFrame(this.timer);
+    }
+    private getScrollAreaWidth() {
+        const [min, max] = this.getRangeX(true);
+        return min || max ? this.margin * 2 : 0;
+    }
+    private getScrollAreaHeight() {
+        const [min, max] = this.getRangeY(true);
+        return min || max ? this.margin * 2 : 0;
     }
 }
 
