@@ -1,5 +1,8 @@
 import Gesto from "gesto";
-import { PREFIX } from "./consts";
+import {
+    SCROLL_BAR_CLASS_NAME, SCROLL_THUMB_CLASS_NAME,
+    HORIZONTAL_SCROLL_BAR_CLASS_NAME, VERTICAL_SCROLL_BAR_CLASS_NAME
+} from "./consts";
 import { addClass, removeEvent, addEvent } from "@daybrush/utils";
 import Component from "@egjs/component";
 
@@ -17,14 +20,20 @@ export default class ScrollBar extends Component {
         barElement?: HTMLElement,
     ) {
         super();
-        this.isHorizontal = type === "horizontal";
+        const isHorizontal = type === "horizontal";
+
+        this.isHorizontal = isHorizontal;
         if (!barElement) {
             barElement = document.createElement("div");
             const thumbElement = document.createElement("div");
 
-            addClass(barElement, `${PREFIX}${type}-scroll-bar`);
-            addClass(barElement, `${PREFIX}scroll-bar`);
-            addClass(thumbElement, `${PREFIX}scroll-thumb`);
+            addClass(
+                barElement,
+                isHorizontal ? HORIZONTAL_SCROLL_BAR_CLASS_NAME
+                    : VERTICAL_SCROLL_BAR_CLASS_NAME,
+            );
+            addClass(barElement, SCROLL_BAR_CLASS_NAME);
+            addClass(thumbElement, SCROLL_THUMB_CLASS_NAME);
 
             barElement.insertBefore(thumbElement, null);
 
@@ -32,14 +41,13 @@ export default class ScrollBar extends Component {
             this.thumbElement = thumbElement;
             this.isAppend = true;
         } else {
-            this.thumbElement = this.barElement.querySelector(`.${PREFIX}scroll-thumb`);
+            this.thumbElement = this.barElement.querySelector(SCROLL_THUMB_CLASS_NAME);
         }
         this.gesto = new Gesto(this.barElement, {
             container: window,
         }).on("dragStart", e => {
             const target = e.inputEvent.target;
             const datas = e.datas;
-            const isHorizontal = this.isHorizontal;
             const isThumb = this.thumbElement === target;
 
             if (!isThumb) {

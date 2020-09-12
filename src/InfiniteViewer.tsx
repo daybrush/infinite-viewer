@@ -4,7 +4,12 @@ import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { camelize, IObject, addEvent, removeEvent, addClass } from "@daybrush/utils";
 import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents } from "./types";
-import { PROPERTIES, injector, CLASS_NAME, TINY_NUM, IS_SAFARI, DEFAULT_OPTIONS, PREFIX } from "./consts";
+import {
+    PROPERTIES, injector, CLASS_NAME, TINY_NUM,
+    IS_SAFARI, DEFAULT_OPTIONS,
+    WRAPPER_CLASS_NAME, SCROLL_AREA_CLASS_NAME,
+    HORIZONTAL_SCROLL_BAR_CLASS_NAME, VERTICAL_SCROLL_BAR_CLASS_NAME
+} from "./consts";
 import { measureSpeed, getDuration, getDestPos, abs, getRange } from "./utils";
 import ScrollBar from "./ScrollBar";
 
@@ -63,8 +68,6 @@ class InfiniteViewer extends Component {
             ...DEFAULT_OPTIONS,
             ...options,
         };
-        this.wrapperElement = options.wrapperElement;
-        this.scrollAreaElement = options.scrollAreaElement;
         this.init();
     }
     /**
@@ -297,6 +300,9 @@ class InfiniteViewer extends Component {
         this.scrollBy(centerX - nextCenterX, centerY - nextCenterY);
         this.render();
     }
+    /**
+     * get x ranges
+     */
     public getRangeX(isZoom?: boolean, isReal?: boolean) {
         const {
             rangeX = DEFAULT_OPTIONS.rangeX,
@@ -321,6 +327,9 @@ class InfiniteViewer extends Component {
             Math.max(this.viewportWidth * zoom - this.containerWidth, range[1] * zoom),
         ];
     }
+    /**
+     * get y ranges
+     */
     public getRangeY(isZoom?: boolean, isReal?: boolean) {
         const {
             rangeY = DEFAULT_OPTIONS.rangeY,
@@ -349,33 +358,43 @@ class InfiniteViewer extends Component {
         // viewport
         // children
         const containerElement = this.containerElement;
-
+        const options = this.options;
         addClass(containerElement, CLASS_NAME);
 
         // vanilla
-        let wrapperElement = this.wrapperElement;
-        let scrollAreaElement = this.scrollAreaElement;
-        if (!wrapperElement) {
+        let wrapperElement = options.wrapperElement
+            || containerElement.querySelector(`.${WRAPPER_CLASS_NAME}`);
+        let scrollAreaElement = options.scrollAreaElement
+            || containerElement.querySelector(`.${SCROLL_AREA_CLASS_NAME}`);
+        const horizontalScrollElement = options.horizontalScrollElement
+            || containerElement.querySelector(`.${HORIZONTAL_SCROLL_BAR_CLASS_NAME}`);
+        const verticalScrollElement = options.verticalScrollElement
+            || containerElement.querySelector(`.${VERTICAL_SCROLL_BAR_CLASS_NAME}`);
+
+        if (wrapperElement) {
+            this.wrapperElement = wrapperElement;
+        } else {
             wrapperElement = document.createElement("div");
 
-            addClass(wrapperElement, `${PREFIX}wrapper`);
+            addClass(wrapperElement, WRAPPER_CLASS_NAME);
 
             wrapperElement.insertBefore(this.viewportElement, null);
             containerElement.insertBefore(wrapperElement, null);
 
             this.wrapperElement = wrapperElement;
         }
-        if (!scrollAreaElement) {
+        if (scrollAreaElement) {
+            this.scrollAreaElement = scrollAreaElement;
+        } else {
             scrollAreaElement = document.createElement("div");
 
-            addClass(scrollAreaElement, `${PREFIX}scroll-area`);
+            addClass(scrollAreaElement, SCROLL_AREA_CLASS_NAME);
             wrapperElement.insertBefore(scrollAreaElement, wrapperElement.firstChild);
 
             this.scrollAreaElement = scrollAreaElement;
-
         }
-        this.horizontalScrollbar = new ScrollBar("horizontal", this.options.horizontalScrollElement);
-        this.verticalScrollbar = new ScrollBar("vertical", this.options.verticalScrollElement);
+        this.horizontalScrollbar = new ScrollBar("horizontal", horizontalScrollElement);
+        this.verticalScrollbar = new ScrollBar("vertical", verticalScrollElement);
 
         this.horizontalScrollbar.on("scroll", e => {
             this.scrollBy(e.delta / this.zoom, 0);
@@ -489,8 +508,7 @@ class InfiniteViewer extends Component {
                 inputEvent,
             });
         }).on("drag", e => {
-            const options = this.options;
-            if (!options.usePinch || e.isPinch) {
+            if (!this.options.usePinch || e.isPinch) {
                 this.trigger("drag", {
                     inputEvent: e.inputEvent,
                 });
@@ -511,7 +529,7 @@ class InfiniteViewer extends Component {
                 inputEvent: e.inputEvent,
             });
             this.startAnimation(e.datas.speed);
-        }).on("ppinchStart", ({ inputEvent, datas }) => {
+        }).on("pinchStart", ({ inputEvent, datas }) => {
             inputEvent.preventDefault();
             this.pauseAnimation();
             datas.startZoom = this.zoom;

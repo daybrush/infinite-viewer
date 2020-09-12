@@ -5,7 +5,17 @@ import { prefixCSS } from "framework-utils";
 
 export const agent = getAgent();
 export const IS_SAFARI = agent.browser.name === "safari";
+
 export const PREFIX = "infinite-viewer-";
+
+export const WRAPPER_CLASS_NAME = `${PREFIX}wrapper`;
+export const SCROLL_AREA_CLASS_NAME = `${PREFIX}scroll-area`;
+
+export const SCROLL_BAR_CLASS_NAME = `${PREFIX}scroll-bar`;
+export const HORIZONTAL_SCROLL_BAR_CLASS_NAME = `${PREFIX}horizontal-scroll-bar`;
+export const VERTICAL_SCROLL_BAR_CLASS_NAME = `${PREFIX}vertical-scroll-bar`;
+export const SCROLL_THUMB_CLASS_NAME = `${PREFIX}scroll-thumb`;
+
 export const injector = styled(prefixCSS(PREFIX, `
 {
     position: relative;
