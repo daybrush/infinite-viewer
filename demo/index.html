@@ -176,45 +176,19 @@
             </div>
             <div class="component" data-moveable>
                 <p class="logo"><img src="https://daybrush.com/scenejs/images/clapperboard.png" alt="Logo" /></p>
-                <p><a href="https://github.com/daybrush/scenejs" target="_blank">Scene.js</a></p>
+                <p><a href="https://github.com/daybrush/scena" target="_blank">Scena</a></p>
             </div>
         </div>
     </div>
 </div>
 <script src="./release/latest/dist/infinite-viewer.js"></script>
-<script src="https://daybrush.com/keycon/release/latest/dist/keycon.pkgd.js"></script>
+<!-- <script src="https://daybrush.com/keycon/release/latest/dist/keycon.pkgd.js"></script> -->
 <script src="https://daybrush.com/selecto/release/latest/dist/selecto.js"></script>
 <script src="https://daybrush.com/guides/release/latest/dist/guides.js"></script>
-<script src="https://daybrush.com/moveable/release/latest/dist/moveable.js"></script>
-<script src="https://daybrush.com/moveable-helper/release/latest/dist/moveable-helper.js"></script>
+<!-- <script src="https://daybrush.com/moveable/release/latest/dist/moveable.js"></script> -->
+<!-- <script src="https://daybrush.com/moveable-helper/release/latest/dist/moveable-helper.js"></script> -->
 <script>
     let targets = [];
-    const moveable = new Moveable(document.querySelector(".viewport"), {
-        target: [],
-        draggable: true,
-        resizable: true,
-        rotatable: true,
-        snappable: true,
-        snapCenter: true,
-    });
-    const helper = MoveableHelper.create();
-    moveable
-        .on("dragStart", helper.onDragStart)
-        .on("drag", helper.onDrag)
-        .on("dragGroupStart", helper.onDragGroupStart)
-        .on("dragGroup", helper.onDragGroup)
-        .on("scaleStart", helper.onScaleStart)
-        .on("scale", helper.onScale)
-        .on("scaleGroupStart", helper.onScaleGroupStart)
-        .on("scaleGroup", helper.onScaleGroup)
-        .on("rotateStart", helper.onRotateStart)
-        .on("rotate", helper.onRotate)
-        .on("rotateGroupStart", helper.onRotateGroupStart)
-        .on("rotateGroup", helper.onRotateGroup)
-        .on("snap", e => {
-            // console.log(e);
-        });
-
 
     const horizontalGuides = new Guides(document.querySelector(".guides.horizontal"), {
         snapThreshold: 5,
@@ -238,25 +212,14 @@
         document.querySelector(".viewer"),
         document.querySelector(".viewport"),
         {
-            usePinch: true,
-            pinchThreshold: 50,
+            // usePinch: true,
+            // pinchThreshold: 50,
         }
     ).on("dragStart", e => {
         const target = e.inputEvent.target;
-        if (
-            target.nodeName === "A"
-            || moveable.isMoveableElement(target)
-            || targets.some(t => t === target || t.contains(target))
-        ) {
+        if (target.nodeName === "A") {
             e.stop();
         }
-    }).on("dragEnd", e => {
-        if (!e.isDrag) {
-            selecto.clickTarget(e.inputEvent);
-        }
-    }).on("abortPinch", e => {
-        // console.log("abort", e.inputEvent);
-        selecto.triggerDragStart(e.inputEvent);
     }).on("scroll", e => {
         // console.log(e.scrollLeft);
         horizontalGuides.scroll(e.scrollLeft);
@@ -265,56 +228,11 @@
         verticalGuides.scroll(e.scrollTop);
         verticalGuides.scrollGuides(e.scrollLeft);
     }).on("pinch", e => {
-        document.querySelector(".description").innerHTML = e.inputEvent.type;
         const zoom = Math.max(0.1, e.zoom);
 
         verticalGuides.zoom = zoom;
         horizontalGuides.zoom = zoom;
         viewer.zoom = zoom;
-    })
-
-    const selecto = new Selecto({
-        container: document.querySelector(".app"),
-        dragContainer: ".viewer",
-        hitRate: 0,
-        selectableTargets: ["[data-moveable]"],
-        toggleContinueSelect: ["shift"],
-        scrollOptions: {
-            container: viewer.getContainer(),
-            threshold: 30,
-            throttleTime: 30,
-            getScrollPosition: ({ direction }) => {
-                return [
-                    viewer.getScrollLeft(),
-                    viewer.getScrollTop(),
-                ];
-            }
-        }
-    }).on("dragStart", e => {
-        const inputEvent = e.inputEvent;
-        const target = inputEvent.target;
-        if (
-            target.nodeName === "A"
-            || (inputEvent.type === "touchstart" && e.isTrusted)
-            || moveable.isMoveableElement(target)
-            || targets.some(t => t === target || t.contains(target))
-        ) {
-            // console.log("?", inputEvent.type);
-            e.stop();
-        }
-    }).on("scroll", ({ direction }) => {
-        viewer.scrollBy(direction[0] * 10, direction[1] * 10);
-    }).on("selectEnd", e => {
-        targets = e.selected;
-        moveable.target = targets;
-
-        if (e.isDragStart) {
-            e.inputEvent.preventDefault();
-
-            setTimeout(() => {
-                moveable.dragStart(e.inputEvent);
-            });
-        }
     });
 
     requestAnimationFrame(() => {
