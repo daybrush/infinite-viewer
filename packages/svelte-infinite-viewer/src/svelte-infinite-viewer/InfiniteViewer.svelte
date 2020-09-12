@@ -17,8 +17,12 @@
 
   export let className = "";
   let infiniteViewer;
-  let container;
-  let scrollArea;
+
+  let wrapperElement;
+  let containerElement;
+  let scrollAreaElement;
+  let horizontalScrollElement;
+  let verticalScrollElement;
 
   export function getInstance() {
     return infiniteViewer;
@@ -45,11 +49,14 @@
     });
 
     infiniteViewer = new VanillaInfiniteViewer(
-      container,
-      scrollArea.nextElementSibling,
+      containerElement,
+      scrollAreaElement.nextElementSibling,
       {
         ...options,
-        scrollArea,
+        wrapperElement,
+        scrollAreaElement,
+        horizontalScrollElement,
+        verticalScrollElement,
       },
     );
 
@@ -67,8 +74,15 @@
     infiniteViewer.destroy();
   });
 </script>
-
-<div class={`${className || ''} ${CLASS_NAME}`} bind:this={container}>
-  <div bind:this={scrollArea} />
-  <slot />
+<div class={`${className || ''} ${CLASS_NAME}`} bind:this={containerElement}>
+    <div class="infinite-viewer-wrapper" bind:this={wrapperElement}>
+        <div class="infinite-viewer-scroll-area" bind:this={scrollAreaElement}></div>
+        <slot />
+    </div>
+    <div class="infinite-viewer-scroll-bar infinite-viewer-horizontal-scroll-bar" bind:this={horizontalScrollElement}>
+        <div class="infinite-viewer-scroll-thumb"></div>
+    </div>
+    <div class="infinite-viewer-scroll-bar infinite-viewer-vertical-scroll-bar" bind:this={verticalScrollElement}>
+        <div class="infinite-viewer-scroll-thumb"></div>
+    </div>
 </div>

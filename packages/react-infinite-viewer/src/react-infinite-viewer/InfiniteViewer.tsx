@@ -16,14 +16,25 @@ import { REACT_EVENTS } from "./consts";
 export default class InfiniteViewer extends React.PureComponent<Partial<InfiniteViewerProps>> {
     @withMethods(METHODS as any)
     private infiniteViewer!: VanillaInfiniteViewer;
-    private container!: HTMLElement;
-    private scrollArea!: HTMLElement;
+    private containerElement!: HTMLElement;
+    private wrapperElement!: HTMLElement;
+    private scrollAreaElement!: HTMLElement;
+    private horizontalScrollElement!: HTMLElement;
+    private verticalScrollElement!: HTMLElement;
     public render() {
         const className = this.props.className;
 
-        return <div className={`${className || ""} ${CLASS_NAME}`} ref={ref(this, "container")}>
-            <div ref={ref(this, "scrollArea")}></div>
-            {this.props.children}
+        return <div className={`${className || ""} ${CLASS_NAME}`} ref={ref(this, "containerElement")}>
+            <div className="infinite-viewer-wrapper" ref={ref(this, "wrapperElement")}>
+                <div className="infinite-viewer-scroll-area" ref={ref(this, "scrollAreaElement")}></div>
+                {this.props.children}
+            </div>
+            <div className="infinite-viewer-scroll-bar infinite-viewer-horizontal-scroll-bar" ref={ref(this, "horizontalScrollElement")}>
+                <div className="infinite-viewer-scroll-thumb"></div>
+            </div>
+            <div className="infinite-viewer-scroll-bar infinite-viewer-vertical-scroll-bar" ref={ref(this, "verticalScrollElement")}>
+                <div className="infinite-viewer-scroll-thumb"></div>
+            </div>
         </div>;
     }
     public componentDidMount() {
@@ -36,11 +47,14 @@ export default class InfiniteViewer extends React.PureComponent<Partial<Infinite
             }
         });
         this.infiniteViewer = new VanillaInfiniteViewer(
-            this.container,
-            this.scrollArea.nextElementSibling as HTMLElement,
+            this.containerElement,
+            this.scrollAreaElement.nextElementSibling as HTMLElement,
             {
                 ...options,
-                scrollArea: this.scrollArea,
+                wrapperElement: this.wrapperElement,
+                scrollAreaElement: this.scrollAreaElement,
+                horizontalScrollElement: this.horizontalScrollElement,
+                verticalScrollElement: this.verticalScrollElement,
             },
         );
 
@@ -69,7 +83,7 @@ export default class InfiniteViewer extends React.PureComponent<Partial<Infinite
         this.infiniteViewer.destroy();
     }
     public getElement() {
-        return this.container;
+        return this.containerElement;
     }
 }
 // tslint:disable-next-line: max-line-length

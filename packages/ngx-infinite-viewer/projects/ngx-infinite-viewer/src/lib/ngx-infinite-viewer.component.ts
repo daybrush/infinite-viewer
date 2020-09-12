@@ -12,15 +12,27 @@ import { NgxInfiniteViewerEvents } from './types';
 @Component({
   selector: 'ngx-infinite-viewer, [NgxInfiniteViewer]',
   template: `
-  <div #scrollArea></div>
-  <ng-content></ng-content>
+  <div class="infinite-viewer-wrapper" #wrapperElement>
+    <div class="infinite-viewer-scroll-area" #scrollAreaElement></div>
+    <ng-content></ng-content>
+  </div>
+  <div class="infinite-viewer-scroll-bar infinite-viewer-horizontal-scroll-bar" #horizontalScrollElement>
+    <div class="infinite-viewer-scroll-thumb"></div>
+  </div>
+  <div class="infinite-viewer-scroll-bar infinite-viewer-vertical-scroll-bar" #verticalScrollElement>
+    <div class="infinite-viewer-scroll-thumb"></div>
+  </div>
+
   `,
   styles: []
 })
 export class NgxInfiniteViewerComponent
   extends NgxInfiniteViewerInterface
   implements OnDestroy, AfterViewInit, OnChanges, InfiniteViewerProperties, NgxInfiniteViewerEvents {
-  @ViewChild('scrollArea', { static: false }) scrollAreaRef: ElementRef;
+  @ViewChild('scrollAreaElement', { static: false }) scrollAreaElementRef: ElementRef;
+  @ViewChild('wrapperElement', { static: false }) wrapperElementRef: ElementRef;
+  @ViewChild('horizontalScrollElement', { static: false }) horizontalScrollElementRef: ElementRef;
+  @ViewChild('verticalScrollElement', { static: false }) verticalScrollElementRef: ElementRef;
   @Input() margin: InfiniteViewerProperties['margin'];
   @Input() threshold: InfiniteViewerProperties['threshold'];
   @Input() zoom: InfiniteViewerProperties['zoom'];
@@ -30,6 +42,8 @@ export class NgxInfiniteViewerComponent
   @Input() usePinch: InfiniteViewerProperties['usePinch'];
   @Input() cspNonce: InfiniteViewerOptions['cspNonce'];
   @Input() wheelScale: InfiniteViewerOptions['wheelScale'];
+  @Input() displayVerticalScroll: InfiniteViewerOptions['displayVerticalScroll'];
+  @Input() displayHorizontalScroll: InfiniteViewerOptions['displayHorizontalScroll'];
   @Output() scroll: NgxInfiniteViewerEvents['scroll'];
   @Output() dragStart: NgxInfiniteViewerEvents['dragStart'];
   @Output() drag: NgxInfiniteViewerEvents['drag'];
@@ -37,7 +51,7 @@ export class NgxInfiniteViewerComponent
   @Output() pinch: NgxInfiniteViewerEvents['pinch'];
   @Output() abortPinch: NgxInfiniteViewerEvents['abortPinch'];
 
-  constructor(public containerRef: ElementRef) {
+  constructor(public containerElementRef: ElementRef) {
     super();
     EVENTS.forEach(name => {
       (this as any)[name] = new EventEmitter();
@@ -51,11 +65,14 @@ export class NgxInfiniteViewerComponent
       }
     });
     this.infiniteViewer = new VanillaInfiniteViewer(
-      this.containerRef.nativeElement,
-      this.scrollAreaRef.nativeElement.nextElementSibling as HTMLElement,
+      this.containerElementRef.nativeElement,
+      this.scrollAreaElementRef.nativeElement.nextElementSibling as HTMLElement,
       {
         ...options,
-        scrollArea: this.scrollAreaRef.nativeElement,
+        wrapperElement: this.wrapperElementRef.nativeElement,
+        scrollAreaElement: this.scrollAreaElementRef.nativeElement,
+        horizontalScrollElement: this.horizontalScrollElementRef.nativeElement,
+        verticalScrollElement: this.verticalScrollElementRef.nativeElement,
       },
     );
 

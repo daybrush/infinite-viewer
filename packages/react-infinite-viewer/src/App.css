@@ -1,8 +1,8 @@
+
 .viewer {
-    border: 1px solid black;
     position: relative;
-    width: 800px;
-    height: 800px;
+    width: 500px;
+    height: 500px;
 }
 .viewport {
     position: relative;

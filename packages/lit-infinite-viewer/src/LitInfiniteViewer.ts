@@ -26,15 +26,13 @@ export class LitInfiniteViewer extends LitElement {
             }
         });
         const viewport = this.children[0] as HTMLElement;
-        const scrollArea = this.shadowRoot.querySelector("div") as HTMLElement;
 
         this.infiniteViewer = new VanillaInfiniteViewer(
             this,
             viewport,
             {
                 ...options,
-                scrollArea,
-            }
+            },
         );
 
         const infiniteViewer = this.infiniteViewer;
@@ -52,7 +50,16 @@ export class LitInfiniteViewer extends LitElement {
         });
     }
     public render() {
-        return html`<div></div><slot></slot>`;
+        return html`<div class="infinite-viewer-wrapper">
+        <div class="infinite-viewer-scroll-area"></div>
+        <slot></slot>
+      </div>
+      <div class="infinite-viewer-scroll-bar infinite-viewer-horizontal-scroll-bar">
+        <div class="infinite-viewer-scroll-thumb"></div>
+      </div>
+      <div class="infinite-viewer-scroll-bar infinite-viewer-vertical-scroll-bar">
+        <div class="infinite-viewer-scroll-thumb"></div>
+      </div>`;
     }
     public updated(changedProperties) {
         const infiniteViewer = this.infiniteViewer;

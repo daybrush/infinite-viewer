@@ -19,10 +19,30 @@ export default class VueInfiniteViewer extends Vue {
 
         return h('div', {
             class: `${props.className || ''} ${CLASS_NAME}`,
-            ref: 'container',
+            ref: 'containerElement',
         }, [
-            h('div', { ref: 'scrollArea' }),
-            this.$slots.default,
+            h('div', {
+                class: `infinite-viewer-wrapper`,
+                ref: 'wrapperElement',
+            }, [
+                h('div', {
+                    class: `infinite-viewer-scroll-area`,
+                    ref: 'scrollAreaElement',
+                }),
+                this.$slots.default,
+            ]),
+            h('div', {
+                class: `infinite-viewer-scroll-bar infinite-viewer-horizontal-scroll-bar`,
+                ref: 'horizontalScrollElement',
+            }, [
+                h('div', { class: `infinite-viewer-scroll-thumb` }),
+            ]),
+            h('div', {
+                class: `infinite-viewer-scroll-bar infinite-viewer-vertical-scroll-bar`,
+                ref: 'verticalScrollElement',
+            }, [
+                h('div', { class: `infinite-viewer-scroll-thumb` }),
+            ]),
         ]);
     }
     public mounted() {
@@ -38,11 +58,14 @@ export default class VueInfiniteViewer extends Vue {
         const refs = this.$refs;
 
         this.infiniteViewer = new VanillaInfiniteViewer(
-            refs.container as HTMLElement,
-            (refs.scrollArea as HTMLElement).nextElementSibling as HTMLElement,
+            refs.containerElement as HTMLElement,
+            (refs.scrollAreaElement as HTMLElement).nextElementSibling as HTMLElement,
             {
                 ...options,
-                scrollArea: refs.scrollArea as HTMLElement,
+                wrapperElement: refs.wrapperElement as HTMLElement,
+                scrollAreaElement: refs.scrollAreaElement as HTMLElement,
+                horizontalScrollElement: refs.horizontalScrollElement as HTMLElement,
+                verticalScrollElement: refs.verticalScrollElement as HTMLElement,
             },
         );
 
