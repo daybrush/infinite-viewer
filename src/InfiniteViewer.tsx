@@ -659,10 +659,9 @@ class InfiniteViewer extends Component {
         );
     }
     private onWheel = (e: WheelEvent) => {
-        const ctrlKey = e.ctrlKey;
         const options = this.options;
 
-        if (ctrlKey) {
+        if (e.ctrlKey) {
             const distance = -e.deltaY;
             const scale = Math.max(1 + distance * (options.wheelScale || 0.01), TINY_NUM);
 
@@ -675,7 +674,15 @@ class InfiniteViewer extends Component {
             });
         } else if (IS_SAFARI || options.useForceWheel) {
             const zoom = this.zoom;
-            this.scrollBy(e.deltaX / zoom, e.deltaY / zoom);
+
+            let deltaX = e.deltaX;
+            let deltaY = e.deltaY;
+
+            if (e.shiftKey && !deltaX) {
+                deltaX = deltaY;
+                deltaY = 0;
+            }
+            this.scrollBy(deltaX / zoom, deltaY / zoom);
         } else {
             return;
         }
