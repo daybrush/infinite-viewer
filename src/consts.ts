@@ -19,6 +19,7 @@ export const SCROLL_THUMB_CLASS_NAME = `${PREFIX}scroll-thumb`;
 export const injector = styled(prefixCSS(PREFIX, `
 {
     position: relative;
+    overscroll-behavior: none;
 }
 .wrapper {
     position: absolute;
@@ -103,6 +104,7 @@ export const DEFAULT_OPTIONS = {
     wheelScale: 0.01,
     displayHorizontalScroll: true,
     displayVerticalScroll: true,
+    useForceWheel: false,
 };
 /**
  * @memberof InfiniteViewer
@@ -123,6 +125,7 @@ export const PROPERTIES = [
     "wheelScale",
     "displayVerticalScroll",
     "displayHorizontalScroll",
+    "useForceWheel",
 ] as const;
 
 /**
@@ -149,6 +152,7 @@ export const OPTION_TYPES: { [key in keyof InfiniteViewerOptions]: any } = {
     rangeY: Array,
     pinchThreshold: Number,
     usePinch: Boolean,
+    useForceWheel: Boolean,
     cspNonce: String,
     wheelScale: Number,
     displayHorizontalScroll: Boolean,

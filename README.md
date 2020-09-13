@@ -18,7 +18,7 @@
     alt="Lit"
     src="https://img.shields.io/static/v1.svg?label=&message=Lit&style=flat-square&color=4E8EE0"></a>
 </p>
-<p align="middle">Infinite Viewer is Document Viewer Component with infinite scrolling.
+<p align="middle">Infinite Viewer is Document Viewer Component with infinite scrolling up, down, left and right.
 </p>
 
 <p align="middle">
@@ -40,6 +40,8 @@ $ npm install infinite-viewer
 ```
 
 ## 🚀 How to use
+* In chrome, the scroll event is used instead of the wheel event due to the backward and forward swipe gesture. If you set `overscroll-behavior: none;` on the body, you can use `useForceWheel` option.
+
 ```html
 <div class="viewer">
     <div class="viewport">

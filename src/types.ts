@@ -17,6 +17,7 @@ export interface InfiniteViewerOptions {
     cspNonce: string;
     displayVerticalScroll: boolean;
     displayHorizontalScroll: boolean;
+    useForceWheel: boolean;
 
     wrapperElement: HTMLElement;
     scrollAreaElement: HTMLElement;

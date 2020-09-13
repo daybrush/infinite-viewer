@@ -55,6 +55,7 @@ class InfiniteViewer extends Component {
     private timer = 0;
     private dragFlag = false;
     private tempScale = 1;
+    private isLoop = false;
     /**
      * @sort 1
      */
@@ -151,8 +152,8 @@ class InfiniteViewer extends Component {
         this.resize();
 
         const zoom = this.zoom;
-        const left = -(this.containerWidth - this.viewportWidth * zoom) / 2;
-        const top = -(this.containerHeight - this.viewportHeight * zoom) / 2;
+        const left = -(this.containerWidth / zoom - this.viewportWidth) / 2;
+        const top = -(this.containerHeight / zoom - this.viewportHeight) / 2;
 
         return this.scrollTo(left, top);
     }
@@ -269,8 +270,27 @@ class InfiniteViewer extends Component {
             scrollLeft: nextX,
             scrollTop: nextY,
         });
-        if (prevScrollLeft !== Math.round(scrollLeft) || prevScrollTop !== scrollTop) {
+        if (prevScrollLeft !== scrollLeft || prevScrollTop !== scrollTop) {
+            this.isLoop = true;
             this.move(scrollLeft, scrollTop);
+            requestAnimationFrame(() => {
+                if (!this.isLoop) {
+                    return;
+                }
+                this.isLoop = false;
+                const {
+                    scrollLeft: requestScrollLeft,
+                    scrollTop: requestScrollTop,
+                } = this.wrapperElement;
+
+                this.scrollLeft = requestScrollLeft;
+                this.scrollTop = requestScrollTop;
+
+                if (scrollLeft !== requestScrollLeft || scrollTop !== requestScrollTop) {
+                    console.log("??");
+                    this.scrollTo(nextX, nextY);
+                }
+            });
             return false;
         }
         return true;
@@ -628,6 +648,9 @@ class InfiniteViewer extends Component {
         const viewerScrollLeft = this.getScrollLeft();
         const viewerScrollTop = this.getScrollTop();
 
+        if (this.isLoop) {
+            this.isLoop = false;
+        }
         this.scrollLeft = scrollLeft;
         this.scrollTop = scrollTop;
         this.scrollTo(
@@ -637,10 +660,11 @@ class InfiniteViewer extends Component {
     }
     private onWheel = (e: WheelEvent) => {
         const ctrlKey = e.ctrlKey;
+        const options = this.options;
 
         if (ctrlKey) {
             const distance = -e.deltaY;
-            const scale = Math.max(1 + distance * (this.options.wheelScale || 0.01), TINY_NUM);
+            const scale = Math.max(1 + distance * (options.wheelScale || 0.01), TINY_NUM);
 
             this.trigger("pinch", {
                 distance,
@@ -649,11 +673,11 @@ class InfiniteViewer extends Component {
                 zoom: this.zoom * scale,
                 inputEvent: e,
             });
-        } else if (!IS_SAFARI) {
-            return;
-        } else {
+        } else if (IS_SAFARI || options.useForceWheel) {
             const zoom = this.zoom;
             this.scrollBy(e.deltaX / zoom, e.deltaY / zoom);
+        } else {
+            return;
         }
         e.preventDefault();
     }
