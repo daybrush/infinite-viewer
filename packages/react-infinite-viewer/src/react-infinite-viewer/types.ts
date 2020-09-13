@@ -5,6 +5,7 @@ export interface InfiniteViewerEventNames {
     onDragStart: "dragStart";
     onDrag: "drag";
     onDragEnd: "dragEnd";
+    onPinchStart: "pinchStart";
     onPinch: "pinch";
     onAbortPinch: "abortPinch";
 }

@@ -67,6 +67,14 @@ export interface OnDragEnd {
  * @typedef
  * @memberof InfiniteViewer
  */
+export interface OnPinchStart {
+    inputEvent: any;
+    stop(): void;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
 export interface OnPinch {
     distance: number;
     scale: number;
@@ -79,6 +87,7 @@ export interface InfiniteViewerEvents {
     dragStart: OnDragStart;
     drag: OnDrag;
     dragEnd: OnDragEnd;
+    pinchStart: OnPinchStart;
     pinch: OnPinch;
 }
 export type InfiniteViewerProperties = { [P in typeof PROPERTIES[number]]: InfiniteViewerOptions[P] };

@@ -500,15 +500,18 @@ class InfiniteViewer extends Component {
         this.gesto = new Gesto(containerElement, {
             container: document.body,
             events: ["touch"],
-        }).on("dragStart", ({ inputEvent, datas }) => {
+        }).on("dragStart", ({ inputEvent, datas, stop }) => {
             inputEvent.preventDefault();
             this.pauseAnimation();
             this.dragFlag = false;
 
             datas.startEvent = inputEvent;
-            return this.trigger("dragStart", {
+            const result = this.trigger("dragStart", {
                 inputEvent,
             });
+            if (result === false) {
+                stop();
+            }
         }).on("drag", e => {
             if (!this.options.usePinch || e.isPinch) {
                 this.trigger("drag", {
@@ -531,10 +534,17 @@ class InfiniteViewer extends Component {
                 inputEvent: e.inputEvent,
             });
             this.startAnimation(e.datas.speed);
-        }).on("pinchStart", ({ inputEvent, datas }) => {
+        }).on("pinchStart", ({ inputEvent, datas, stop }) => {
             inputEvent.preventDefault();
             this.pauseAnimation();
             datas.startZoom = this.zoom;
+
+            const result = this.trigger("pinchstart", {
+                inputEvent,
+            });
+            if (result === false) {
+                stop();
+            }
         }).on("pinch", e => {
             // e.distance;
             // e.scale
@@ -546,7 +556,6 @@ class InfiniteViewer extends Component {
                 inputEvent: e.inputEvent,
             });
         });
-        const margin = this.margin;
 
         addEvent(wrapperElement, "scroll", this.onScroll);
         addEvent(window, "resize", this.resize);

@@ -163,6 +163,7 @@ export const EVENTS = [
     "abortPinch",
     "dragStart",
     "dragEnd",
+    "pinchStart",
     "pinch",
 ] as const;
 
@@ -179,6 +180,10 @@ export const METHODS = [
     "scrollCenter",
     "getContainer",
     "getViewport",
+    "getWrapper",
+    "setZoom",
+    "getRangeX",
+    "getRangeY",
 ] as const;
 
 export const TINY_NUM = 0.000001;

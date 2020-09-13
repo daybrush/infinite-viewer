@@ -48,6 +48,7 @@ export class NgxInfiniteViewerComponent
   @Output() dragStart: NgxInfiniteViewerEvents['dragStart'];
   @Output() drag: NgxInfiniteViewerEvents['drag'];
   @Output() dragEnd: NgxInfiniteViewerEvents['dragEnd'];
+  @Output() pinchStart: NgxInfiniteViewerEvents['pinchStart'];
   @Output() pinch: NgxInfiniteViewerEvents['pinch'];
   @Output() abortPinch: NgxInfiniteViewerEvents['abortPinch'];
 
