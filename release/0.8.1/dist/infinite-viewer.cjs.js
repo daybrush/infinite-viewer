@@ -520,8 +520,8 @@ function (_super) {
   __proto.scrollCenter = function () {
     this.resize();
     var zoom = this.zoom;
-    var left = -(this.containerWidth - this.viewportWidth * zoom) / 2;
-    var top = -(this.containerHeight - this.viewportHeight * zoom) / 2;
+    var left = -(this.containerWidth / zoom - this.viewportWidth) / 2;
+    var top = -(this.containerHeight / zoom - this.viewportHeight) / 2;
     return this.scrollTo(left, top);
   };
   /**
