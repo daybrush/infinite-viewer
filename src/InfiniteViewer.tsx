@@ -521,17 +521,19 @@ class InfiniteViewer extends Component {
             container: document.body,
             events: ["touch"],
         }).on("dragStart", ({ inputEvent, datas, stop }) => {
-            inputEvent.preventDefault();
             this.pauseAnimation();
             this.dragFlag = false;
-
-            datas.startEvent = inputEvent;
             const result = this.trigger("dragStart", {
                 inputEvent,
             });
             if (result === false) {
                 stop();
+                return;
             }
+
+            inputEvent.preventDefault();
+
+            datas.startEvent = inputEvent;
         }).on("drag", e => {
             if (!this.options.usePinch || e.isPinch) {
                 this.trigger("drag", {

@@ -69,11 +69,20 @@ infiniteViewer.on("scroll", () => {
 });
 ```
 ## Structure
+* Before
+```html
+<div class="viewer">
+    <div class="viewport">
+        AAAA
+    </div>
+</div>
+```
+* After
 ```html
 <div class="container">
     <div class="infinite-viewer-wrapper">
         <div class="infinite-viewer-scroll-area"></div>
-        <div class="viewport"></div>
+        <div class="viewport">AAA</div>
     </div>
     <div class="infinite-viewer-scroll-bar infinite-viewer-vertical-scroll-bar">
         <div class="infinite-viewer-scroll-thumb"></div>
@@ -82,6 +91,8 @@ infiniteViewer.on("scroll", () => {
         <div class="infinite-viewer-scroll-thumb"></div>
     </div>
 </div>
+```
+
 ## 📦 Packages
 |Package&nbsp;Name|&nbsp;Version&nbsp;|Description|
 |---|---|---|
