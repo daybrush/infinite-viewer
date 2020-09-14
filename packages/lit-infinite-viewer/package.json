@@ -1,6 +1,6 @@
 {
     "name": "lit-infinite-viewer",
-    "version": "0.8.1",
+    "version": "0.8.2",
     "types": "declaration/index.d.ts",
     "main": "dist/infinite-viewer.cjs.js",
     "module": "dist/infinite-viewer.esm.js",
@@ -35,6 +35,6 @@
         "typescript": "3.6.4"
     },
     "dependencies": {
-        "infinite-viewer": "^0.9.1"
+        "infinite-viewer": "^0.9.2"
     }
 }
