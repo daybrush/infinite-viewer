@@ -4,9 +4,9 @@ import {
     HORIZONTAL_SCROLL_BAR_CLASS_NAME, VERTICAL_SCROLL_BAR_CLASS_NAME
 } from "./consts";
 import { addClass, removeEvent, addEvent } from "@daybrush/utils";
-import Component from "@egjs/component";
+import EventEmitter from "@scena/event-emitter";
 
-export default class ScrollBar extends Component {
+export default class ScrollBar extends EventEmitter {
     public isAppend: boolean = false;
     public thumbElement!: HTMLElement;
     private gesto!: Gesto;

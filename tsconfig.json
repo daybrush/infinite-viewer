@@ -16,6 +16,6 @@
     "jsxFactory": "h"
   },
   "include": [
-    "./src/**/*.ts", "src/InfiniteViewer.tsx"
+    "./src/**/*.ts", "src/**/*.tsx"
   ]
 }

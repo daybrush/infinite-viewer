@@ -105,6 +105,8 @@ export const DEFAULT_OPTIONS = {
     displayHorizontalScroll: true,
     displayVerticalScroll: true,
     useForceWheel: false,
+    zoomOffsetX: "50%",
+    zoomOffsetY: "50%",
 };
 /**
  * @memberof InfiniteViewer
@@ -117,6 +119,8 @@ export const CLASS_NAME = injector.className;
 export const PROPERTIES = [
     "margin",
     "threshold",
+    "zoomOffsetX",
+    "zoomOffsetY",
     "zoom",
     "rangeX",
     "rangeY",
@@ -143,6 +147,8 @@ export const OPTIONS = [
 export const OPTION_TYPES: { [key in keyof InfiniteViewerOptions]: any } = {
     margin: Number,
     threshold: Number,
+    zoomOffsetX: String,
+    zoomOffsetY: String,
     zoom: Number,
     wrapperElement: Object,
     scrollAreaElement: Object,

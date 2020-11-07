@@ -1,16 +1,33 @@
-import { PROPERTIES, METHODS, OPTIONS } from "./consts";
+import { PROPERTIES, METHODS } from "./consts";
 import InfiniteViewer from "./InfiniteViewer";
 
 /**
  * @typedef
  * @memberof InfiniteViewer
+ * @property - viewer's zoom (default: 1)
+ * @property - Horizontal scroll range [Left, Right] (default: [-Infinity, Infinity])
+ * @property - Vertical scroll range [Top, Bottom] (default: [-Infinity, Infinity])
+ *
+ * @property - Offset left position for zoom operation (default: "50%")
+ * @property - Offset top position for zoom operation (default: "50%")
+ * @property - Whether to pinch the scroll motion when the touch event is activated (default: false)
+ * @property - Threshold at which pinch can be operated when the usePinch option is used (default: 50)
+ * @property - Wheel of the delta scale (default: 0.01)
+ * @property - add nonce property to style for CSP (default: "")
+ * @property - Whether to show vertical scroll bar (default: true)
+ * @property - Whether to show horizontal scroll bar (default: true)
+ * @property - Whether to force use of the wheel event (Only use in safari as default) (default: false)
+ *
+ * @property - Margin to determine the scroll area. (default: 500)
+ * @property - The size of the area to be infinite scrolled. (default: 100)
  */
 export interface InfiniteViewerOptions {
-    margin: number;
-    threshold: number;
     zoom: number;
     rangeX: number[];
     rangeY: number[];
+
+    zoomOffsetX: number | string;
+    zoomOffsetY: number | string;
     usePinch: boolean;
     pinchThreshold: number;
     wheelScale: number;
@@ -18,6 +35,9 @@ export interface InfiniteViewerOptions {
     displayVerticalScroll: boolean;
     displayHorizontalScroll: boolean;
     useForceWheel: boolean;
+
+    margin: number;
+    threshold: number;
 
     wrapperElement: HTMLElement;
     scrollAreaElement: HTMLElement;
@@ -77,6 +97,7 @@ export interface OnPinchStart {
  * @memberof InfiniteViewer
  */
 export interface OnPinch {
+    rotation: number;
     distance: number;
     scale: number;
     zoom: number;
