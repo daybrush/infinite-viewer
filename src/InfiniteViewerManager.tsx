@@ -287,7 +287,6 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 this.scrollTop = requestScrollTop;
 
                 if (scrollLeft !== requestScrollLeft || scrollTop !== requestScrollTop) {
-                    console.log("??");
                     this.scrollTo(nextX, nextY);
                 }
             });
@@ -572,7 +571,6 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 stop();
             }
         }).on("pinch", e => {
-            console.log(e);
             // e.distance;
             // e.scale
             this.trigger("pinch", {
@@ -666,7 +664,6 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         );
     }
     private onWheel = (e: WheelEvent) => {
-        console.log("wheel", e);
         const options = this.options;
 
         if (e.ctrlKey) {
@@ -701,7 +698,6 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         e.preventDefault();
     }
     private onGestureChange = (e: any) => {
-        console.log(e);
         e.preventDefault();
         if (this.gesto.isFlag() || !this.tempScale) {
             this.tempScale = 0;
