@@ -603,6 +603,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             offsetX,
             offsetY,
             zoom = DEFAULT_OPTIONS.zoom,
+            translateZ = 0,
         } = this;
         const nextOffsetX = -offsetX * zoom;
         const nextOffsetY = -offsetY * zoom;
@@ -610,7 +611,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         this.scrollAreaElement.style.cssText
             = `width:calc(100% + ${this.getScrollAreaWidth()}px);`
             + `height:calc(100% + ${this.getScrollAreaHeight()}px);`;
-        this.viewportElement.style.cssText += `transform-origin: 0 0;transform:translate(${nextOffsetX}px, ${nextOffsetY}px) scale(${zoom});`;
+        this.viewportElement.style.cssText += `transform-origin: 0 0;transform:translate3d(${nextOffsetX}px, ${nextOffsetY}px, ${translateZ}px) scale(${zoom});`;
         this.renderScroll();
     }
     private renderScroll() {

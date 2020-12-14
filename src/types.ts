@@ -20,6 +20,7 @@ import InfiniteViewer from "./InfiniteViewer";
  *
  * @property - Margin to determine the scroll area. (default: 500)
  * @property - The size of the area to be infinite scrolled. (default: 100)
+ * @property - Set translateZ transform. (default: 0)
  */
 export interface InfiniteViewerOptions {
     zoom: number;
@@ -38,6 +39,7 @@ export interface InfiniteViewerOptions {
 
     margin: number;
     threshold: number;
+    translateZ: number;
 
     wrapperElement: HTMLElement;
     scrollAreaElement: HTMLElement;

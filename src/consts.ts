@@ -107,6 +107,7 @@ export const DEFAULT_OPTIONS = {
     useForceWheel: false,
     zoomOffsetX: "50%",
     zoomOffsetY: "50%",
+    translateZ: 0,
 };
 /**
  * @memberof InfiniteViewer
@@ -130,6 +131,7 @@ export const PROPERTIES = [
     "displayVerticalScroll",
     "displayHorizontalScroll",
     "useForceWheel",
+    "translateZ",
 ] as const;
 
 /**
@@ -150,6 +152,7 @@ export const OPTION_TYPES: { [key in keyof InfiniteViewerOptions]: any } = {
     zoomOffsetX: String,
     zoomOffsetY: String,
     zoom: Number,
+    translateZ: Number,
     wrapperElement: Object,
     scrollAreaElement: Object,
     verticalScrollElement: Object,
