@@ -47,6 +47,7 @@ export class NgxInfiniteViewerComponent
   @Input() useForceWheel: InfiniteViewerOptions['useForceWheel'];
   @Input() zoomOffsetX: InfiniteViewerOptions['zoomOffsetX'];
   @Input() zoomOffsetY: InfiniteViewerOptions['zoomOffsetY'];
+  @Input() translateZ: InfiniteViewerOptions['translateZ'];
 
   @Output() scroll: NgxInfiniteViewerEvents['scroll'];
   @Output() dragStart: NgxInfiniteViewerEvents['dragStart'];
