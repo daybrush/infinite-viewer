@@ -1,3 +1,5 @@
-import VueInfiniteViewer from './VueInfiniteViewer';
+// import VueInfiniteViewer from './VueInfiniteViewer';
+import InfiniteViewer from './InfiniteViewer.vue';
 
-export { VueInfiniteViewer };
+export default InfiniteViewer;
+export { InfiniteViewer as VueInfiniteViewer };
