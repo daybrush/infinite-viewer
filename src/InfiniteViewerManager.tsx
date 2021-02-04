@@ -199,8 +199,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         const [minX, maxX] = this.getRangeX(true, true);
         const [minY, maxY] = this.getRangeY(true, true);
 
-        let scrollLeft = prevScrollLeft;
-        let scrollTop = prevScrollTop;
+        let scrollLeft = Math.round(prevScrollLeft);
+        let scrollTop = Math.round(prevScrollTop);
 
         const scrollAreaWidth = this.getScrollAreaWidth();
         const scrollAreaHeight = this.getScrollAreaHeight();
@@ -244,8 +244,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         this.scrollLeft = scrollLeft;
         this.scrollTop = scrollTop;
 
-        this.offsetX = x - scrollLeft / zoom;
-        this.offsetY = y - scrollTop / zoom;
+        this.offsetX = Math.round(x - scrollLeft / zoom);
+        this.offsetY = Math.round(y - scrollTop / zoom);
 
         this.render();
         const nextX = this.getScrollLeft();
@@ -270,7 +270,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             scrollLeft: nextX,
             scrollTop: nextY,
         });
-        if (prevScrollLeft !== scrollLeft || prevScrollTop !== scrollTop) {
+
+        if (Math.round(prevScrollLeft) !== scrollLeft || Math.round(prevScrollTop) !== scrollTop) {
             this.isLoop = true;
             this.move(scrollLeft, scrollTop);
             requestAnimationFrame(() => {
@@ -286,7 +287,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 this.scrollLeft = requestScrollLeft;
                 this.scrollTop = requestScrollTop;
 
-                if (scrollLeft !== requestScrollLeft || scrollTop !== requestScrollTop) {
+                if (scrollLeft !== Math.round(requestScrollLeft) || scrollTop !== Math.round(requestScrollTop)) {
                     this.scrollTo(nextX, nextY);
                 }
             });
@@ -384,7 +385,6 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         // children
         const containerElement = this.containerElement;
         const options = this.options;
-        addClass(containerElement, CLASS_NAME);
 
         // vanilla
         let wrapperElement = options.wrapperElement
@@ -400,24 +400,25 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             this.wrapperElement = wrapperElement;
         } else {
             wrapperElement = document.createElement("div");
-
-            addClass(wrapperElement, WRAPPER_CLASS_NAME);
-
             wrapperElement.insertBefore(this.viewportElement, null);
             containerElement.insertBefore(wrapperElement, null);
 
             this.wrapperElement = wrapperElement;
         }
+
         if (scrollAreaElement) {
             this.scrollAreaElement = scrollAreaElement;
         } else {
             scrollAreaElement = document.createElement("div");
 
-            addClass(scrollAreaElement, SCROLL_AREA_CLASS_NAME);
             wrapperElement.insertBefore(scrollAreaElement, wrapperElement.firstChild);
 
             this.scrollAreaElement = scrollAreaElement;
         }
+        addClass(containerElement, CLASS_NAME);
+        addClass(wrapperElement, WRAPPER_CLASS_NAME);
+        addClass(scrollAreaElement, SCROLL_AREA_CLASS_NAME);
+
         this.horizontalScrollbar = new ScrollBar("horizontal", horizontalScrollElement);
         this.verticalScrollbar = new ScrollBar("vertical", verticalScrollElement);
 
@@ -435,7 +436,6 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         if (this.verticalScrollbar.isAppend) {
             containerElement.insertBefore(this.verticalScrollbar.barElement, null);
         }
-        addClass(containerElement, CLASS_NAME);
         this.injectResult = injector.inject(containerElement, {
             nonce: this.options.cspNonce,
         });

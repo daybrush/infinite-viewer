@@ -9,40 +9,43 @@ import EventEmitter from "@scena/event-emitter";
 export default class ScrollBar extends EventEmitter {
     public isAppend: boolean = false;
     public thumbElement!: HTMLElement;
+    public barElement!: HTMLElement;
     private gesto!: Gesto;
     private pos: number = 0;
     private size: number = 0;
     private scrollSize: number = 0;
     private isHorizontal = false;
+
     constructor(
         private type: "horizontal" | "vertical",
-        public barElement?: HTMLElement,
+        container?: HTMLElement,
     ) {
         super();
         const isHorizontal = type === "horizontal";
+        let thumbElement: HTMLElement;
+        let barElement: HTMLElement = container;
 
-        this.isHorizontal = isHorizontal;
-        if (!barElement) {
+        if (!container) {
             barElement = document.createElement("div");
-            const thumbElement = document.createElement("div");
-
-            addClass(
-                barElement,
-                isHorizontal ? HORIZONTAL_SCROLL_BAR_CLASS_NAME
-                    : VERTICAL_SCROLL_BAR_CLASS_NAME,
-            );
-            addClass(barElement, SCROLL_BAR_CLASS_NAME);
-            addClass(thumbElement, SCROLL_THUMB_CLASS_NAME);
+            thumbElement = document.createElement("div");
 
             barElement.insertBefore(thumbElement, null);
-
-            this.barElement = barElement;
-            this.thumbElement = thumbElement;
             this.isAppend = true;
         } else {
-            this.thumbElement = barElement.querySelector(`.${SCROLL_THUMB_CLASS_NAME}`);
+            thumbElement = container.querySelector(`.${SCROLL_THUMB_CLASS_NAME}`);
         }
-        this.gesto = new Gesto(this.barElement, {
+        addClass(
+            barElement,
+            isHorizontal ? HORIZONTAL_SCROLL_BAR_CLASS_NAME
+                : VERTICAL_SCROLL_BAR_CLASS_NAME,
+        );
+        addClass(barElement, SCROLL_BAR_CLASS_NAME);
+        addClass(thumbElement, SCROLL_THUMB_CLASS_NAME);
+
+        this.thumbElement = thumbElement;
+        this.barElement = barElement;
+        this.isHorizontal = isHorizontal;
+        this.gesto = new Gesto(barElement, {
             container: window,
         }).on("dragStart", e => {
             const target = e.inputEvent.target;
