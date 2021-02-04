@@ -18,7 +18,7 @@ import VanillaInfiniteViewer, {
 } from 'infinite-viewer';
 import { isUndefined } from '@daybrush/utils';
 
-const methods = {};
+const methods: Record<string, any> = {};
 
 METHODS.forEach(name => {
     methods[name] = function (this: any, ...args: any[]) {
@@ -29,14 +29,15 @@ METHODS.forEach(name => {
 export default {
     methods,
     props: OPTIONS,
-    mounted() {
+    a: 1,
+    mounted(this: any) {
         const options: Partial<InfiniteViewerOptions> = {};
         const props = this.$props;
         OPTIONS.forEach((name) => {
             const value = props[name];
 
             if (!isUndefined(value)) {
-                options[name as any] = props[name];
+                options[name] = props[name];
             }
         });
         const refs = this.$refs;
@@ -56,12 +57,12 @@ export default {
         const infiniteViewer = this.infiniteViewer;
 
         EVENTS.forEach((name) => {
-            infiniteViewer.on(name, (e) => {
+            infiniteViewer.on(name, (e: any) => {
                 this.$emit(name, { ...e });
             });
         });
     },
-    updated() {
+    updated(this: any) {
         const props = this.$props;
         const infiniteViewer = this.infiniteViewer;
 
@@ -73,10 +74,10 @@ export default {
             }
         });
     },
-    beforeDestroy() {
+    beforeDestroy(this: any) {
         this.infiniteViewer.destroy();
     },
-    unmounted() {
+    unmounted(this: any) {
         this.infiniteViewer.destroy();
     },
 };
