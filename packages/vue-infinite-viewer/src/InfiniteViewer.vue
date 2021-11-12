@@ -29,7 +29,6 @@ METHODS.forEach(name => {
 export default {
     methods,
     props: OPTIONS,
-    a: 1,
     mounted(this: any) {
         const options: Partial<InfiniteViewerOptions> = {};
         const props = this.$props;
@@ -37,7 +36,7 @@ export default {
             const value = props[name];
 
             if (!isUndefined(value)) {
-                options[name] = props[name];
+                (options as any)[name] = props[name];
             }
         });
         const refs = this.$refs;
@@ -75,9 +74,6 @@ export default {
         });
     },
     beforeDestroy(this: any) {
-        this.infiniteViewer.destroy();
-    },
-    unmounted(this: any) {
         this.infiniteViewer.destroy();
     },
 };
