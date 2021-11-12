@@ -1,0 +1,46 @@
+{
+    "name": "vue3-infinite-viewer",
+    "version": "0.1.0",
+    "description": "Vue 3 Infinite Viewer is Document Viewer Component with infinite scrolling.",
+    "types": "declaration/index.d.ts",
+    "main": "dist/infinite-viewer.cjs.js",
+    "module": "dist/infinite-viewer.esm.js",
+    "sideEffects": false,
+    "scripts": {
+        "serve": "vue-cli-service serve demo",
+        "build": "rm -rf dist && rollup -c && npm run declaration",
+        "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json && cp ./src/InfiniteViewer.vue.d.ts ./declaration",
+        "lint": "vue-cli-service lint --no-fix"
+    },
+    "keywords": [
+        "scroll",
+        "scroller",
+        "viewer",
+        "infinite",
+        "moveable",
+        "vue"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/daybrush/infinite-viewer/blob/master/packages/vue-infinite-viewer"
+    },
+    "author": "Daybrush",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daybrush/infinite-viewer/issues"
+    },
+    "homepage": "https://daybrush.com/infinite-viewer",
+    "dependencies": {
+        "infinite-viewer": "^0.12.1"
+    },
+    "devDependencies": {
+        "@daybrush/builder": "^0.1.2",
+        "@vue/cli-plugin-typescript": "~4.5.0",
+        "@vue/cli-service": "~4.5.0",
+        "@vue/compiler-sfc": "^3.0.0",
+        "rollup-plugin-vue": "^6.0.0",
+        "tslib": "^2.3.1",
+        "typescript": "^4.3.5",
+        "vue": "^3.1.1"
+    }
+}
