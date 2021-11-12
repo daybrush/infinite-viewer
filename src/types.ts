@@ -20,6 +20,7 @@ import InfiniteViewer from "./InfiniteViewer";
  *
  * @property - Margin to determine the scroll area. (default: 500)
  * @property - The size of the area to be infinite scrolled. (default: 100)
+ * @property - Whether to use the transform property. If you don't use it, you can't use zoom. (default: true)
  * @property - Set translateZ transform. (default: 0)
  */
 export interface InfiniteViewerOptions {
@@ -39,6 +40,7 @@ export interface InfiniteViewerOptions {
 
     margin: number;
     threshold: number;
+    useTransform: boolean;
     translateZ: number;
 
     wrapperElement: HTMLElement;
@@ -103,6 +105,7 @@ export interface OnPinch {
     distance: number;
     scale: number;
     zoom: number;
+    isWheel: boolean;
     inputEvent: any;
 }
 export interface InfiniteViewerEvents {

@@ -237,8 +237,10 @@
         document.querySelector(".viewer"),
         document.querySelector(".viewport"),
         {
+            useTransform: false,
             usePinch: true,
             pinchThreshold: 50,
+            // rangeX: [0, 1000],
         }
     ).on("dragStart", e => {
         const target = e.inputEvent.target;

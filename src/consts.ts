@@ -104,6 +104,7 @@ export const DEFAULT_OPTIONS = {
     wheelScale: 0.01,
     displayHorizontalScroll: true,
     displayVerticalScroll: true,
+    useTransform: true,
     useForceWheel: false,
     zoomOffsetX: "50%",
     zoomOffsetY: "50%",
@@ -166,6 +167,7 @@ export const OPTION_TYPES: { [key in keyof InfiniteViewerOptions]: any } = {
     wheelScale: Number,
     displayHorizontalScroll: Boolean,
     displayVerticalScroll: Boolean,
+    useTransform: Boolean,
 };
 
 /**

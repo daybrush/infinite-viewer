@@ -504,6 +504,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
          */
         /**
          * the `pinch` event fires when two points pinch the viewer
+         * The pinchStart and abortPinch events do not occur when pinching through the wheel.
          * @memberof InfiniteViewer
          * @event pinch
          * @param {InfiniteViewer.OnPinch} - Parameters for the `pinch` event
@@ -579,6 +580,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 scale: e.scale,
                 zoom: e.datas.startZoom * e.scale,
                 inputEvent: e.inputEvent,
+                isWheel: false,
             });
         });
 
@@ -605,13 +607,23 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             zoom = DEFAULT_OPTIONS.zoom,
             translateZ = 0,
         } = this;
+        const {
+            useTransform = DEFAULT_OPTIONS.useTransform,
+        } = this.options;
         const nextOffsetX = -offsetX * zoom;
         const nextOffsetY = -offsetY * zoom;
 
         this.scrollAreaElement.style.cssText
             = `width:calc(100% + ${this.getScrollAreaWidth()}px);`
             + `height:calc(100% + ${this.getScrollAreaHeight()}px);`;
-        this.viewportElement.style.cssText += `transform-origin: 0 0;transform:translate3d(${nextOffsetX}px, ${nextOffsetY}px, ${translateZ}px) scale(${zoom});`;
+
+        const viewportStyle = this.viewportElement.style;
+
+        if (useTransform === false) {
+            viewportStyle.cssText += `position: relative; top: ${nextOffsetY}px; left: ${nextOffsetX}px;`;
+        } else {
+            viewportStyle.cssText += `transform-origin: 0 0;transform:translate3d(${nextOffsetX}px, ${nextOffsetY}px, ${translateZ}px) scale(${zoom});`;
+        }
         this.renderScroll();
     }
     private renderScroll() {
@@ -677,6 +689,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 rotation: 0,
                 zoom: this.zoom * scale,
                 inputEvent: e,
+                isWheel: true,
             });
         } else if (IS_SAFARI || options.useForceWheel) {
             const zoom = this.zoom;
@@ -712,6 +725,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             rotation: e.rotation,
             zoom: this.tempScale * scale,
             inputEvent: e,
+            isWheel: true,
         });
     }
     private startAnimation(speed: number[]) {
