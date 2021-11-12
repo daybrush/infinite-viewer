@@ -11,6 +11,9 @@
 <a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/vue-infinite-viewer" target="_blank"><img
     alt="Vue"
     src="https://img.shields.io/static/v1.svg?label=&message=Vue&style=flat-square&color=3fb984"></a>
+<a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/vue3-infinite-viewer" target="_blank"><img
+    alt="Vue 3"
+    src="https://img.shields.io/static/v1.svg?label=&message=Vue 3&style=flat-square&color=3fb984"></a>
 <a href="https://github.com/daybrush/infinite-viewer/tree/master/packages/svelte-infinite-viewer" target="_blank"><img
     alt="Svelte"
     src="https://img.shields.io/static/v1.svg?label=&message=Svelte&style=flat-square&color=C82B38"></a>
@@ -99,6 +102,7 @@ infiniteViewer.on("scroll", () => {
 |[**react-infinite-viewer**](https://github.com/daybrush/infinite-viewer/tree/master/packages/react-infinite-viewer)|[![](https://img.shields.io/npm/v/react-infinite-viewer.svg?style=flat-square)](https://npmjs.com/package/react-infinite-viewer)|A React Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.|
 |[**ngx-infinite-viewer**](https://github.com/daybrush/infinite-viewer/tree/master/packages/ngx-infinite-viewer)|[![](https://img.shields.io/npm/v/ngx-infinite-viewer.svg?style=flat-square)](https://npmjs.com/package/ngx-infinite-viewer)|An Angular Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.|
 |[**vue-infinite-viewer**](https://github.com/daybrush/infinite-viewer/tree/master/packages/vue-infinite-viewer)|[![](https://img.shields.io/npm/v/vue-infinite-viewer.svg?style=flat-square)](https://npmjs.com/package/vue-infinite-viewer)|A Vue Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.|
+|[**vue3-infinite-viewer**](https://github.com/daybrush/infinite-viewer/tree/master/packages/vue3-infinite-viewer)|[![](https://img.shields.io/npm/v/vue3-infinite-viewer.svg?style=flat-square)](https://npmjs.com/package/vue3-infinite-viewer)|A Vue 3 Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.|
 |[**preact-infinite-viewer**](https://github.com/daybrush/infinite-viewer/tree/master/packages/preact-infinite-viewer)|[![](https://img.shields.io/npm/v/preact-infinite-viewer.svg?style=flat-square)](https://npmjs.com/package/preact-infinite-viewer)|A Preact Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.|
 |[**svelte-infinite-viewer**](https://github.com/daybrush/infinite-viewer/tree/master/packages/svelte-infinite-viewer)|[![](https://img.shields.io/npm/v/svelte-infinite-viewer.svg?style=flat-square)](https://npmjs.com/package/svelte-infinite-viewer)|A Svelte Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.|
 |[**lit-infinite-viewer**](https://github.com/daybrush/infinite-viewer/tree/master/packages/lit-infinite-viewer)|[![](https://img.shields.io/npm/v/lit-infinite-viewer.svg?style=flat-square)](https://npmjs.com/package/lit-infinite-viewer)|A Lit Infinite Viewer Component that allows you to select elements in the drag area using the mouse or touch.|
