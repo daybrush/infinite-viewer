@@ -541,6 +541,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         }).on("drag", e => {
             if (!this.options.usePinch || e.isPinch) {
                 this.trigger("drag", {
+                    ...e,
                     inputEvent: e.inputEvent,
                 });
                 measureSpeed(e);

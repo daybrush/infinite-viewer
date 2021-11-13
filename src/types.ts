@@ -1,5 +1,8 @@
 import { PROPERTIES, METHODS } from "./consts";
 import InfiniteViewer from "./InfiniteViewer";
+import {
+    OnDrag as OnParentDrag
+} from "gesto";
 
 /**
  * @typedef
@@ -75,8 +78,9 @@ export interface OnDragStart {
 /**
  * @typedef
  * @memberof InfiniteViewer
+ * @extends Gesto.OnDrag
  */
-export interface OnDrag {
+export interface OnDrag extends OnParentDrag {
     inputEvent: any;
 }
 /**
