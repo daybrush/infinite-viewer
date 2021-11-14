@@ -90,6 +90,12 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         return this.wrapperElement;
     }
     /**
+     * Get Scroll Area Element
+     */
+     public geScrollArea(): HTMLElement {
+        return this.scrollAreaElement;
+    }
+    /**
      * Destroy elements, properties, and events.
      */
     public destroy(): void {
