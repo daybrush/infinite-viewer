@@ -240,7 +240,8 @@
             useTransform: false,
             usePinch: true,
             pinchThreshold: 50,
-            // rangeX: [0, 1000],
+            rangeX: [0, 0],
+            rangeOffsetX: [-1000, 1000],
         }
     ).on("dragStart", e => {
         const target = e.inputEvent.target;

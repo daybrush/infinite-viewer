@@ -332,6 +332,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     public getRangeX(isZoom?: boolean, isReal?: boolean) {
         const {
             rangeX = DEFAULT_OPTIONS.rangeX,
+            rangeOffsetX = DEFAULT_OPTIONS.rangeOffsetX,
             margin = DEFAULT_OPTIONS.margin,
             zoom = DEFAULT_OPTIONS.zoom,
             threshold,
@@ -346,11 +347,11 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         );
 
         if (!isZoom) {
-            return range;
+            return [range[0] + rangeOffsetX[0], range[1] + rangeOffsetX[1]];
         }
         return [
-            range[0] * zoom,
-            Math.max(this.viewportWidth * zoom - this.containerWidth, range[1] * zoom),
+            range[0] * zoom + rangeOffsetX[0],
+            Math.max(this.viewportWidth * zoom - this.containerWidth, range[1] * zoom + rangeOffsetX[1]),
         ];
     }
     /**

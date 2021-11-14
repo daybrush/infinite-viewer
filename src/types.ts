@@ -10,6 +10,8 @@ import {
  * @property - viewer's zoom (default: 1)
  * @property - Horizontal scroll range [Left, Right] (default: [-Infinity, Infinity])
  * @property - Vertical scroll range [Top, Bottom] (default: [-Infinity, Infinity])
+ * @property - Horizontal scroll range offset not affected by zoom [Left, Right] (default: [0, 0])
+ * @property - Vertical scroll range offset not affected by zoom [Top, Bottom] (default: [0, 0])
  *
  * @property - Offset left position for zoom operation (default: "50%")
  * @property - Offset top position for zoom operation (default: "50%")
@@ -30,6 +32,8 @@ export interface InfiniteViewerOptions {
     zoom: number;
     rangeX: number[];
     rangeY: number[];
+    rangeOffsetX: number[];
+    rangeOffsetY: number[];
 
     zoomOffsetX: number | string;
     zoomOffsetY: number | string;
