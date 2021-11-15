@@ -17,6 +17,7 @@ import {
  * @property - Offset top position for zoom operation (default: "50%")
  * @property - Whether to pinch the scroll motion when the touch event is activated (default: false)
  * @property - Threshold at which pinch can be operated when the usePinch option is used (default: 50)
+ * @property - The max value of the wheel. If the wheel weight is too large, it can be adjusted. (default: Infinity)
  * @property - Wheel of the delta scale (default: 0.01)
  * @property - add nonce property to style for CSP (default: "")
  * @property - Whether to show vertical scroll bar (default: true)
@@ -39,6 +40,7 @@ export interface InfiniteViewerOptions {
     zoomOffsetY: number | string;
     usePinch: boolean;
     pinchThreshold: number;
+    maxWheelDistance: number;
     wheelScale: number;
     cspNonce: string;
     displayVerticalScroll: boolean;

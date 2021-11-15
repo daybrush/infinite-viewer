@@ -686,10 +686,17 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     }
     private onWheel = (e: WheelEvent) => {
         const options = this.options;
+        const maxWheelDistance = options.maxWheelDistance || Infinity;
 
         if (e.ctrlKey) {
-            const distance = -e.deltaY;
-            const scale = Math.max(1 + distance * (options.wheelScale || 0.01), TINY_NUM);
+            let deltaY = e.deltaY;
+            const sign = deltaY >= 0 ? 1 : -1;
+            const distance = Math.min(maxWheelDistance, Math.abs(deltaY));
+
+
+            deltaY = sign * distance;
+            const delta = -deltaY;
+            const scale = Math.max(1 + delta * (options.wheelScale || 0.01), TINY_NUM);
 
             this.trigger("pinch", {
                 distance,
