@@ -1,11 +1,14 @@
 import { MethodInterface } from "framework-utils";
 import VanillaInfiniteViewer, { InfiniteViewerProperties, InfiniteViewerMethods } from "infinite-viewer";
 
-export default class InfiniteViewer {}
-export default interface InfiniteViewer
+interface InfiniteViewerInterface
     extends InfiniteViewerProperties,
-        MethodInterface<
-            InfiniteViewerMethods,
-            VanillaInfiniteViewer,
-            InfiniteViewer
-        > {}
+    MethodInterface<
+    InfiniteViewerMethods,
+    VanillaInfiniteViewer,
+    InfiniteViewerInterface
+    > { }
+declare const InfiniteViewer: InfiniteViewerInterface;
+type InfiniteViewer = InfiniteViewerInterface;
+
+export default InfiniteViewer;
