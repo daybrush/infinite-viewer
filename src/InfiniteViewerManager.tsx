@@ -686,12 +686,12 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     }
     private onWheel = (e: WheelEvent) => {
         const options = this.options;
-        const maxWheelDistance = options.maxWheelDistance || Infinity;
+        const maxPinchWheel = options.maxPinchWheel || Infinity;
 
         if (e.ctrlKey) {
             let deltaY = e.deltaY;
             const sign = deltaY >= 0 ? 1 : -1;
-            const distance = Math.min(maxWheelDistance, Math.abs(deltaY));
+            const distance = Math.min(maxPinchWheel, Math.abs(deltaY));
 
 
             deltaY = sign * distance;

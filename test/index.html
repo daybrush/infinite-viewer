@@ -242,6 +242,8 @@
             pinchThreshold: 50,
             rangeX: [0, 0],
             rangeOffsetX: [-1000, 1000],
+            useForceWheel: true,
+            maxPinchWheel: 1,
         }
     ).on("dragStart", e => {
         const target = e.inputEvent.target;
@@ -267,7 +269,7 @@
         verticalGuides.scroll(e.scrollTop);
         verticalGuides.scrollGuides(e.scrollLeft);
     }).on("pinch", e => {
-        console.log(e);
+        // console.log(e);
         document.querySelector(".description").innerHTML = e.inputEvent.type;
         const zoom = Math.max(0.1, e.zoom);
 
