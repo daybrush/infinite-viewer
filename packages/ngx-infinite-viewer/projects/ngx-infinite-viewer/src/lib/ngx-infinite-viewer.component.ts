@@ -48,6 +48,9 @@ export class NgxInfiniteViewerComponent
   @Input() zoomOffsetX: InfiniteViewerOptions['zoomOffsetX'];
   @Input() zoomOffsetY: InfiniteViewerOptions['zoomOffsetY'];
   @Input() translateZ: InfiniteViewerOptions['translateZ'];
+  @Input() rangeOffsetX: InfiniteViewerOptions['rangeOffsetX'];
+  @Input() rangeOffsetY: InfiniteViewerOptions['rangeOffsetY'];
+  @Input() maxPinchWheel: InfiniteViewerOptions['maxPinchWheel'];
 
   @Output() scroll: NgxInfiniteViewerEvents['scroll'];
   @Output() dragStart: NgxInfiniteViewerEvents['dragStart'];

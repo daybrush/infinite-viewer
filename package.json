@@ -1,6 +1,6 @@
 {
     "name": "infinite-viewer",
-    "version": "0.12.1",
+    "version": "0.13.0",
     "description": "Infinite Viewer is Document Viewer Component with infinite scrolling up, down, left and right.",
     "main": "./dist/infinite-viewer.cjs.js",
     "module": "./dist/infinite-viewer.esm.js",
@@ -54,7 +54,7 @@
         "@daybrush/release": "^0.2.4",
         "daybrush-jsdoc-template": "^1.6.0",
         "print-sizes": "^0.1.0",
-        "pvu": "^0.4.1",
+        "pvu": "^0.6.1",
         "tslint": "^5.20.1",
         "typescript": "^3.7.4"
     }
