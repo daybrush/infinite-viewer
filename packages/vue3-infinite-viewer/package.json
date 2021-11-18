@@ -1,6 +1,6 @@
 {
     "name": "vue3-infinite-viewer",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "Vue 3 Infinite Viewer is Document Viewer Component with infinite scrolling.",
     "types": "declaration/index.d.ts",
     "main": "dist/infinite-viewer.cjs.js",

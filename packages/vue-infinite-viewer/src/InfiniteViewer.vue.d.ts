@@ -7,7 +7,9 @@ interface InfiniteViewerInterface
     InfiniteViewerMethods,
     VanillaInfiniteViewer,
     InfiniteViewerInterface
-    > { }
+    > {
+        name: string;
+    }
 declare const InfiniteViewer: InfiniteViewerInterface;
 type InfiniteViewer = InfiniteViewerInterface;
 

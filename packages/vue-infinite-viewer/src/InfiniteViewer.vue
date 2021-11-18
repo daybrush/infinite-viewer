@@ -27,6 +27,7 @@ METHODS.forEach(name => {
 });
 
 export default {
+    name: "infinite-viewer",
     methods,
     props: OPTIONS,
     mounted(this: any) {
