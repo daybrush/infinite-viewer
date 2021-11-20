@@ -1,5 +1,5 @@
 <template>
-    <div v-bind:class="className || defaultClassName" ref="containerElement">
+    <div ref="containerElement">
         <div ref="wrapperElement">
             <div ref="scrollAreaElement"></div>
             <slot />
