@@ -17,12 +17,16 @@ import {
  * @property - Offset top position for zoom operation (default: "50%")
  * @property - Whether to pinch the scroll motion when the touch event is activated (default: false)
  * @property - Threshold at which pinch can be operated when the usePinch option is used (default: 50)
+ *
+ * @property - Whether to use wheel pinch. you can pinch using the ctrl key. (default: true)
+ * @property - Whether to use wheel scroll. You can scroll smoothly by using the wheel. (default: IS_SAFARI)
+ * @property - Whether to use gestures using trackpad or magic mouse. (default: true)
+ *
  * @property - The max value of the wheel for pinch. If the wheel weight is too large, it can be adjusted. (default: Infinity)
  * @property - Wheel of the delta scale (default: 0.01)
  * @property - add nonce property to style for CSP (default: "")
  * @property - Whether to show vertical scroll bar (default: true)
  * @property - Whether to show horizontal scroll bar (default: true)
- * @property - Whether to force use of the wheel event (Only use in safari as default) (default: false)
  *
  * @property - Margin to determine the scroll area. (default: 500)
  * @property - The size of the area to be infinite scrolled. (default: 100)
@@ -40,12 +44,16 @@ export interface InfiniteViewerOptions {
     zoomOffsetY: number | string;
     usePinch: boolean;
     pinchThreshold: number;
+
+    useWheelPinch: boolean;
+    useWheelScroll: boolean;
+    useGesture: boolean;
     maxPinchWheel: number;
     wheelScale: number;
     cspNonce: string;
+
     displayVerticalScroll: boolean;
     displayHorizontalScroll: boolean;
-    useForceWheel: boolean;
 
     margin: number;
     threshold: number;

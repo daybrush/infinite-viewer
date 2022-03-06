@@ -594,16 +594,20 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
 
         addEvent(wrapperElement, "scroll", this.onScroll);
         addEvent(window, "resize", this.resize);
-        addEvent(containerElement, "wheel", this.onWheel, {
-            passive: false,
-        });
 
-        addEvent(containerElement, "gesturestart", this.onGestureStart, {
-            passive: false,
-        });
-        addEvent(containerElement, "gesturechange", this.onGestureChange, {
-            passive: false,
-        });
+        if (options.useWheelPinch || options.useWheelScroll) {
+            addEvent(containerElement, "wheel", this.onWheel, {
+                passive: false,
+            });
+        }
+        if (options.useGesture) {
+            addEvent(containerElement, "gesturestart", this.onGestureStart, {
+                passive: false,
+            });
+            addEvent(containerElement, "gesturechange", this.onGestureChange, {
+                passive: false,
+            });
+        }
         this.resize();
         this.render();
         this.scrollTo(0, 0);
@@ -688,7 +692,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         const options = this.options;
         const maxPinchWheel = options.maxPinchWheel || Infinity;
 
-        if (e.ctrlKey) {
+        if (options.useWheelPinch && e.ctrlKey) {
             let deltaY = e.deltaY;
             const sign = deltaY >= 0 ? 1 : -1;
             const distance = Math.min(maxPinchWheel, Math.abs(deltaY));
@@ -706,7 +710,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 inputEvent: e,
                 isWheel: true,
             });
-        } else if (IS_SAFARI || options.useForceWheel) {
+        } else if (options.useWheelScroll) {
             const zoom = this.zoom;
 
             let deltaX = e.deltaX;

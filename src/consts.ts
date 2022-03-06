@@ -108,10 +108,12 @@ export const DEFAULT_OPTIONS = {
     displayHorizontalScroll: true,
     displayVerticalScroll: true,
     useTransform: true,
-    useForceWheel: false,
+    useWheelPinch: true,
+    useWheelScroll: IS_SAFARI,
     zoomOffsetX: "50%",
     zoomOffsetY: "50%",
     translateZ: 0,
+    useGesture: true,
 };
 /**
  * @memberof InfiniteViewer
@@ -137,7 +139,7 @@ export const PROPERTIES = [
     "wheelScale",
     "displayVerticalScroll",
     "displayHorizontalScroll",
-    "useForceWheel",
+    "useWheelScroll",
     "translateZ",
 ] as const;
 
@@ -147,6 +149,8 @@ export const PROPERTIES = [
 export const OPTIONS = [
     // ignore target, container,
     ...PROPERTIES,
+    "useWheel",
+    "useGesture",
     "cspNonce",
     "wrapperElement",
     "scrollAreaElement",
@@ -170,13 +174,15 @@ export const OPTION_TYPES: { [key in keyof InfiniteViewerOptions]: any } = {
     rangeOffsetY: Array,
     pinchThreshold: Number,
     usePinch: Boolean,
-    useForceWheel: Boolean,
+    useWheelScroll: Boolean,
     cspNonce: String,
     maxPinchWheel: Number,
     wheelScale: Number,
     displayHorizontalScroll: Boolean,
     displayVerticalScroll: Boolean,
     useTransform: Boolean,
+    useWheelPinch: Boolean,
+    useGesture: Boolean,
 };
 
 /**

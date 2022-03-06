@@ -30,6 +30,10 @@
     <a href="https://github.com/daybrush/scena" target="_blank"><strong>Main Project</strong></a>
 </p>
 
+
+## ❗Changed❗
+* Change name `useForceWheel` to `useWheelScroll` option
+
 ## ⚙️ Installation
 ### npm
 ```bash
@@ -43,7 +47,7 @@ $ npm install infinite-viewer
 ```
 
 ## 🚀 How to use
-* In chrome, the scroll event is used instead of the wheel event due to the backward and forward swipe gesture. If you set `overscroll-behavior: none;` on the body, you can use `useForceWheel` option.
+* In chrome, the scroll event is used instead of the wheel event due to the backward and forward swipe gesture. If you set `overscroll-behavior: none;` on the body, you can use `useWheelScroll` option.
 
 ```html
 <div class="viewer">

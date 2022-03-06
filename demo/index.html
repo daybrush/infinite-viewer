@@ -217,12 +217,11 @@
         {
             // usePinch: true,
             // pinchThreshold: 50,
-            useForceWheel: true,
+            useWheelScroll: true,
         }
     ).on("dragStart", e => {
         const target = e.inputEvent.target;
 
-        console.log(target.nodeName);
         if (target.nodeName === "A") {
             e.stop();
         }
