@@ -28,7 +28,7 @@ import { NgxInfiniteViewerEvents } from './types';
 })
 export class NgxInfiniteViewerComponent
   extends NgxInfiniteViewerInterface
-  implements OnDestroy, AfterViewInit, OnChanges, InfiniteViewerProperties, NgxInfiniteViewerEvents {
+  implements OnDestroy, AfterViewInit, OnChanges, InfiniteViewerOptions, NgxInfiniteViewerEvents {
   @ViewChild('scrollAreaElement', { static: false }) scrollAreaElementRef: ElementRef;
   @ViewChild('wrapperElement', { static: false }) wrapperElementRef: ElementRef;
   @ViewChild('horizontalScrollElement', { static: false }) horizontalScrollElementRef: ElementRef;
@@ -44,13 +44,22 @@ export class NgxInfiniteViewerComponent
   @Input() wheelScale: InfiniteViewerOptions['wheelScale'];
   @Input() displayVerticalScroll: InfiniteViewerOptions['displayVerticalScroll'];
   @Input() displayHorizontalScroll: InfiniteViewerOptions['displayHorizontalScroll'];
+
   @Input() useWheelScroll: InfiniteViewerOptions['useWheelScroll'];
+  @Input() useWheelPinch: InfiniteViewerOptions['useWheelPinch'];
+
   @Input() zoomOffsetX: InfiniteViewerOptions['zoomOffsetX'];
   @Input() zoomOffsetY: InfiniteViewerOptions['zoomOffsetY'];
   @Input() translateZ: InfiniteViewerOptions['translateZ'];
   @Input() rangeOffsetX: InfiniteViewerOptions['rangeOffsetX'];
   @Input() rangeOffsetY: InfiniteViewerOptions['rangeOffsetY'];
   @Input() maxPinchWheel: InfiniteViewerOptions['maxPinchWheel'];
+  @Input() useGesture: InfiniteViewerOptions['useGesture'];
+  @Input() useTransform: InfiniteViewerOptions['useTransform'];
+  @Input() wrapperElement: InfiniteViewerOptions['wrapperElement'];
+  @Input() scrollAreaElement: InfiniteViewerOptions['scrollAreaElement'];
+  @Input() verticalScrollElement: InfiniteViewerOptions['verticalScrollElement'];
+  @Input() horizontalScrollElement: InfiniteViewerOptions['horizontalScrollElement'];
 
   @Output() scroll: NgxInfiniteViewerEvents['scroll'];
   @Output() dragStart: NgxInfiniteViewerEvents['dragStart'];
@@ -66,6 +75,7 @@ export class NgxInfiniteViewerComponent
       (this as any)[name] = new EventEmitter();
     });
   }
+
   ngAfterViewInit(): void {
     const options: Partial<InfiniteViewerProperties> = {};
     PROPERTIES.forEach((name) => {

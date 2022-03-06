@@ -1,6 +1,6 @@
 {
     "name": "vue-infinite-viewer",
-    "version": "0.12.2",
+    "version": "0.13.0",
     "description": "Vue Infinite Viewer is Document Viewer Component with infinite scrolling.",
     "types": "declaration/index.d.ts",
     "main": "dist/infinite-viewer.cjs.js",
@@ -31,7 +31,7 @@
     },
     "homepage": "https://daybrush.com/infinite-viewer",
     "dependencies": {
-        "infinite-viewer": "~0.13.0"
+        "infinite-viewer": "~0.14.0"
     },
     "devDependencies": {
         "@daybrush/builder": "^0.1.2",
