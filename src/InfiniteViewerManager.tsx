@@ -109,7 +109,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         removeEvent(window, "resize", this.resize);
         removeEvent(this.wrapperElement, "scroll", this.onScroll);
         removeEvent(containerElement, "wheel", this.onWheel);
-        removeEvent(containerElement, "tgesturestart", this.onGestureStart);
+        removeEvent(containerElement, "gesturestart", this.onGestureStart);
         removeEvent(containerElement, "gesturechange", this.onGestureChange);
 
         this.gesto = null;
