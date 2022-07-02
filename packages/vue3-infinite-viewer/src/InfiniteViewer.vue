@@ -22,7 +22,7 @@ const methods: Record<string, any> = {};
 
 METHODS.forEach(name => {
     methods[name] = function (this: any, ...args: any[]) {
-        this.infiniteViewer[name](...args);
+        return this.infiniteViewer[name](...args);
     };
 });
 
