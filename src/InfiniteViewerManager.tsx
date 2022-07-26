@@ -608,6 +608,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 zoom: e.datas.startZoom * e.scale,
                 clientX: e.clientX,
                 clientY: e.clientY,
+                ratioX: 0,
+                ratioY: 0,
             });
         }).on("pinchEnd", () => {
             this._tempRect = null;
@@ -738,6 +740,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 isWheel: true,
                 clientX: e.clientX,
                 clientY: e.clientY,
+                ratioX: 0,
+                ratioY: 0,
             });
         } else if (options.useWheelScroll) {
             const zoom = this.zoom;
@@ -777,6 +781,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             zoom: this._tempScale * scale,
             clientX: e.clientX,
             clientY: e.clientY,
+            ratioX: 0,
+            ratioY: 0,
         });
     }
     private onGestureEnd = () => {
@@ -829,14 +835,32 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         return min || max ? this.margin * 2 : 0;
     }
     private _triggerPinch(event: OnPinch) {
+        const {
+            clientX,
+            clientY,
+            zoom,
+        } = event;
         if (this.useAutoZoom) {
-            this._zoomByClient(event.zoom, event.clientX, event.clientY);
+            this._zoomByClient(event.zoom, clientX, clientY);
+        }
+        if (!this._tempRect) {
+            this._setClientRect();
         }
         const zoomRange = this.zoomRange;
+        const {
+            left,
+            top,
+            width,
+            height,
+        } = this._tempRect;
+        const ratioX = (clientX - left) / width * 100;
+        const ratioY = (clientY - top) / height * 100;
 
         this.trigger("pinch", {
             ...event,
-            zoom: between(event.zoom, zoomRange[0], zoomRange[1]),
+            zoom: between(zoom, zoomRange[0], zoomRange[1]),
+            ratioX,
+            ratioY,
         });
     }
     private _setClientRect() {

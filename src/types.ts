@@ -202,6 +202,8 @@ export interface OnPinch {
     inputEvent: any;
     clientX: number;
     clientY: number;
+    ratioX: number;
+    ratioY: number;
 }
 export interface InfiniteViewerEvents {
     scroll: OnScroll;
