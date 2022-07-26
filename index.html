@@ -182,8 +182,8 @@
         </div>
     </div>
 </div>
-<!-- <script src="../dist/infinite-viewer.js"></script> -->
-<script src="./release/latest/dist/infinite-viewer.js"></script>
+<script src="../dist/infinite-viewer.js"></script>
+<!-- <script src="./release/latest/dist/infinite-viewer.js"></script> -->
 <!-- <script src="https://daybrush.com/keycon/release/latest/dist/keycon.pkgd.js"></script> -->
 <script src="https://daybrush.com/selecto/release/latest/dist/selecto.js"></script>
 <script src="https://daybrush.com/guides/release/latest/dist/guides.js"></script>
@@ -217,7 +217,10 @@
         {
             // usePinch: true,
             // pinchThreshold: 50,
+            useMouseDrag: true,
             useWheelScroll: true,
+            useAutoZoom: true,
+            zoomRange: [0.1, 10],
         }
     ).on("dragStart", e => {
         const target = e.inputEvent.target;
@@ -237,7 +240,8 @@
 
         verticalGuides.zoom = zoom;
         horizontalGuides.zoom = zoom;
-        viewer.zoom = zoom;
+
+        const rect = viewer.getContainer().getBoundingClientRect();
     });
 
     requestAnimationFrame(() => {
