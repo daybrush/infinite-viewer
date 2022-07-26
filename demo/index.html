@@ -219,6 +219,8 @@
             // pinchThreshold: 50,
             useMouseDrag: true,
             useWheelScroll: true,
+            useAutoZoom: true,
+            zoomRange: [0.1, 10],
         }
     ).on("dragStart", e => {
         const target = e.inputEvent.target;
@@ -238,7 +240,8 @@
 
         verticalGuides.zoom = zoom;
         horizontalGuides.zoom = zoom;
-        viewer.zoom = zoom;
+
+        const rect = viewer.getContainer().getBoundingClientRect();
     });
 
     requestAnimationFrame(() => {

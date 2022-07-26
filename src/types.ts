@@ -59,10 +59,25 @@ export interface InfiniteViewerOptions {
      */
     pinchThreshold: number;
     /**
+     * Whether zoom automatically updates when pinch occurs through wheel, gesture, or touch
+     * @default false
+     */
+    useAutoZoom: boolean;
+    /**
+     * Set the zoom range.
+     * @default [0.001, Infinity]
+     */
+    zoomRange: number[];
+    /**
      * Whether to use wheel pinch. you can pinch using the ctrl key.
      * @default true
      */
     useWheelPinch: boolean;
+    /**
+     * Key to use wheel pinch
+     * @default "ctrl"
+     */
+    wheelPinchKey: "ctrl" | "meta" | "alt" | "shift",
     /**
      * Whether to use wheel scroll. You can scroll smoothly by using the wheel.
      * @default IS_SAFARI
@@ -185,6 +200,8 @@ export interface OnPinch {
     zoom: number;
     isWheel: boolean;
     inputEvent: any;
+    clientX: number;
+    clientY: number;
 }
 export interface InfiniteViewerEvents {
     scroll: OnScroll;

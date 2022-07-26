@@ -101,6 +101,7 @@ export const DEFAULT_OPTIONS = {
     horizontalScrollElement: null,
     verticalScrollElement: null,
     usePinch: false,
+    useAutoZoom: false,
     useMouseDrag: false,
     pinchThreshold: 30,
     cspNonce: "",
@@ -110,6 +111,8 @@ export const DEFAULT_OPTIONS = {
     displayVerticalScroll: true,
     useTransform: true,
     useWheelPinch: true,
+    zoomRange: [0.001, Infinity],
+    wheelPinchKey: "ctrl" as const,
     useWheelScroll: IS_SAFARI,
     zoomOffsetX: "50%",
     zoomOffsetY: "50%",
@@ -143,6 +146,9 @@ export const PROPERTIES = [
     "displayHorizontalScroll",
     "useWheelScroll",
     "translateZ",
+    "useAutoZoom",
+    "wheelPinchKey",
+    "zoomRange",
 ] as const;
 
 /**
