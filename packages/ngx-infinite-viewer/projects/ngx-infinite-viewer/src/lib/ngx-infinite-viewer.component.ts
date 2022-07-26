@@ -61,6 +61,11 @@ export class NgxInfiniteViewerComponent
   @Input() verticalScrollElement: InfiniteViewerOptions['verticalScrollElement'];
   @Input() horizontalScrollElement: InfiniteViewerOptions['horizontalScrollElement'];
 
+  @Output() useMouseDrag: InfiniteViewerOptions['useMouseDrag'];
+  @Output() useAutoZoom: InfiniteViewerOptions['useAutoZoom'];
+  @Output() zoomRange: InfiniteViewerOptions['zoomRange'];
+  @Output() wheelPinchKey: InfiniteViewerOptions['wheelPinchKey'];
+
   @Output() scroll: NgxInfiniteViewerEvents['scroll'];
   @Output() dragStart: NgxInfiniteViewerEvents['dragStart'];
   @Output() drag: NgxInfiniteViewerEvents['drag'];
