@@ -1,6 +1,6 @@
 {
     "name": "preact-infinite-viewer",
-    "version": "0.12.0",
+    "version": "0.12.1",
     "description": "Preact Infinite Viewer is Document Viewer Component with infinite scrolling.",
     "main": "./dist/infinite-viewer.cjs.js",
     "module": "./dist/infinite-viewer.esm.js",
@@ -41,6 +41,6 @@
         "typescript": "^3.4.5"
     },
     "dependencies": {
-        "react-infinite-viewer": "~0.15.1"
+        "react-infinite-viewer": "~0.15.2"
     }
 }

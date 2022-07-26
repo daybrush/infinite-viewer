@@ -853,8 +853,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             width,
             height,
         } = this._tempRect;
-        const ratioX = (clientX - left) / width * 100;
-        const ratioY = (clientY - top) / height * 100;
+        const ratioX = (clientX - left) / width;
+        const ratioY = (clientY - top) / height;
 
         this.trigger("pinch", {
             ...event,
