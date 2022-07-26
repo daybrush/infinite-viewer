@@ -530,8 +530,12 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
          */
         this.gesto = new Gesto(containerElement, {
             container: document.body,
-            events: ["touch"],
-        }).on("dragStart", ({ inputEvent, datas, stop }) => {
+            events: ["touch", "mouse"],
+        }).on("dragStart", ({ inputEvent, datas, stop, isMouseEvent }) => {
+            if (!this.useMouseDrag && isMouseEvent) {
+                stop();
+                return;
+            }
             this.pauseAnimation();
             this.dragFlag = false;
             const result = this.trigger("dragStart", {

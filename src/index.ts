@@ -3,7 +3,6 @@ import InfiniteViewer from "./InfiniteViewer";
 export default InfiniteViewer;
 export {
     OPTIONS,
-    OPTION_TYPES,
     PROPERTIES,
     EVENTS,
     METHODS,

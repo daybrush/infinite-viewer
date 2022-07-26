@@ -1,13 +1,13 @@
 import { LitElement, html, customElement, property } from "lit-element";
 import VanillaInfiniteViewer, {
-    InfiniteViewerProperties, OPTION_TYPES,
+    InfiniteViewerProperties,
     EVENTS, PROPERTIES, InfiniteViewerMethods, METHODS
 } from "infinite-viewer";
 import { Properties, withMethods, MethodInterface } from "framework-utils";
 import { camelize } from "@daybrush/utils";
 
 @Properties(PROPERTIES as any, (prototype, name) => {
-    property({ type: OPTION_TYPES[name] })(prototype, name);
+    property({ type: Object })(prototype, name);
 })
 @customElement("lit-infinite-viewer")
 export class LitInfiniteViewer extends LitElement {
