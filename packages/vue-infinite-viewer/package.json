@@ -29,6 +29,10 @@
     "bugs": {
         "url": "https://github.com/daybrush/infinite-viewer/issues"
     },
+    "files": [
+        "./*",
+        "dist/*"
+    ],
     "homepage": "https://daybrush.com/infinite-viewer",
     "dependencies": {
         "infinite-viewer": "~0.15.1"

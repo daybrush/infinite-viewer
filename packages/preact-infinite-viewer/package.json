@@ -42,5 +42,9 @@
     },
     "dependencies": {
         "react-infinite-viewer": "~0.15.1"
-    }
+    },
+    "files": [
+        "./*",
+        "dist/*"
+    ]
 }
