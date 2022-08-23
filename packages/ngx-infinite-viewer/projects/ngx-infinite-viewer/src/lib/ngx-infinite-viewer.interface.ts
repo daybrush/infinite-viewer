@@ -6,4 +6,4 @@ export class NgxInfiniteViewerInterface {
   @withMethods(METHODS as any)
   protected infiniteViewer!: VanillaInfiniteViewer;
 }
-export default interface InfiniteViewer extends MethodInterface<InfiniteViewerMethods, VanillaInfiniteViewer, NgxInfiniteViewerComponent> {}
+export interface NgxInfiniteViewerInterface extends MethodInterface<InfiniteViewerMethods, VanillaInfiniteViewer, NgxInfiniteViewerComponent> {}
