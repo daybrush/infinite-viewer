@@ -138,7 +138,7 @@ export interface InfiniteViewerOptions {
      * Whether to use the resize observer
      * @default false
      */
-    useResizeObserver?: boolean;
+    useResizeObserver: boolean;
     wrapperElement: HTMLElement;
     scrollAreaElement: HTMLElement;
     verticalScrollElement: HTMLElement;

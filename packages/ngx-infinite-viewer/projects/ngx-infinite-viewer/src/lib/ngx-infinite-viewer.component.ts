@@ -59,6 +59,8 @@ export class NgxInfiniteViewerComponent
   @Input() wrapperElement: InfiniteViewerOptions['wrapperElement'];
   @Input() scrollAreaElement: InfiniteViewerOptions['scrollAreaElement'];
   @Input() verticalScrollElement: InfiniteViewerOptions['verticalScrollElement'];
+  @Input() useResizeObserver: InfiniteViewerOptions['useResizeObserver'];
+  
   @Input() horizontalScrollElement: InfiniteViewerOptions['horizontalScrollElement'];
 
   @Output() useMouseDrag: InfiniteViewerOptions['useMouseDrag'];
