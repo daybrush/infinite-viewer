@@ -153,6 +153,10 @@
             <p class="logo"><img src="https://daybrush.com/infinite-viewer/images/logo.png" data-moveable /></p>
             <h2 data-moveable>Infinite Viewer</h2>
             <p class="description" data-moveable>Infinite Viewer is Document Viewer Component with infinite scrolling.</p>
+            <select data-moveable>
+                <option>A</option>
+                <option>B</option>
+            </select>
             <div class="buttons">
                 <a href="https://github.com/daybrush/infinite-viewer" class="button">Download</a>
                 <a href="https://daybrush.com/infinite-viewer/release/latest/doc" class="button">API</a>
@@ -181,8 +185,8 @@
 </div>
 <script src="../dist/infinite-viewer.js"></script>
 <script src="https://daybrush.com/keycon/release/latest/dist/keycon.pkgd.js"></script>
-<script src="../../selecto/dist/selecto.js"></script>
-<!-- <script src="https://daybrush.com/selecto/release/latest/dist/selecto.js"></script> -->
+<!-- <script src="../../selecto/dist/selecto.js"></script> -->
+<script src="https://daybrush.com/selecto/release/latest/dist/selecto.js"></script>
 <script src="https://daybrush.com/guides/release/latest/dist/guides.js"></script>
 <script src="https://daybrush.com/moveable/release/latest/dist/moveable.js"></script>
 <script src="https://daybrush.com/moveable-helper/release/latest/dist/moveable-helper.js"></script>
@@ -239,6 +243,7 @@
         {
             useTransform: false,
             usePinch: true,
+            useResizeObserver: true,
             pinchThreshold: 50,
             rangeX: [0, 0],
             rangeOffsetX: [-1000, 1000],
@@ -282,6 +287,10 @@
         container: document.querySelector(".app"),
         dragContainer: ".viewer",
         hitRate: 0,
+
+        selectByClick: true,
+        selectFromInside: false,
+
         selectableTargets: ["[data-moveable]"],
         toggleContinueSelect: ["shift"],
         scrollOptions: {
@@ -304,7 +313,7 @@
             || moveable.isMoveableElement(target)
             || targets.some(t => t === target || t.contains(target))
         ) {
-            // console.log("?", inputEvent.type);
+            console.log("?", inputEvent.type);
             e.stop();
         }
     }).on("scroll", ({ direction }) => {

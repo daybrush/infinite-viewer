@@ -118,6 +118,7 @@ export const DEFAULT_OPTIONS = {
     zoomOffsetY: "50%",
     translateZ: 0,
     useGesture: true,
+    useResizeObserver: false,
 };
 /**
  * @memberof InfiniteViewer
@@ -164,6 +165,7 @@ export const OPTIONS = [
     "scrollAreaElement",
     "verticalScrollElement",
     "horizontalScrollElement",
+    "useResizeObserver",
 ] as const;
 
 /**
@@ -195,6 +197,7 @@ export const METHODS = [
     "setZoom",
     "getRangeX",
     "getRangeY",
+    "resize",
 ] as const;
 
 export const TINY_NUM = 0.000001;

@@ -134,7 +134,11 @@ export interface InfiniteViewerOptions {
      * @default 0
      */
     translateZ: number;
-
+    /**
+     * Whether to use the resize observer
+     * @default false
+     */
+    useResizeObserver?: boolean;
     wrapperElement: HTMLElement;
     scrollAreaElement: HTMLElement;
     verticalScrollElement: HTMLElement;

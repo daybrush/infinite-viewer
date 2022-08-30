@@ -58,6 +58,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     private _tempScale: number = 1;
     private _tempRect: { top: number, left: number, width: number, height: number } | null = null;
     private _tempRectTimer: number | null = null;
+    private _onDestroys: Array<() => void> = [];
     /**
      * @sort 1
      */
@@ -108,7 +109,9 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         this.injectResult.destroy();
         const containerElement = this.containerElement;
 
-        removeEvent(window, "resize", this.resize);
+        this._onDestroys.forEach(callback => {
+            callback();
+        });
         removeEvent(this.wrapperElement, "scroll", this.onScroll);
         removeEvent(containerElement, "wheel", this.onWheel);
         removeEvent(containerElement, "gesturestart", this.onGestureStart);
@@ -616,7 +619,26 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         });
 
         addEvent(wrapperElement, "scroll", this.onScroll);
-        addEvent(window, "resize", this.resize);
+
+        if (options.useResizeObserver) {
+            const observer = new ResizeObserver(() => {
+                this.resize();
+            });
+
+            observer.observe(this.viewportElement);
+            observer.observe(this.containerElement);
+
+
+            this._onDestroys.push(() => {
+                observer.disconnect();
+            });
+        } else {
+            addEvent(window, "resize", this.resize);
+            
+            this._onDestroys.push(() => {
+                removeEvent(window, "resize", this.resize);
+            })
+        }
 
         if (options.useWheelPinch || options.useWheelScroll) {
             addEvent(containerElement, "wheel", this.onWheel, {
