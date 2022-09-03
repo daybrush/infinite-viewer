@@ -23,9 +23,9 @@ export default builder([
         format: "es",
     },
     {
-        input: "src/index.umd.ts",
+        input: "src/index.cjs.ts",
         output: "./dist/infinite-viewer.cjs.js",
-        exports: "default",
+        exports: "named",
         format: "cjs",
     },
 ]);

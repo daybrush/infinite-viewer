@@ -20,10 +20,6 @@
     "url": "https://github.com/daybrush/infinite-viewer/issues"
   },
   "homepage": "https://github.com/daybrush/infinite-viewer#readme",
-  "peerDependencies": {
-    "@angular/common": "^8.2.14",
-    "@angular/core": "^8.2.14"
-  },
   "dependencies": {
     "infinite-viewer": "~0.16.0"
   }

@@ -187,6 +187,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         this.containerHeight = containerHeight;
         this.viewportWidth = viewportWidth;
         this.viewportHeight = viewportHeight;
+
+        this.render();
     }
     /**
      * Scrolls the container by the given amount.
@@ -634,7 +636,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             });
         } else {
             addEvent(window, "resize", this.resize);
-            
+
             this._onDestroys.push(() => {
                 removeEvent(window, "resize", this.resize);
             })
@@ -654,7 +656,6 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             });
         }
         this.resize();
-        this.render();
         this.scrollTo(0, 0);
     }
     private render() {
