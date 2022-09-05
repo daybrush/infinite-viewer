@@ -4,6 +4,9 @@ import { METHODS } from "infinite-viewer";
 export default /*#__PURE__*/ (() => {
     const prototype = InfiniteViewer.prototype;
 
+    if (!prototype) {
+        return InfiniteViewer;
+    }
     METHODS.forEach(name => {
         prototype[name] = function (...args) {
             const self = this.getInstance();
