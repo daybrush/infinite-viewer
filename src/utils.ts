@@ -56,3 +56,8 @@ export function getRange(
 export function throttle(value: number) {
     return Math.round(value / TINY_NUM) * TINY_NUM;
 }
+
+
+export function checkDefault<T>(value: T | undefined | null, defaultValue: T): T {
+    return value != null ? value : defaultValue;
+}

@@ -26,7 +26,8 @@
     }
 
     .viewport {
-        width: 400px;
+        width: 1920px;
+        height: 1080px;
         /* height: 600px; */
         border: 1px solid #eee;
         box-sizing: border-box;
@@ -246,7 +247,9 @@
             useResizeObserver: true,
             pinchThreshold: 50,
             rangeX: [0, 0],
-            rangeOffsetX: [-1000, 1000],
+            rangeY: [0, 0],
+            rangeOffsetX: [-200, 200],
+            rangeOffsetY: [-200, 200],
             useWheelScroll: true,
             maxPinchWheel: 1,
         }
@@ -267,7 +270,6 @@
         // console.log("abort", e.inputEvent);
         selecto.triggerDragStart(e.inputEvent);
     }).on("scroll", e => {
-        // console.log(e.scrollLeft);
         horizontalGuides.scroll(e.scrollLeft);
         horizontalGuides.scrollGuides(e.scrollTop);
 

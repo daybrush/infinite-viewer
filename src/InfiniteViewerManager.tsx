@@ -6,11 +6,11 @@ import { camelize, IObject, addEvent, removeEvent, addClass, convertUnitSize, be
 import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents, OnPinch } from "./types";
 import {
     PROPERTIES, injector, CLASS_NAME, TINY_NUM,
-    IS_SAFARI, DEFAULT_OPTIONS,
+    DEFAULT_OPTIONS,
     WRAPPER_CLASS_NAME, SCROLL_AREA_CLASS_NAME,
-    HORIZONTAL_SCROLL_BAR_CLASS_NAME, VERTICAL_SCROLL_BAR_CLASS_NAME
+    HORIZONTAL_SCROLL_BAR_CLASS_NAME, VERTICAL_SCROLL_BAR_CLASS_NAME, NAMES
 } from "./consts";
-import { measureSpeed, getDuration, getDestPos, abs, getRange } from "./utils";
+import { measureSpeed, getDuration, getDestPos, abs, getRange, checkDefault } from "./utils";
 import ScrollBar from "./ScrollBar";
 
 @Properties(PROPERTIES as any, (prototype, property) => {
@@ -59,6 +59,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     private _tempRect: { top: number, left: number, width: number, height: number } | null = null;
     private _tempRectTimer: number | null = null;
     private _onDestroys: Array<() => void> = [];
+    private _asLeft = 0;
+    private _asTop = 0;
     /**
      * @sort 1
      */
@@ -204,87 +206,19 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
      */
     public scrollTo(x: number, y: number) {
         const {
-            zoom = DEFAULT_OPTIONS.zoom,
-            margin = DEFAULT_OPTIONS.margin,
-            threshold = DEFAULT_OPTIONS.threshold,
             scrollLeft: prevScrollLeft,
             scrollTop: prevScrollTop,
         } = this;
+        this._scrollTo("horizontal", x);
+        this._scrollTo("vertical", y);
 
-        const [minX, maxX] = this.getRangeX(true, true);
-        const [minY, maxY] = this.getRangeY(true, true);
-
-        let scrollLeft = Math.round(prevScrollLeft);
-        let scrollTop = Math.round(prevScrollTop);
-
-        const scrollAreaWidth = this.getScrollAreaWidth();
-        const scrollAreaHeight = this.getScrollAreaHeight();
-        const zoomX = x * zoom;
-        const zoomY = y * zoom;
-
-        if (zoomX - threshold <= minX) {
-            const minThreshold = Math.max(0, zoomX - minX);
-
-            scrollLeft = minThreshold;
-            x = (minX + minThreshold) / zoom;
-        } else if (zoomX + threshold >= maxX) {
-            const maxThreshold = Math.max(0, maxX - zoomX);
-
-            scrollLeft = scrollAreaWidth - maxThreshold;
-            x = (maxX - maxThreshold) / zoom;
-        } else if (scrollLeft < threshold) {
-            scrollLeft += margin;
-        } else if (scrollLeft > scrollAreaWidth - threshold) {
-            scrollLeft -= margin;
-        }
-
-        if (zoomY - threshold <= minY) {
-            const minThreshold = Math.max(0, zoomY - minY);
-
-            scrollTop = minThreshold;
-            y = (minY + minThreshold) / zoom;
-        } else if (zoomY + threshold >= maxY) {
-            const maxThreshold = Math.max(0, maxY - zoomY);
-
-            scrollTop = scrollAreaHeight - maxThreshold;
-            y = (maxY - maxThreshold) / zoom;
-        } else if (scrollTop < threshold) {
-            scrollTop += margin;
-        } else if (scrollTop > scrollAreaHeight - threshold) {
-            scrollTop -= margin;
-        }
-        scrollLeft = Math.round(scrollLeft);
-        scrollTop = Math.round(scrollTop);
-
-        this.scrollLeft = scrollLeft;
-        this.scrollTop = scrollTop;
-
-        this.offsetX = Math.round(x - scrollLeft / zoom);
-        this.offsetY = Math.round(y - scrollTop / zoom);
-
+        const scrollLeft = this.scrollLeft;
+        const scrollTop = this.scrollTop;
         this.render();
-        const nextX = this.getScrollLeft();
-        const nextY = this.getScrollTop();
+        const nextScrollAbsoluteLeft = this.getScrollLeft();
+        const nextScrollAbsoluteTop = this.getScrollTop();
 
-        /**
-         * The `scroll` event fires when the document view or an element has been scrolled.
-         * @memberof InfiniteViewer
-         * @event scroll
-         * @param {InfiniteViewer.OnScroll} - Parameters for the scroll event
-         * @example
-         * import InfiniteViewer from "infinite-viewer";
-         *
-         * const viewer = new InfiniteViewer(
-         *   document.querySelector(".container"),
-         *   document.querySelector(".viewport"),
-         * ).on("scroll", () => {
-         *   console.log(viewer.getScrollLeft(), viewer.getScrollTop());
-         * });
-         */
-        this.trigger("scroll", {
-            scrollLeft: nextX,
-            scrollTop: nextY,
-        });
+        this._emitScrollEvent(nextScrollAbsoluteLeft, nextScrollAbsoluteTop);
 
         if (Math.round(prevScrollLeft) !== scrollLeft || Math.round(prevScrollTop) !== scrollTop) {
             this.isLoop = true;
@@ -302,8 +236,11 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 this.scrollLeft = requestScrollLeft;
                 this.scrollTop = requestScrollTop;
 
-                if (scrollLeft !== Math.round(requestScrollLeft) || scrollTop !== Math.round(requestScrollTop)) {
-                    this.scrollTo(nextX, nextY);
+                if (
+                    scrollLeft !== Math.round(requestScrollLeft)
+                    || scrollTop !== Math.round(requestScrollTop)
+                ) {
+                    this.scrollTo(nextScrollAbsoluteLeft, nextScrollAbsoluteTop);
                 }
             });
             return false;
@@ -356,56 +293,15 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
      * get x ranges
      */
     public getRangeX(isZoom?: boolean, isReal?: boolean) {
-        const {
-            rangeX = DEFAULT_OPTIONS.rangeX,
-            rangeOffsetX = DEFAULT_OPTIONS.rangeOffsetX,
-            margin = DEFAULT_OPTIONS.margin,
-            zoom = DEFAULT_OPTIONS.zoom,
-            threshold,
-        } = this;
-
-        const range = getRange(
-            this.getScrollLeft(),
-            margin,
-            rangeX,
-            threshold,
-            isReal,
-        );
-
-        if (!isZoom) {
-            return [range[0] + rangeOffsetX[0], range[1] + rangeOffsetX[1]];
-        }
-        return [
-            range[0] * zoom + rangeOffsetX[0],
-            Math.max(this.viewportWidth * zoom - this.containerWidth, range[1] * zoom + rangeOffsetX[1]),
-        ];
+        return this._getRangeCoord("horizontal", isZoom, isReal);
     }
     /**
      * get y ranges
      */
     public getRangeY(isZoom?: boolean, isReal?: boolean) {
-        const {
-            rangeY = DEFAULT_OPTIONS.rangeY,
-            margin = DEFAULT_OPTIONS.margin,
-            zoom = DEFAULT_OPTIONS.zoom,
-            threshold,
-        } = this;
-
-        const range = getRange(
-            this.getScrollTop(),
-            margin,
-            rangeY,
-            threshold,
-            isReal,
-        );
-        if (!isZoom) {
-            return range;
-        }
-        return [
-            range[0] * zoom,
-            Math.max(this.viewportHeight * zoom - this.containerHeight, range[1] * zoom),
-        ];
+        return this._getRangeCoord("vertical", isZoom, isReal);
     }
+
     private init() {
         // infinite-viewer(container)
         // viewport
@@ -918,7 +814,100 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         options.zoomOffsetX = originalZoomOffsetX;
         options.zoomOffsetY = originalZoomOffsetY;
     }
+    private _scrollTo(type: "horizontal" | "vertical", coord: number) {
+        const names = NAMES[type];
+        const {
+            zoom = DEFAULT_OPTIONS.zoom,
+            margin = DEFAULT_OPTIONS.margin,
+            threshold = DEFAULT_OPTIONS.threshold,
+        } = this;
+        const prevScrollPos = this[`scroll${names.pos}`];
+        const [minCoord, maxCoord] = this[`getRange${names.coord}`](true, true);
 
+        let scrollPos = Math.round(prevScrollPos);
+
+        const scrollAreaSize = this[`getScrollArea${names.size}`]();
+        const zoomCoord = coord * zoom;
+
+        if (minCoord === maxCoord) {
+            scrollPos = minCoord;
+            coord = minCoord / zoom;
+        } else if (zoomCoord - threshold <= minCoord) {
+            const minThreshold = Math.max(0, zoomCoord - minCoord);
+
+            scrollPos = minThreshold;
+            coord = (minCoord + minThreshold) / zoom;
+        } else if (zoomCoord + threshold >= maxCoord) {
+            const maxThreshold = Math.max(0, maxCoord - zoomCoord);
+
+            scrollPos = scrollAreaSize - maxThreshold;
+            coord = (maxCoord - maxThreshold) / zoom;
+        } else if (scrollPos < threshold) {
+            scrollPos += margin;
+        } else if (scrollPos > scrollAreaSize - threshold) {
+            scrollPos -= margin;
+        }
+
+        scrollPos = Math.round(scrollPos);
+
+        this[`scroll${names.pos}`] = scrollPos;
+        this[`offset${names.coord}`] = Math.round(coord - scrollPos / zoom);
+    }
+    private _getRangeCoord(type: "vertical" | "horizontal", isZoom?: boolean, isReal?: boolean) {
+        const {
+            margin = DEFAULT_OPTIONS.margin,
+            zoom = DEFAULT_OPTIONS.zoom,
+            threshold,
+        } = this;
+        const names = NAMES[type];
+        const rangeCoord = checkDefault(this[`range${names.coord}`], DEFAULT_OPTIONS[`range${names.coord}`]);
+        const rangeOffsetCoord = checkDefault(this[`rangeOffset${names.coord}`], DEFAULT_OPTIONS[`rangeOffset${names.coord}`]);
+        const range = getRange(
+            this[`getScroll${names.pos}`](),
+            margin,
+            rangeCoord,
+            threshold,
+            isReal,
+        );
+
+        if (!isZoom) {
+            return [range[0] + rangeOffsetCoord[0], range[1] + rangeOffsetCoord[1]];
+        }
+        return [
+            range[0] * zoom + rangeOffsetCoord[0],
+            Math.max(this[`viewport${names.size}`] * zoom - this[`container${names.size}`], range[1] * zoom + rangeOffsetCoord[1]),
+        ];
+    }
+    private _emitScrollEvent(scrollLeft: number, scrollTop: number) {
+        const prevScrollLeft = this._asLeft;
+        const prevScrollTop = this._asTop;
+
+        if (prevScrollLeft === scrollLeft && prevScrollTop === scrollTop) {
+            return;
+        }
+        this._asLeft = scrollLeft;
+        this._asTop = scrollTop;
+
+        /**
+         * The `scroll` event fires when the document view or an element has been scrolled.
+         * @memberof InfiniteViewer
+         * @event scroll
+         * @param {InfiniteViewer.OnScroll} - Parameters for the scroll event
+         * @example
+         * import InfiniteViewer from "infinite-viewer";
+         *
+         * const viewer = new InfiniteViewer(
+         *   document.querySelector(".container"),
+         *   document.querySelector(".viewport"),
+         * ).on("scroll", () => {
+         *   console.log(viewer.getScrollLeft(), viewer.getScrollTop());
+         * });
+         */
+         this.trigger("scroll", {
+            scrollLeft,
+            scrollTop,
+        });
+    }
 }
 
 interface InfiniteViewer extends InfiniteViewerProperties { }

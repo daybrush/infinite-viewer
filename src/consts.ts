@@ -120,6 +120,18 @@ export const DEFAULT_OPTIONS = {
     useGesture: true,
     useResizeObserver: false,
 };
+export const NAMES = {
+    horizontal: {
+        pos: "Left",
+        coord: "X",
+        size: "Width",
+    },
+    vertical: {
+        pos: "Top",
+        coord: "Y",
+        size: "Height",
+    },
+} as const;
 /**
  * @memberof InfiniteViewer
  */
