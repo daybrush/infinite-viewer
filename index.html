@@ -196,7 +196,6 @@
         snapThreshold: 5,
         snaps: [0, 300, 600],
         displayDragPos: true,
-        maxPinchWheel: 10,
         dragPosFormat: v => `${v}px`,
     }).on("changeGuides", ({ guides }) => {
         moveable.horizontalGuidelines = guides;
@@ -221,6 +220,7 @@
             useWheelScroll: true,
             useAutoZoom: true,
             zoomRange: [0.1, 10],
+            maxPinchWheel: 10,
         }
     ).on("dragStart", e => {
         const target = e.inputEvent.target;
