@@ -1,6 +1,6 @@
 {
   "name": "svelte-infinite-viewer",
-  "version": "0.15.4",
+  "version": "0.15.5",
   "description": "Svelte Infinite Viewer is Document Viewer Component with infinite scrolling.",
   "main": "./dist/infinite-viewer.cjs.js",
   "module": "./dist/infinite-viewer.esm.js",
@@ -49,6 +49,6 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
-    "infinite-viewer": "~0.16.3"
+    "infinite-viewer": "~0.16.4"
   }
 }
