@@ -229,19 +229,17 @@
             e.stop();
         }
     }).on("scroll", e => {
-        // console.log(e.scrollLeft);
-        horizontalGuides.scroll(e.scrollLeft);
-        horizontalGuides.scrollGuides(e.scrollTop);
+        const zoom = viewer.zoom;
+        horizontalGuides.scroll(e.scrollLeft, zoom);
+        horizontalGuides.scrollGuides(e.scrollTop, zoom);
 
-        verticalGuides.scroll(e.scrollTop);
-        verticalGuides.scrollGuides(e.scrollLeft);
+        verticalGuides.scroll(e.scrollTop, zoom);
+        verticalGuides.scrollGuides(e.scrollLeft, zoom);
     }).on("pinch", e => {
         const zoom = Math.max(0.1, e.zoom);
 
         verticalGuides.zoom = zoom;
         horizontalGuides.zoom = zoom;
-
-        const rect = viewer.getContainer().getBoundingClientRect();
     });
 
     requestAnimationFrame(() => {

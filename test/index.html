@@ -242,16 +242,17 @@
         document.querySelector(".viewer"),
         document.querySelector(".viewport"),
         {
-            useTransform: false,
+            useTransform: true,
             usePinch: true,
             useResizeObserver: true,
             pinchThreshold: 50,
-            rangeX: [0, 0],
-            rangeY: [0, 0],
-            rangeOffsetX: [-200, 200],
-            rangeOffsetY: [-200, 200],
+            // rangeX: [0, 0],
+            // rangeY: [0, 0],
+            // rangeOffsetX: [-200, 200],
+            // rangeOffsetY: [-200, 200],
             useWheelScroll: true,
-            maxPinchWheel: 1,
+            maxPinchWheel: 2,
+            useAutoZoom: true,
         }
     ).on("dragStart", e => {
         const target = e.inputEvent.target;
@@ -270,11 +271,15 @@
         // console.log("abort", e.inputEvent);
         selecto.triggerDragStart(e.inputEvent);
     }).on("scroll", e => {
-        horizontalGuides.scroll(e.scrollLeft);
-        horizontalGuides.scrollGuides(e.scrollTop);
+        // console.log("Change SCROLL", e.scrollLeft);
+        const zoom = viewer.zoom;
+        horizontalGuides.scroll(e.scrollLeft, zoom);
+        horizontalGuides.scrollGuides(e.scrollTop, zoom);
+        horizontalGuides.innerGuides.forceUpdate();
 
-        verticalGuides.scroll(e.scrollTop);
-        verticalGuides.scrollGuides(e.scrollLeft);
+        verticalGuides.scroll(e.scrollTop, zoom);
+        verticalGuides.scrollGuides(e.scrollLeft, zoom);
+        verticalGuides.innerGuides.forceUpdate();
     }).on("pinch", e => {
         // console.log(e);
         document.querySelector(".description").innerHTML = e.inputEvent.type;

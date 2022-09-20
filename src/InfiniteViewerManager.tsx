@@ -851,7 +851,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         scrollPos = Math.round(scrollPos);
 
         this[`scroll${names.pos}`] = scrollPos;
-        this[`offset${names.coord}`] = Math.round(coord - scrollPos / zoom);
+        this[`offset${names.coord}`] = coord - scrollPos / zoom;
     }
     private _getRangeCoord(type: "vertical" | "horizontal", isZoom?: boolean, isReal?: boolean) {
         const {
