@@ -32,13 +32,12 @@
     },
     "homepage": "https://daybrush.com/infinite-viewer",
     "devDependencies": {
-        "@daybrush/builder": "^0.1.0",
+        "@daybrush/builder": "^0.1.2",
         "preact": "^10.1.1",
         "print-sizes": "^0.1.0",
         "rollup-plugin-css-bundle": "^1.0.4",
         "rollup-plugin-preact": "^0.5.2",
-        "tslint": "^5.16.0",
-        "typescript": "^3.4.5"
+        "typescript": "^4.5.0 <4.6.0"
     },
     "dependencies": {
         "react-infinite-viewer": "~0.16.5"

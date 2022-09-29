@@ -1,0 +1,59 @@
+{
+    "name": "infinite-viewer",
+    "version": "0.16.5",
+    "description": "Infinite Viewer is Document Viewer Component with infinite scrolling up, down, left and right.",
+    "main": "./dist/infinite-viewer.cjs.js",
+    "module": "./dist/infinite-viewer.esm.js",
+    "sideEffects": false,
+    "types": "declaration/index.d.ts",
+    "scripts": {
+        "start": "rollup -c -w",
+        "build": "rollup -c && npm run declaration && print-sizes ./dist",
+        "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
+        "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
+        "prerelease": "npm run build && npm run doc && prerelease --dirs=dist,doc",
+        "storybook": "cd storybook/ && npm run build && cd ../",
+        "release": "npm run build && npm run doc && release --dirs=dist,doc",
+        "release:init": "npm run build && npm run doc && npm run storybook && release -i --dirs=dist,doc",
+        "deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
+        "deploy:init": "gh-pages -d ./demo --dest=./ --remote origin"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/daybrush/infinite-viewer.git"
+    },
+    "keywords": [
+        "scroll",
+        "scroller",
+        "viewer",
+        "infinite",
+        "moveable"
+    ],
+    "author": "Daybrush",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/daybrush/infinite-viewer/issues"
+    },
+    "homepage": "https://github.com/daybrush/infinite-viewer#readme",
+    "files": [
+        "./*",
+        "dist/*"
+    ],
+    "dependencies": {
+        "@daybrush/utils": "^1.9.1",
+        "@egjs/agent": "^2.2.1",
+        "@scena/event-emitter": "^1.0.5",
+        "css-styled": "^1.0.1",
+        "framework-utils": "^1.1.0",
+        "gesto": "^1.13.0"
+    },
+    "devDependencies": {
+        "@daybrush/builder": "^0.1.2",
+        "@daybrush/jsdoc": "^0.4.1",
+        "@daybrush/release": "^0.2.4",
+        "daybrush-jsdoc-template": "^1.7.0",
+        "print-sizes": "^0.2.0",
+        "tslib": "^2.4.0",
+        "typescript": "^4.5.0 <4.6.0"
+    }
+}

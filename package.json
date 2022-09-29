@@ -1,28 +1,7 @@
 {
-    "name": "infinite-viewer",
-    "version": "0.16.5",
+    "name": "infinite-viewer-root",
+    "private": true,
     "description": "Infinite Viewer is Document Viewer Component with infinite scrolling up, down, left and right.",
-    "main": "./dist/infinite-viewer.cjs.js",
-    "module": "./dist/infinite-viewer.esm.js",
-    "sideEffects": false,
-    "types": "declaration/index.d.ts",
-    "scripts": {
-        "start": "rollup -c -w",
-        "build": "rollup -c && npm run declaration && print-sizes ./dist",
-        "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
-        "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
-        "prerelease": "npm run build && npm run doc && prerelease --dirs=dist,doc",
-        "storybook": "cd storybook/ && npm run build && cd ../",
-        "release": "npm run build && npm run doc && release --dirs=dist,doc",
-        "release:init": "npm run build && npm run doc && npm run storybook && release -i --dirs=dist,doc",
-        "deploy": "gh-pages -d ./demo --dest=./ --add --remote origin",
-        "deploy:init": "gh-pages -d ./demo --dest=./ --remote origin",
-        "packages": "npm run packages:update && npm run packages:build && npm run packages:publish && npm run packages:preact",
-        "packages:update": "pvu --update=react-infinite-viewer,vue-infinite-viewer,vue3-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer/projects/ngx-infinite-viewer",
-        "packages:build": "pvu --build=react-infinite-viewer,vue-infinite-viewer,vue3-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer",
-        "packages:publish": "pvu --publish=react-infinite-viewer,vue-infinite-viewer,vue3-infinite-viewer,svelte-infinite-viewer,lit-infinite-viewer,ngx-infinite-viewer/dist/ngx-infinite-viewer",
-        "packages:preact": "pvu --base=./packages/react-infinite-viewer/ --update=preact-infinite-viewer --build=preact-infinite-viewer --publish=preact-infinite-viewer"
-    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/daybrush/infinite-viewer.git"
@@ -40,27 +19,87 @@
         "url": "https://github.com/daybrush/infinite-viewer/issues"
     },
     "homepage": "https://github.com/daybrush/infinite-viewer#readme",
-    "files": [
-        "./*",
-        "dist/*"
-    ],
-    "dependencies": {
-        "@daybrush/utils": "^1.9.1",
-        "@egjs/agent": "^2.2.1",
-        "@scena/event-emitter": "^1.0.5",
-        "css-styled": "^1.0.1",
-        "framework-utils": "^1.1.0",
-        "gesto": "^1.13.0"
+    "scripts": {
+        "build": "npm run build --prefix ./packages/infinite-viewer",
+        "packages:update": "lerna-helper version && npm run update-type-consts",
+        "update-type-consts": "node ./config/update-type-consts.js",
+        "packages:build": "npm run build --prefix packages/infinite-viewer && npm run update-type-consts && lerna run build --ignore ngx-infinite-viewer --ignore infinite-viewer",
+        "packages:publish": "lerna-helper publish --ignore ngx-infinite-viewer --commit 'chore: publish packages'",
+        "demo:build": "npm run packages:build && npm run doc && npm run build:storybook && npm run build:storybook2",
+        "changelog": "lerna-helper changelog --type all --base infinite-viewer",
+        "changelog:root": "lerna-helper changelog --type root --base infinite-viewer",
+        "doc": "rm -rf ./doc && jsdoc -c jsdoc.json",
+        "predeploy": "lerna-helper deploy --base infinite-viewer --pre",
+        "deploy": "lerna-helper deploy --base infinite-viewer",
+        "release": "lerna-helper release --base infinite-viewer"
     },
     "devDependencies": {
-        "@daybrush/builder": "^0.1.2",
-        "@daybrush/jsdoc": "^0.4.1",
-        "@daybrush/release": "^0.2.4",
+        "@daybrush/jsdoc": "^0.4.3",
+        "@daybrush/release": "^0.7.0",
+        "cpx": "1.5.0",
         "daybrush-jsdoc-template": "^1.7.0",
-        "print-sizes": "^0.2.0",
-        "pvu": "^0.6.1",
-        "tslib": "^2.4.0",
-        "tslint": "^5.20.1",
-        "typescript": "^4.8.2"
+        "gh-pages": "^2.0.1",
+        "intercept-stdout": "0.1.2",
+        "lerna": "^4.0.0",
+        "lerna-changelog": "2.2.0",
+        "typescript": "^4.5.0 <4.6.0"
+    },
+    "workspaces": {
+        "nohoist": [
+            "**/@daybrush/builder",
+            "**/@daybrush/builder/**",
+            "**/rollup-plugin-vue",
+            "**/rollup-plugin-vue/**",
+            "**/karma",
+            "**/karma/**",
+            "**/karma-*",
+            "**/karma-*/**",
+            "**/@tyoes/chai",
+            "**/@tyoes/chai/**",
+            "**/@types/karma-chai",
+            "**/@types/karma-chai/**",
+            "**/@types/mocha",
+            "**/@types/mocha/**",
+            "**/@vue/*",
+            "**/@vue/*/**",
+            "**/vue",
+            "**/vue/**"
+        ],
+        "packages": [
+            "packages/*",
+            "packages/ngx-infinite-viewer/projects/ngx-infinite-viewer"
+        ]
+    },
+    "resolutions": {
+        "@daybrush/utils": "^1.7.1",
+        "@types/react": "^16.9.17",
+        "typescript": "^4.5.0 <4.6.0",
+        "@egjs/agent": "^2.2.1",
+        "@egjs/children-differ": "^1.0.1",
+        "@scena/dragscroll": "^1.2.0",
+        "@scena/matrix": "^1.1.1",
+        "css-to-mat": "^1.0.3",
+        "framework-utils": "^1.1.0",
+        "gesto": "^1.12.2",
+        "overlap-area": "^1.1.0",
+        "react-compat-css-styled": "^1.0.8",
+        "react-css-styled": "^1.0.3",
+        "tslib": "^2.3.0"
+    },
+    "overrides": {
+        "@daybrush/utils": "^1.7.1",
+        "@types/react": "^16.9.17",
+        "typescript": "^4.5.0 <4.6.0",
+        "@egjs/agent": "^2.2.1",
+        "@egjs/children-differ": "^1.0.1",
+        "@scena/dragscroll": "^1.2.0",
+        "@scena/matrix": "^1.1.1",
+        "css-to-mat": "^1.0.3",
+        "framework-utils": "^1.1.0",
+        "gesto": "^1.12.2",
+        "overlap-area": "^1.1.0",
+        "react-compat-css-styled": "^1.0.8",
+        "react-css-styled": "^1.0.3",
+        "tslib": "^2.3.0"
     }
 }

@@ -28,53 +28,53 @@ import { NgxInfiniteViewerEvents } from './types';
 })
 export class NgxInfiniteViewerComponent
   extends NgxInfiniteViewerInterface
-  implements OnDestroy, AfterViewInit, OnChanges, InfiniteViewerOptions, NgxInfiniteViewerEvents {
-  @ViewChild('scrollAreaElement', { static: false }) scrollAreaElementRef: ElementRef;
-  @ViewChild('wrapperElement', { static: false }) wrapperElementRef: ElementRef;
-  @ViewChild('horizontalScrollElement', { static: false }) horizontalScrollElementRef: ElementRef;
-  @ViewChild('verticalScrollElement', { static: false }) verticalScrollElementRef: ElementRef;
-  @Input() margin: InfiniteViewerProperties['margin'];
-  @Input() threshold: InfiniteViewerProperties['threshold'];
-  @Input() zoom: InfiniteViewerProperties['zoom'];
-  @Input() rangeX: InfiniteViewerProperties['rangeX'];
-  @Input() rangeY: InfiniteViewerProperties['rangeY'];
-  @Input() pinchThreshold: InfiniteViewerProperties['pinchThreshold'];
-  @Input() usePinch: InfiniteViewerProperties['usePinch'];
-  @Input() cspNonce: InfiniteViewerOptions['cspNonce'];
-  @Input() wheelScale: InfiniteViewerOptions['wheelScale'];
-  @Input() displayVerticalScroll: InfiniteViewerOptions['displayVerticalScroll'];
-  @Input() displayHorizontalScroll: InfiniteViewerOptions['displayHorizontalScroll'];
+  implements OnDestroy, AfterViewInit, OnChanges {
+  @ViewChild('scrollAreaElement', { static: false }) scrollAreaElementRef!: ElementRef;
+  @ViewChild('wrapperElement', { static: false }) wrapperElementRef!: ElementRef;
+  @ViewChild('horizontalScrollElement', { static: false }) horizontalScrollElementRef!: ElementRef;
+  @ViewChild('verticalScrollElement', { static: false }) verticalScrollElementRef!: ElementRef;
+  // @Input() margin!: InfiniteViewerProperties['margin'];
+  // @Input() threshold: InfiniteViewerProperties['threshold'];
+  // @Input() zoom: InfiniteViewerProperties['zoom'];
+  // @Input() rangeX: InfiniteViewerProperties['rangeX'];
+  // @Input() rangeY: InfiniteViewerProperties['rangeY'];
+  // @Input() pinchThreshold: InfiniteViewerProperties['pinchThreshold'];
+  // @Input() usePinch: InfiniteViewerProperties['usePinch'];
+  // @Input() cspNonce: InfiniteViewerOptions['cspNonce'];
+  // @Input() wheelScale: InfiniteViewerOptions['wheelScale'];
+  // @Input() displayVerticalScroll: InfiniteViewerOptions['displayVerticalScroll'];
+  // @Input() displayHorizontalScroll: InfiniteViewerOptions['displayHorizontalScroll'];
 
-  @Input() useWheelScroll: InfiniteViewerOptions['useWheelScroll'];
-  @Input() useWheelPinch: InfiniteViewerOptions['useWheelPinch'];
+  // @Input() useWheelScroll: InfiniteViewerOptions['useWheelScroll'];
+  // @Input() useWheelPinch: InfiniteViewerOptions['useWheelPinch'];
 
-  @Input() zoomOffsetX: InfiniteViewerOptions['zoomOffsetX'];
-  @Input() zoomOffsetY: InfiniteViewerOptions['zoomOffsetY'];
-  @Input() translateZ: InfiniteViewerOptions['translateZ'];
-  @Input() rangeOffsetX: InfiniteViewerOptions['rangeOffsetX'];
-  @Input() rangeOffsetY: InfiniteViewerOptions['rangeOffsetY'];
-  @Input() maxPinchWheel: InfiniteViewerOptions['maxPinchWheel'];
-  @Input() useGesture: InfiniteViewerOptions['useGesture'];
-  @Input() useTransform: InfiniteViewerOptions['useTransform'];
-  @Input() wrapperElement: InfiniteViewerOptions['wrapperElement'];
-  @Input() scrollAreaElement: InfiniteViewerOptions['scrollAreaElement'];
-  @Input() verticalScrollElement: InfiniteViewerOptions['verticalScrollElement'];
-  @Input() useResizeObserver: InfiniteViewerOptions['useResizeObserver'];
-  
-  @Input() horizontalScrollElement: InfiniteViewerOptions['horizontalScrollElement'];
+  // @Input() zoomOffsetX: InfiniteViewerOptions['zoomOffsetX'];
+  // @Input() zoomOffsetY: InfiniteViewerOptions['zoomOffsetY'];
+  // @Input() translateZ: InfiniteViewerOptions['translateZ'];
+  // @Input() rangeOffsetX: InfiniteViewerOptions['rangeOffsetX'];
+  // @Input() rangeOffsetY: InfiniteViewerOptions['rangeOffsetY'];
+  // @Input() maxPinchWheel: InfiniteViewerOptions['maxPinchWheel'];
+  // @Input() useGesture: InfiniteViewerOptions['useGesture'];
+  // @Input() useTransform: InfiniteViewerOptions['useTransform'];
+  // @Input() wrapperElement: InfiniteViewerOptions['wrapperElement'];
+  // @Input() scrollAreaElement: InfiniteViewerOptions['scrollAreaElement'];
+  // @Input() verticalScrollElement: InfiniteViewerOptions['verticalScrollElement'];
+  // @Input() useResizeObserver: InfiniteViewerOptions['useResizeObserver'];
 
-  @Output() useMouseDrag: InfiniteViewerOptions['useMouseDrag'];
-  @Output() useAutoZoom: InfiniteViewerOptions['useAutoZoom'];
-  @Output() zoomRange: InfiniteViewerOptions['zoomRange'];
-  @Output() wheelPinchKey: InfiniteViewerOptions['wheelPinchKey'];
+  // @Input() horizontalScrollElement: InfiniteViewerOptions['horizontalScrollElement'];
 
-  @Output() scroll: NgxInfiniteViewerEvents['scroll'];
-  @Output() dragStart: NgxInfiniteViewerEvents['dragStart'];
-  @Output() drag: NgxInfiniteViewerEvents['drag'];
-  @Output() dragEnd: NgxInfiniteViewerEvents['dragEnd'];
-  @Output() pinchStart: NgxInfiniteViewerEvents['pinchStart'];
-  @Output() pinch: NgxInfiniteViewerEvents['pinch'];
-  @Output() abortPinch: NgxInfiniteViewerEvents['abortPinch'];
+  // @Output() useMouseDrag: InfiniteViewerOptions['useMouseDrag'];
+  // @Output() useAutoZoom: InfiniteViewerOptions['useAutoZoom'];
+  // @Output() zoomRange: InfiniteViewerOptions['zoomRange'];
+  // @Output() wheelPinchKey: InfiniteViewerOptions['wheelPinchKey'];
+
+  // @Output() scroll: NgxInfiniteViewerEvents['scroll'];
+  // @Output() dragStart: NgxInfiniteViewerEvents['dragStart'];
+  // @Output() drag: NgxInfiniteViewerEvents['drag'];
+  // @Output() dragEnd: NgxInfiniteViewerEvents['dragEnd'];
+  // @Output() pinchStart: NgxInfiniteViewerEvents['pinchStart'];
+  // @Output() pinch: NgxInfiniteViewerEvents['pinch'];
+  // @Output() abortPinch: NgxInfiniteViewerEvents['abortPinch'];
 
   constructor(public containerElementRef: ElementRef) {
     super();
@@ -126,7 +126,7 @@ export class NgxInfiniteViewerComponent
       if (previousValue === currentValue) {
         continue;
       }
-      infiniteViewer[name] = currentValue;
+      (infiniteViewer as any)[name] = currentValue;
     }
   }
   ngOnDestroy() {

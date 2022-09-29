@@ -40,12 +40,11 @@
     "@daybrush/builder": "^0.1.2",
     "@types/react-dom": "^16.9.4",
     "print-sizes": "0.0.4",
-    "pvu": "^0.3.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "^3.0.1",
     "tslint": "^5.16.0",
-    "typescript": "^3.4.5"
+    "typescript": "^4.5.0 <4.6.0"
   },
   "dependencies": {
     "infinite-viewer": "~0.16.5"

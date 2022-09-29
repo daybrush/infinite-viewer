@@ -1,7 +1,7 @@
 # http://editorconfig.org
 root = true
 
-[*]
+[{*.js,*.ts,*.tsx,*.jsx}]
 charset = utf-8
 end_of_line = lf
 indent_style = space
@@ -13,7 +13,3 @@ trim_trailing_whitespace = true
 [{package.json,.travis.yml}]
 indent_style = space
 indent_size = 4
-
-[*.svelte]
-indent_style = space
-indent_size = 2
