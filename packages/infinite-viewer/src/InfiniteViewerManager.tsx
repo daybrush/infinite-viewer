@@ -220,6 +220,18 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         }
     }
     /**
+     * Set viewer zoom by the given amount
+     */
+    public zoomBy(deltaZoom: number, options?: AnimationOptions) {
+        this._pauseZoomAnimation();
+
+        if (!options || !options.duration) {
+            this._setZoom(this.zoom + deltaZoom);
+        } else {
+            this._startZoomAnimation(deltaZoom, options);
+        }
+    }
+    /**
      * Set viewer zoom
      */
     public setZoom(zoom: number, options?: AnimationOptions) {
