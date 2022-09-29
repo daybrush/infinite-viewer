@@ -26,8 +26,8 @@
     }
 
     .viewport {
-        width: 1920px;
-        height: 1080px;
+        width: 900px;
+        height: 800px;
         /* height: 600px; */
         border: 1px solid #eee;
         box-sizing: border-box;
@@ -243,16 +243,18 @@
         document.querySelector(".viewport"),
         {
             useTransform: true,
-            usePinch: true,
+            // usePinch: true,
             useResizeObserver: true,
             pinchThreshold: 50,
             // rangeX: [0, 0],
             // rangeY: [0, 0],
             // rangeOffsetX: [-200, 200],
             // rangeOffsetY: [-200, 200],
-            useWheelScroll: true,
             zoomRange: [0.1, 10],
             maxPinchWheel: 10,
+            useWheelScroll: true,
+            useAutoZoom: true,
+            useMouseDrag: true,
         }
     ).on("dragStart", e => {
         const target = e.inputEvent.target;
@@ -265,11 +267,11 @@
         }
     }).on("dragEnd", e => {
         if (!e.isDrag) {
-            selecto.clickTarget(e.inputEvent);
+            // selecto.clickTarget(e.inputEvent);
         }
     }).on("abortPinch", e => {
         // console.log("abort", e.inputEvent);
-        selecto.triggerDragStart(e.inputEvent);
+        // selecto.triggerDragStart(e.inputEvent);
     }).on("scroll", e => {
         // console.log("Change SCROLL", e.scrollLeft);
         const zoom = viewer.zoom;
@@ -288,56 +290,10 @@
         viewer.zoom = zoom;
     })
 
-    const selecto = new Selecto({
-        container: document.querySelector(".app"),
-        dragContainer: ".viewer",
-        hitRate: 0,
-
-        selectByClick: true,
-        selectFromInside: false,
-
-        selectableTargets: ["[data-moveable]"],
-        toggleContinueSelect: ["shift"],
-        scrollOptions: {
-            container: viewer.getContainer(),
-            threshold: 30,
-            throttleTime: 30,
-            getScrollPosition: ({ direction }) => {
-                return [
-                    viewer.getScrollLeft(),
-                    viewer.getScrollTop(),
-                ];
-            }
-        }
-    }).on("dragStart", e => {
-        const inputEvent = e.inputEvent;
-        const target = inputEvent.target;
-        if (
-            target.nodeName === "A"
-            || (inputEvent.type === "touchstart" && e.isTrusted)
-            || moveable.isMoveableElement(target)
-            || targets.some(t => t === target || t.contains(target))
-        ) {
-            console.log("?", inputEvent.type);
-            e.stop();
-        }
-    }).on("scroll", ({ direction }) => {
-        viewer.scrollBy(direction[0] * 10, direction[1] * 10);
-    }).on("selectEnd", e => {
-        targets = e.selected;
-        moveable.target = targets;
-
-        if (e.isDragStart) {
-            e.inputEvent.preventDefault();
-
-            setTimeout(() => {
-                moveable.dragStart(e.inputEvent);
-            });
-        }
-    });
-
     requestAnimationFrame(() => {
-        viewer.scrollCenter();
+        viewer.scrollCenter({
+            duration: 1000,
+        });
     });
 
     window.addEventListener("resize", () => {
@@ -346,6 +302,8 @@
     });
 
     document.querySelector(".reset").addEventListener("click", () => {
-        viewer.scrollCenter();
+        viewer.scrollCenter({
+            duration: 1000,
+        });
     });
 </script>

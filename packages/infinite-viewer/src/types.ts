@@ -144,7 +144,14 @@ export interface InfiniteViewerOptions {
     verticalScrollElement: HTMLElement;
     horizontalScrollElement: HTMLElement;
 }
-
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface AnimationOptions {
+    easing?: (t: number) => number;
+    duration: number;
+}
 /**
  * @typedef
  * @memberof InfiniteViewer

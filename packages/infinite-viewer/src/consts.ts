@@ -120,6 +120,8 @@ export const DEFAULT_OPTIONS = {
     useGesture: true,
     useResizeObserver: false,
 };
+
+export const DEFAULT_EASING = (x: number) => 1 - Math.pow(1 - x, 3);
 export const NAMES = {
     horizontal: {
         pos: "Left",
