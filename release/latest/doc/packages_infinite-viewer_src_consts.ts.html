@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>node_modules/@scena/event-emitter/src/EventEmitter.ts - Documentation</title>
+    <title>packages/infinite-viewer/src/consts.ts - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -14,7 +14,7 @@
     <link type="text/css" rel="stylesheet" href="styles/daybrush.css">
     <link type="text/css" rel="stylesheet" href="styles/custom.css">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <meta name="description" content="node_modules/@scena/event-emitter/src/EventEmitter.ts - Documentation"/>
+    <meta name="description" content="packages/infinite-viewer/src/consts.ts - Documentation"/>
 
 </head>
 <body>
@@ -32,7 +32,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">node_modules/@scena/event-emitter/src/EventEmitter.ts</h1>
+    <h1 class="page-title">packages/infinite-viewer/src/consts.ts</h1>
     
 
     
@@ -42,220 +42,224 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { findIndex, isObject } from "@daybrush/utils";
-import { EventListener, EventHash, EventInfo, EventOptions, OnEvent, TargetParam } from "./types";
+            <pre class="prettyprint source linenums"><code>import styled from "css-styled";
+import { InfiniteViewerOptions } from "./types";
+import getAgent from "@egjs/agent";
+import { prefixCSS } from "framework-utils";
+
+export const agent = getAgent();
+export const IS_SAFARI = agent.browser.name === "safari";
+
+export const PREFIX = "infinite-viewer-";
+
+export const WRAPPER_CLASS_NAME = `${PREFIX}wrapper`;
+export const SCROLL_AREA_CLASS_NAME = `${PREFIX}scroll-area`;
+
+export const SCROLL_BAR_CLASS_NAME = `${PREFIX}scroll-bar`;
+export const HORIZONTAL_SCROLL_BAR_CLASS_NAME = `${PREFIX}horizontal-scroll-bar`;
+export const VERTICAL_SCROLL_BAR_CLASS_NAME = `${PREFIX}vertical-scroll-bar`;
+export const SCROLL_THUMB_CLASS_NAME = `${PREFIX}scroll-thumb`;
+
+export const injector = styled(prefixCSS(PREFIX, `
+{
+    position: relative;
+    overscroll-behavior: none;
+}
+.wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    top: 0;
+    left: 0;
+    will-change: scroll-position;
+}
+.wrapper::-webkit-scrollbar {
+    display: none;
+}
+.scroll-area {
+    position:absolute;
+    top:0;
+    left:0;
+    transform-origin: 0 0;
+}
+.scroll-bar {
+    position:absolute;
+    width: 10px;
+    height: 10px;
+    box-sizing: border-box;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+.horizontal-scroll-bar {
+    width: 100%;
+    height: 14px;
+}
+.vertical-scroll-bar {
+    height: 100%;
+    width: 14px;
+}
+.scroll-thumb {
+    position:relative;
+    opacity: 0.7;
+    background: #333;
+    border-radius: 3px;
+    left: 0px;
+    top: 0px;
+    z-index: 10;
+    width: 6px;
+    height: 6px;
+    transition: all ease 0.2s;
+}
+.horizontal-scroll-bar .scroll-thumb {
+    margin: 4px 0px;
+    transition-property: margin, height, border-radius;
+}
+.vertical-scroll-bar .scroll-thumb {
+    margin: 0px 4px;
+    transition-property: margin, width, border-radius;
+}
+.horizontal-scroll-bar:hover .scroll-thumb {
+    height: 10px;
+    margin: 2px 0px;
+    border-radius: 5px;
+}
+.vertical-scroll-bar:hover .scroll-thumb {
+    width: 10px;
+    margin: 0px 2px;
+    border-radius: 5px;
+}
+`));
+
+export const DEFAULT_OPTIONS = {
+    margin: 500,
+    threshold: 100,
+    zoom: 1,
+    rangeX: [-Infinity, Infinity],
+    rangeY: [-Infinity, Infinity],
+    rangeOffsetX: [0, 0],
+    rangeOffsetY: [0, 0],
+    wrapperElement: null,
+    scrollAreaElement: null,
+    horizontalScrollElement: null,
+    verticalScrollElement: null,
+    usePinch: false,
+    useAutoZoom: false,
+    useMouseDrag: false,
+    pinchThreshold: 30,
+    cspNonce: "",
+    maxPinchWheel: Infinity,
+    wheelScale: 0.01,
+    displayHorizontalScroll: true,
+    displayVerticalScroll: true,
+    useTransform: true,
+    useWheelPinch: true,
+    zoomRange: [0.001, Infinity],
+    wheelPinchKey: "ctrl" as const,
+    useWheelScroll: IS_SAFARI,
+    zoomOffsetX: "50%",
+    zoomOffsetY: "50%",
+    translateZ: 0,
+    useGesture: true,
+    useResizeObserver: false,
+};
+
+export const DEFAULT_EASING = (x: number) => 1 - Math.pow(1 - x, 3);
+export const NAMES = {
+    horizontal: {
+        pos: "Left",
+        coord: "X",
+        size: "Width",
+    },
+    vertical: {
+        pos: "Top",
+        coord: "Y",
+        size: "Height",
+    },
+} as const;
+/**
+ * @memberof InfiniteViewer
+ */
+export const CLASS_NAME = injector.className;
 
 /**
- * Implement EventEmitter on object or component.
+ * @memberof InfiniteViewer
  */
-class EventEmitter&lt;Events extends {} = { [key: string]: { [key: string]: any } }> {
+export const PROPERTIES = [
+    "margin",
+    "threshold",
+    "zoomOffsetX",
+    "zoomOffsetY",
+    "zoom",
+    "rangeX",
+    "rangeY",
+    "rangeOffsetX",
+    "rangeOffsetY",
+    "usePinch",
+    "useMouseDrag",
+    "pinchThreshold",
+    "maxPinchWheel",
+    "wheelScale",
+    "displayVerticalScroll",
+    "displayHorizontalScroll",
+    "useWheelScroll",
+    "translateZ",
+    "useAutoZoom",
+    "wheelPinchKey",
+    "zoomRange",
+] as const;
 
-    private _events: {
-        [name: string]: EventInfo[],
-    } = {};
-    public on&lt;Name extends keyof Events, Param = Events[Name]>(
-        eventName: Name, listener: EventListener&lt;Param, this>): this;
-    public on(events: EventHash&lt;Events, this>): this;
-    /**
-     * Add a listener to the registered event.
-     * @param - Name of the event to be added
-     * @param - listener function of the event to be added
-     * @example
-     * import EventEmitter from "@scena/event-emitter";
-     * cosnt emitter = new EventEmitter();
-     *
-     * // Add listener in "a" event
-     * emitter.on("a", () => {
-     * });
-     * // Add listeners
-     * emitter.on({
-     *  a: () => {},
-     *  b: () => {},
-     * });
-     */
-    public on(eventName: string | object, listener?: EventListener&lt;Events[any], this>): this {
-        if (isObject(eventName)) {
-            for (const name in eventName) {
-                this.on&lt;any>(name, eventName[name]);
-            }
-        } else {
-            this._addEvent(eventName, listener, {});
-        }
-        return this;
-    }
-    public off&lt;Name extends keyof Events, Param = Events[Name]>(
-        eventName?: Name, listener?: EventListener&lt;Param, this>): this;
-    public off(events: EventHash&lt;Events, this>): this;
-    /**
-     * Remove listeners registered in the event target.
-     * @param - Name of the event to be removed
-     * @param - listener function of the event to be removed
-     * @example
-     * import EventEmitter from "@scena/event-emitter";
-     * cosnt emitter = new EventEmitter();
-     *
-     * // Remove all listeners.
-     * emitter.off();
-     *
-     * // Remove all listeners in "A" event.
-     * emitter.off("a");
-     *
-     *
-     * // Remove "listener" listener in "a" event.
-     * emitter.off("a", listener);
-     */
-    public off(eventName?: string | object, listener?: EventListener&lt;Events[any], this>): this {
-        if (!eventName) {
-            this._events = {};
-        } else if(isObject(eventName)) {
-            for (const name in eventName) {
-                this.off&lt;any>(name);
-            }
-        } else if (!listener) {
-            this._events[eventName] = [];
-        } else {
-            const events = this._events[eventName];
+/**
+ * @memberof InfiniteViewer
+ */
+export const OPTIONS = [
+    // ignore target, container,
+    ...PROPERTIES,
+    "useWheel",
+    "useGesture",
+    "cspNonce",
+    "wrapperElement",
+    "scrollAreaElement",
+    "verticalScrollElement",
+    "horizontalScrollElement",
+    "useResizeObserver",
+] as const;
 
-            if (events) {
-                const index = findIndex(events, e => e.listener === listener);
+/**
+ * @memberof InfiniteViewer
+ */
+export const EVENTS = [
+    "scroll",
+    "abortPinch",
+    "dragStart",
+    "dragEnd",
+    "pinchStart",
+    "pinch",
+] as const;
 
-                if (index > -1) {
-                    events.splice(index, 1);
-                }
-            }
-        }
-        return this;
-    }
-    /**
-     * Add a disposable listener and Use promise to the registered event.
-     * @param - Name of the event to be added
-     * @param - disposable listener function of the event to be added
-     * @example
-     * import EventEmitter from "@scena/event-emitter";
-     * cosnt emitter = new EventEmitter();
-     *
-     * // Add a disposable listener in "a" event
-     * emitter.once("a", () => {
-     * });
-     *
-     * // Use Promise
-     * emitter.once("a").then(e => {
-     * });
-     */
-    public once&lt;Name extends keyof Events &amp; string, Param = Events[Name]>(
-        eventName: Name, listener?: EventListener&lt;Param, this>): Promise&lt;OnEvent&lt;Param, this>> {
-        if (listener) {
-            this._addEvent(eventName, listener, { once: true });
-        }
-        return new Promise&lt;OnEvent&lt;Param, this>>(resolve => {
-            this._addEvent(eventName, resolve, { once: true });
-        });
-    }
-    public emit&lt;Name extends keyof Events, Param = Events[Name]>(
-        eventName: {} extends Param ? Name : never): boolean;
-    public emit&lt;Name extends keyof Events, Param = Events[Name]>(
-        eventName: Name, param: TargetParam&lt;Param>): boolean;
-    /**
-     * Fires an event to call listeners.
-     * @param - Event name
-     * @param - Event parameter
-     * @return If false, stop the event.
-     * @example
-     *
-     * import EventEmitter from "@scena/event-emitter";
-     *
-     *
-     * const emitter = new EventEmitter();
-     *
-     * emitter.on("a", e => {
-     * });
-     *
-     *
-     * emitter.emit("a", {
-     *   a: 1,
-     * });
-     */
-    public emit(eventName: string, param: TargetParam&lt;any> = {}): boolean {
-        const events = this._events[eventName];
+/**
+ * @memberof InfiniteViewer
+ */
+export const METHODS = [
+    "getScrollLeft",
+    "getScrollTop",
+    "getScrollWidth",
+    "getScrollHeight",
+    "scrollTo",
+    "scrollBy",
+    "zoomBy",
+    "scrollCenter",
+    "getContainer",
+    "getViewport",
+    "getWrapper",
+    "setZoom",
+    "getRangeX",
+    "getRangeY",
+    "resize",
+] as const;
 
-        if (!eventName || !events) {
-            return true;
-        }
-        let isStop = false;
-
-        param.eventType = eventName;
-        param.stop = () => {
-            isStop = true;
-        };
-        param.currentTarget = this;
-
-
-        [...events].forEach(info => {
-            info.listener(param);
-            if (info.once) {
-                this.off&lt;any>(eventName, info.listener);
-            }
-        });
-
-        return !isStop;
-    }
-    public trigger&lt;Name extends keyof Events, Param = Events[Name]>(eventName: {} extends TargetParam&lt;Param> ? Name : never): boolean;
-    public trigger&lt;Name extends keyof Events, Param = Events[Name]>(eventName: Name, param: TargetParam&lt;Param>): boolean;
-    /**
-     * Fires an event to call listeners.
-     * @param - Event name
-     * @param - Event parameter
-     * @return If false, stop the event.
-     * @example
-     *
-     * import EventEmitter from "@scena/event-emitter";
-     *
-     *
-     * const emitter = new EventEmitter();
-     *
-     * emitter.on("a", e => {
-     * });
-     *
-     *
-     * emitter.emit("a", {
-     *   a: 1,
-     * });
-     *//**
-     * Fires an event to call listeners.
-     * @param - Event name
-     * @param - Event parameter
-     * @return If false, stop the event.
-     * @example
-     *
-     * import EventEmitter from "@scena/event-emitter";
-     *
-     *
-     * const emitter = new EventEmitter();
-     *
-     * emitter.on("a", e => {
-     * });
-     *
-     * // emit
-     * emitter.trigger("a", {
-     *   a: 1,
-     * });
-     */
-    public trigger&lt;Name extends keyof Events>(eventName: Name, param: TargetParam&lt;any>= {}): boolean {
-        return this.emit&lt;any>(eventName, param);
-    }
-
-    private _addEvent(eventName: string, listener: EventListener&lt;Events[any], this>, options: Partial&lt;EventOptions>) {
-        const events = this._events;
-
-        events[eventName] = events[eventName] || [];
-
-        const listeners = events[eventName];
-
-        listeners.push({ listener, ...options });
-    }
-}
-
-export default EventEmitter;
+export const TINY_NUM = 0.000001;
 </code></pre>
         </article>
     </section>
@@ -267,10 +271,10 @@ export default EventEmitter;
 <style>
 
 
-nav li[file="node_modules/@scena/event-emitter/src/eventemitter"]:after {
+nav li[file="packages/infinite-viewer/src/consts"]:after {
     display: none;
 }
-nav li[file="node_modules/@scena/event-emitter/src/eventemitter"] h4, nav li[file="node_modules/@scena/event-emitter/src/eventemitter"] ul {
+nav li[file="packages/infinite-viewer/src/consts"] h4, nav li[file="packages/infinite-viewer/src/consts"] ul {
     display: block;
 }
 </style>

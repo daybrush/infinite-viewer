@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>packages/infinite-viewer/src/InfiniteViewerManager.tsx - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/daybrush.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="description" content="packages/infinite-viewer/src/InfiniteViewerManager.tsx - Documentation"/>
+
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h2 class="custom"><a href="https://github.com/daybrush/infinite-viewer" target="_blank" class="menu-item" id="repository" >Github repo</a></h2><div class="search"><div class="input-area"><input type="text"/></div><button></button></div><ul class="classes"><li file="infiniteviewer" class="parent"><a href="InfiniteViewer.html">InfiniteViewer</a><h4><a href="InfiniteViewer.html#static members">Static Members</a></h4><ul class='static members'><li data-type='member'><a href="InfiniteViewer.html#.CLASS_NAME">CLASS_NAME</a></li><li data-type='member'><a href="InfiniteViewer.html#.EVENTS">EVENTS</a></li><li data-type='member'><a href="InfiniteViewer.html#.METHODS">METHODS</a></li><li data-type='member'><a href="InfiniteViewer.html#.OPTIONS">OPTIONS</a></li><li data-type='member'><a href="InfiniteViewer.html#.PROPERTIES">PROPERTIES</a></li></ul><h4><a href="InfiniteViewer.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="InfiniteViewer.html#destroy">destroy</a></li><li data-type='method'><a href="InfiniteViewer.html#emit">emit</a></li><li data-type='method'><a href="InfiniteViewer.html#geScrollArea">geScrollArea</a></li><li data-type='method'><a href="InfiniteViewer.html#getContainer">getContainer</a></li><li data-type='method'><a href="InfiniteViewer.html#getRangeX">getRangeX</a></li><li data-type='method'><a href="InfiniteViewer.html#getRangeY">getRangeY</a></li><li data-type='method'><a href="InfiniteViewer.html#getScrollHeight">getScrollHeight</a></li><li data-type='method'><a href="InfiniteViewer.html#getScrollLeft">getScrollLeft</a></li><li data-type='method'><a href="InfiniteViewer.html#getScrollTop">getScrollTop</a></li><li data-type='method'><a href="InfiniteViewer.html#getScrollWidth">getScrollWidth</a></li><li data-type='method'><a href="InfiniteViewer.html#getViewport">getViewport</a></li><li data-type='method'><a href="InfiniteViewer.html#getWrapper">getWrapper</a></li><li data-type='method'><a href="InfiniteViewer.html#off">off</a></li><li data-type='method'><a href="InfiniteViewer.html#on">on</a></li><li data-type='method'><a href="InfiniteViewer.html#once">once</a></li><li data-type='method'><a href="InfiniteViewer.html#resize">resize</a></li><li data-type='method'><a href="InfiniteViewer.html#scrollBy">scrollBy</a></li><li data-type='method'><a href="InfiniteViewer.html#scrollCenter">scrollCenter</a></li><li data-type='method'><a href="InfiniteViewer.html#scrollTo">scrollTo</a></li><li data-type='method'><a href="InfiniteViewer.html#setZoom">setZoom</a></li><li data-type='method'><a href="InfiniteViewer.html#trigger">trigger</a></li><li data-type='method'><a href="InfiniteViewer.html#zoomBy">zoomBy</a></li></ul><h4><a href="InfiniteViewer.html#events">Events</a></h4><ul class='events'><li data-type='event'><a href="InfiniteViewer.html#.event:abortPinch">abortPinch</a></li><li data-type='event'><a href="InfiniteViewer.html#.event:drag">drag</a></li><li data-type='event'><a href="InfiniteViewer.html#.event:dragEnd">dragEnd</a></li><li data-type='event'><a href="InfiniteViewer.html#.event:dragStart">dragStart</a></li><li data-type='event'><a href="InfiniteViewer.html#.event:pinch">pinch</a></li><li data-type='event'><a href="InfiniteViewer.html#.event:scroll">scroll</a></li></ul><h4><a href="InfiniteViewer.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="InfiniteViewer.html#.AnimationOptions">AnimationOptions</a></li><li data-type='typddef'><a href="InfiniteViewer.html#.InfiniteViewerOptions">InfiniteViewerOptions</a></li><li data-type='typddef'><a href="InfiniteViewer.html#.OnAbortPinch">OnAbortPinch</a></li><li data-type='typddef'><a href="InfiniteViewer.html#.OnDrag">OnDrag</a></li><li data-type='typddef'><a href="InfiniteViewer.html#.OnDragEnd">OnDragEnd</a></li><li data-type='typddef'><a href="InfiniteViewer.html#.OnDragStart">OnDragStart</a></li><li data-type='typddef'><a href="InfiniteViewer.html#.OnPinch">OnPinch</a></li><li data-type='typddef'><a href="InfiniteViewer.html#.OnPinchStart">OnPinchStart</a></li><li data-type='typddef'><a href="InfiniteViewer.html#.OnScroll">OnScroll</a></li></ul></li><li file="eventemitter" class="parent"><a href="EventEmitter.html">EventEmitter</a><h4><a href="EventEmitter.html#methods">Methods</a></h4><ul class='methods'><li data-type='method'><a href="EventEmitter.html#emit">emit</a></li><li data-type='method'><a href="EventEmitter.html#off">off</a></li><li data-type='method'><a href="EventEmitter.html#on">on</a></li><li data-type='method'><a href="EventEmitter.html#once">once</a></li><li data-type='method'><a href="EventEmitter.html#trigger">trigger</a></li><li data-type='method'><a href="EventEmitter.html#trigger">trigger</a></li></ul><h4><a href="EventEmitter.html#type definitions">Type Definitions</a></h4><ul class='type definitions'><li data-type='typddef'><a href="EventEmitter.html#.EmitterParam">EmitterParam</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventHash">EventHash</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventInfo">EventInfo</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventListener">EventListener</a></li><li data-type='typddef'><a href="EventEmitter.html#.EventOptions">EventOptions</a></li><li data-type='typddef'><a href="EventEmitter.html#.OnEvent">OnEvent</a></li><li data-type='typddef'><a href="EventEmitter.html#.TargetParam">TargetParam</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">packages/infinite-viewer/src/InfiniteViewerManager.tsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import EventEmitter from "@scena/event-emitter";
+import Gesto from "gesto";
+import { InjectResult } from "css-styled";
+import { Properties } from "framework-utils";
+import { camelize, IObject, addEvent, removeEvent, addClass, convertUnitSize, between } from "@daybrush/utils";
+import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents, OnPinch, AnimationOptions } from "./types";
+import {
+    PROPERTIES, injector, CLASS_NAME, TINY_NUM,
+    DEFAULT_OPTIONS,
+    WRAPPER_CLASS_NAME, SCROLL_AREA_CLASS_NAME,
+    HORIZONTAL_SCROLL_BAR_CLASS_NAME, VERTICAL_SCROLL_BAR_CLASS_NAME, NAMES, DEFAULT_EASING
+} from "./consts";
+import { measureSpeed, getDuration, getDestPos, abs, getRange, checkDefault, startAnimation } from "./utils";
+import ScrollBar from "./ScrollBar";
+
+@Properties(PROPERTIES as any, (prototype, property) => {
+    const attributes: IObject&lt;any> = {
+        enumerable: true,
+        configurable: true,
+        get() {
+            return this.options[property];
+        },
+    };
+    const setter = camelize(`set ${property}`);
+    if (prototype[setter]) {
+        attributes.set = function (value) {
+            this[setter](value);
+        };
+    } else {
+        attributes.set = function (value) {
+            this.options[property] = value;
+        };
+    }
+    Object.defineProperty(prototype, property, attributes);
+})
+/**
+ * @sort 1
+ */
+class InfiniteViewer extends EventEmitter&lt;InfiniteViewerEvents> {
+    public options: InfiniteViewerOptions;
+    private injectResult!: InjectResult;
+    private wrapperElement!: HTMLElement;
+    private scrollAreaElement!: HTMLElement;
+    private horizontalScrollbar: ScrollBar;
+    private verticalScrollbar: ScrollBar;
+    private gesto!: Gesto;
+    private offsetX: number = 0;
+    private offsetY: number = 0;
+    private containerWidth: number = 0;
+    private containerHeight: number = 0;
+    private viewportWidth: number = 0;
+    private viewportHeight: number = 0;
+    private scrollLeft: number = 0;
+    private scrollTop: number = 0;
+    private _scrollTimer = 0;
+    private _zoomTimer = 0;
+    private dragFlag: boolean = false;
+    private isLoop: boolean = false;
+    private _tempScale: number = 1;
+    private _tempRect: { top: number, left: number, width: number, height: number } | null = null;
+    private _tempRectTimer: number | null = null;
+    private _onDestroys: Array&lt;() => void> = [];
+    private _asLeft = 0;
+    private _asTop = 0;
+    /**
+     * @sort 1
+     */
+    constructor(
+        private containerElement: HTMLElement,
+        private viewportElement: HTMLElement,
+        options: Partial&lt;InfiniteViewerOptions> = {},
+    ) {
+        super();
+        this.options = {
+            ...DEFAULT_OPTIONS,
+            ...options,
+        };
+        this.init();
+    }
+    /**
+     * Get Container Element
+     */
+    public getContainer(): HTMLElement {
+        return this.containerElement;
+    }
+    /**
+     * Get Viewport Element
+     */
+    public getViewport(): HTMLElement {
+        return this.viewportElement;
+    }
+    /**
+     * Get Wrapper Element
+     */
+    public getWrapper(): HTMLElement {
+        return this.wrapperElement;
+    }
+    /**
+     * Get Scroll Area Element
+     */
+    public geScrollArea(): HTMLElement {
+        return this.scrollAreaElement;
+    }
+    /**
+     * Destroy elements, properties, and events.
+     */
+    public destroy(): void {
+        this.off();
+        this.gesto.unset();
+        this.verticalScrollbar.destroy();
+        this.horizontalScrollbar.destroy();
+        this.injectResult.destroy();
+        const containerElement = this.containerElement;
+
+        this._onDestroys.forEach(callback => {
+            callback();
+        });
+        removeEvent(this.wrapperElement, "scroll", this._onScroll);
+        removeEvent(containerElement, "wheel", this.onWheel);
+        removeEvent(containerElement, "gesturestart", this.onGestureStart);
+        removeEvent(containerElement, "gesturechange", this.onGestureChange);
+        removeEvent(containerElement, "gesturesend", this.onGestureEnd);
+
+        this.gesto = null;
+        this.injectResult = null;
+        this.containerElement = null;
+        this.viewportElement = null;
+        this.options = null;
+    }
+    /**
+     * Gets the number of pixels that an element's content is scrolled vertically.
+     * @param - Get absolute top position
+     */
+    public getScrollTop(isAbsolute?: boolean) {
+        return this.scrollTop / this.zoom + this.offsetY
+            + (isAbsolute ? abs(this.getRangeY()[0]) : 0);
+    }
+    /**
+     * Gets the number of pixels that an element's content is scrolled vertically.
+     * @param - Get absolute left position
+     */
+    public getScrollLeft(isAbsolute?: boolean) {
+        return this.scrollLeft / this.zoom + this.offsetX
+            + (isAbsolute ? abs(this.getRangeX()[0]) : 0);
+    }
+    /**
+     * Gets measurement of the width of an element's content with overflow
+     */
+    public getScrollWidth(isZoom?: boolean) {
+        const range = this.getRangeX(isZoom);
+
+        return this.containerWidth + abs(range[0]) + abs(range[1]);
+    }
+    /**
+     * Gets measurement of the height of an element's content with overflow
+     */
+    public getScrollHeight(isZoom?: boolean) {
+        const range = this.getRangeY(isZoom);
+
+        return this.containerHeight + abs(range[0]) + abs(range[1]);
+    }
+
+    /**
+     * Scroll the element to the center
+     */
+    public scrollCenter(options?: AnimationOptions) {
+        this.resize();
+
+        const zoom = this.zoom;
+        const left = -(this.containerWidth / zoom - this.viewportWidth) / 2;
+        const top = -(this.containerHeight / zoom - this.viewportHeight) / 2;
+
+        return this.scrollTo(left, top, options);
+    }
+    /**
+     * Update Viewer Sizes
+     * @method
+     */
+    public resize = () => {
+        const {
+            offsetWidth: containerWidth,
+            offsetHeight: containerHeight,
+        } = this.containerElement;
+        const {
+            offsetWidth: viewportWidth,
+            offsetHeight: viewportHeight,
+        } = this.viewportElement;
+
+        this.containerWidth = containerWidth;
+        this.containerHeight = containerHeight;
+        this.viewportWidth = viewportWidth;
+        this.viewportHeight = viewportHeight;
+
+        this.render();
+        this._scrollBy(0, 0);
+    }
+    /**
+     * Scrolls the container by the given amount.
+     */
+    public scrollBy(deltaX: number, deltaY: number, options?: AnimationOptions) {
+        this._pauseScrollAnimation();
+        if (!options || !options.duration) {
+            return this.scrollTo(this.getScrollLeft() + deltaX, this.getScrollTop() + deltaY);
+        } else {
+            this._startScrollAnimation([deltaX, deltaY], options);
+            return true;
+        }
+    }
+    /**
+     * Scrolls the container to set of coordinates.
+     * @param scrollLeft
+     * @param scrollTop
+     */
+    public scrollTo(x: number, y: number, options?: AnimationOptions) {
+        this._pauseScrollAnimation();
+        if (!options || !options.duration) {
+            return this._scrollTo(x, y);
+        } else {
+            return this.scrollBy(x - this.getScrollLeft(), y - this.getScrollTop(), options);
+        }
+    }
+    /**
+     * Set viewer zoom by the given amount
+     */
+    public zoomBy(deltaZoom: number, options?: AnimationOptions) {
+        this._pauseZoomAnimation();
+
+        if (!options || !options.duration) {
+            this._setZoom(this.zoom + deltaZoom);
+        } else {
+            this._startZoomAnimation(deltaZoom, options);
+        }
+    }
+    /**
+     * Set viewer zoom
+     */
+    public setZoom(zoom: number, options?: AnimationOptions) {
+        this._pauseZoomAnimation();
+
+        if (!options || !options.duration) {
+            this._setZoom(zoom);
+        } else {
+            this._startZoomAnimation(zoom - this.zoom, options);
+        }
+    }
+    /**
+     * get x ranges
+     */
+    public getRangeX(isZoom?: boolean, isReal?: boolean) {
+        return this._getRangeCoord("horizontal", isZoom, isReal);
+    }
+    /**
+     * get y ranges
+     */
+    public getRangeY(isZoom?: boolean, isReal?: boolean) {
+        return this._getRangeCoord("vertical", isZoom, isReal);
+    }
+
+    private init() {
+        // infinite-viewer(container)
+        // viewport
+        // children
+        const containerElement = this.containerElement;
+        const options = this.options;
+
+        // vanilla
+        let wrapperElement = options.wrapperElement
+            || containerElement.querySelector(`.${WRAPPER_CLASS_NAME}`);
+        let scrollAreaElement = options.scrollAreaElement
+            || containerElement.querySelector(`.${SCROLL_AREA_CLASS_NAME}`);
+        const horizontalScrollElement = options.horizontalScrollElement
+            || containerElement.querySelector(`.${HORIZONTAL_SCROLL_BAR_CLASS_NAME}`);
+        const verticalScrollElement = options.verticalScrollElement
+            || containerElement.querySelector(`.${VERTICAL_SCROLL_BAR_CLASS_NAME}`);
+
+        if (wrapperElement) {
+            this.wrapperElement = wrapperElement;
+        } else {
+            wrapperElement = document.createElement("div");
+            wrapperElement.insertBefore(this.viewportElement, null);
+            containerElement.insertBefore(wrapperElement, null);
+
+            this.wrapperElement = wrapperElement;
+        }
+
+        if (scrollAreaElement) {
+            this.scrollAreaElement = scrollAreaElement;
+        } else {
+            scrollAreaElement = document.createElement("div");
+
+            wrapperElement.insertBefore(scrollAreaElement, wrapperElement.firstChild);
+
+            this.scrollAreaElement = scrollAreaElement;
+        }
+        addClass(containerElement, CLASS_NAME);
+        addClass(wrapperElement, WRAPPER_CLASS_NAME);
+        addClass(scrollAreaElement, SCROLL_AREA_CLASS_NAME);
+
+        this.horizontalScrollbar = new ScrollBar("horizontal", horizontalScrollElement);
+        this.verticalScrollbar = new ScrollBar("vertical", verticalScrollElement);
+
+        this.horizontalScrollbar.on("scroll", e => {
+            this.scrollBy(e.delta / this.zoom, 0);
+        });
+
+        this.verticalScrollbar.on("scroll", e => {
+            this.scrollBy(0, e.delta / this.zoom);
+        });
+
+        if (this.horizontalScrollbar.isAppend) {
+            containerElement.insertBefore(this.horizontalScrollbar.barElement, null);
+        }
+        if (this.verticalScrollbar.isAppend) {
+            containerElement.insertBefore(this.verticalScrollbar.barElement, null);
+        }
+        this.injectResult = injector.inject(containerElement, {
+            nonce: this.options.cspNonce,
+        });
+        /**
+         * the `dragStart` event fires when `touchstart` does occur.
+         * @memberof InfiniteViewer
+         * @event dragStart
+         * @param {InfiniteViewer.OnDragStart} - Parameters for the `dragStart` event
+         * @example
+         * import InfiniteViewer from "infinite-viewer";
+         *
+         * const viewer = new InfiniteViewer(
+         *   document.querySelector(".container"),
+         *   document.querySelector(".viewport"),
+         * ).on("dragStart", e => {
+         *   console.log(e.inputEvent);
+         * });
+         */
+        /**
+         * the `drag` event fires when `touch` does occur.
+         * @memberof InfiniteViewer
+         * @event drag
+         * @param {InfiniteViewer.OnDrag} - Parameters for the `drag` event
+         * @example
+         * import InfiniteViewer from "infinite-viewer";
+         *
+         * const viewer = new InfiniteViewer(
+         *   document.querySelector(".container"),
+         *   document.querySelector(".viewport"),
+         * ).on("drag", e => {
+         *   console.log(e.inputEvent);
+         * });
+         */
+        /**
+         * the `dragEnd` event fires when `touchend` does occur.
+         * @memberof InfiniteViewer
+         * @event dragEnd
+         * @param {InfiniteViewer.OnDragEnd} - Parameters for the `dragEnd` event
+         * @example
+         * import InfiniteViewer from "infinite-viewer";
+         *
+         * const viewer = new InfiniteViewer(
+         *   document.querySelector(".container"),
+         *   document.querySelector(".viewport"),
+         * ).on("dragEnd", e => {
+         *   console.log(e.inputEvent);
+         * });
+         */
+        /**
+         * the `abortPinch` event fires when `pinch` event does not occur by dragging a certain area.
+         * @memberof InfiniteViewer
+         * @event abortPinch
+         * @param {InfiniteViewer.OnAbortPinch} - Parameters for the abortPinch event
+         * @example
+         * import InfiniteViewer from "infinite-viewer";
+         *
+         * const viewer = new InfiniteViewer(
+         *   document.querySelector(".container"),
+         *   document.querySelector(".viewport"),
+         *   {
+         *     usePinch: true,
+         *   }
+         * ).on("abortPinch", e => {
+         *   console.log(e.inputEvent);
+         * });
+         */
+        /**
+         * the `pinch` event fires when two points pinch the viewer
+         * The pinchStart and abortPinch events do not occur when pinching through the wheel.
+         * @memberof InfiniteViewer
+         * @event pinch
+         * @param {InfiniteViewer.OnPinch} - Parameters for the `pinch` event
+         * @example
+         * import InfiniteViewer from "infinite-viewer";
+         *
+         * const viewer = new InfiniteViewer(
+         *   document.querySelector(".container"),
+         *   document.querySelector(".viewport"),
+         *   {
+         *     usePinch: true,
+         *   }
+         * ).on("pinch", e => {
+         *   console.log(e.zoom, e.inputEvent);
+         * });
+         */
+        this.gesto = new Gesto(containerElement, {
+            container: document.body,
+            events: ["touch", "mouse"],
+        }).on("dragStart", ({ inputEvent, datas, stop, isMouseEvent }) => {
+            if (!this.useMouseDrag &amp;&amp; isMouseEvent) {
+                stop();
+                return;
+            }
+            this._pauseScrollAnimation();
+            this.dragFlag = false;
+            const result = this.trigger("dragStart", {
+                inputEvent,
+            });
+            if (result === false) {
+                stop();
+                return;
+            }
+
+            inputEvent.preventDefault();
+
+            datas.startEvent = inputEvent;
+        }).on("drag", e => {
+            if (!this.options.usePinch || e.isPinch || (this.useMouseDrag &amp;&amp; e.isMouseEvent)) {
+                this.trigger("drag", {
+                    ...e,
+                    inputEvent: e.inputEvent,
+                });
+                measureSpeed(e);
+                const zoom = this.zoom;
+                this.scrollBy(-e.deltaX / zoom, -e.deltaY / zoom);
+            } else if (!this.dragFlag &amp;&amp; e.movement > options.pinchThreshold) {
+                this.dragFlag = true;
+
+                this.trigger("abortPinch", {
+                    inputEvent: e.datas.startEvent || e.inputEvent,
+                });
+            }
+        }).on("dragEnd", e => {
+            this.trigger("dragEnd", {
+                isDrag: e.isDrag,
+                isDouble: e.isDouble,
+                inputEvent: e.inputEvent,
+            });
+            this._startScrollAnimationBySpeed(e.datas.speed);
+        }).on("pinchStart", ({ inputEvent, datas, stop }) => {
+            inputEvent.preventDefault();
+            this._pauseScrollAnimation();
+            datas.startZoom = this.zoom;
+
+            const result = this.trigger("pinchStart", {
+                inputEvent,
+            });
+            if (result === false) {
+                stop();
+            }
+            this._setClientRect();
+        }).on("pinch", e => {
+            this._triggerPinch({
+                rotation: e.rotation,
+                distance: e.distance,
+                scale: e.scale,
+                inputEvent: e.inputEvent,
+                isWheel: false,
+                zoom: e.datas.startZoom * e.scale,
+                clientX: e.clientX,
+                clientY: e.clientY,
+                ratioX: 0,
+                ratioY: 0,
+            });
+        }).on("pinchEnd", () => {
+            this._tempRect = null;
+        });
+
+        addEvent(wrapperElement, "scroll", this._onScroll);
+
+        if (options.useResizeObserver) {
+            const observer = new ResizeObserver(() => {
+                this.resize();
+            });
+
+            observer.observe(this.viewportElement);
+            observer.observe(this.containerElement);
+
+
+            this._onDestroys.push(() => {
+                observer.disconnect();
+            });
+        } else {
+            addEvent(window, "resize", this.resize);
+
+            this._onDestroys.push(() => {
+                removeEvent(window, "resize", this.resize);
+            })
+        }
+
+        if (options.useWheelPinch || options.useWheelScroll) {
+            addEvent(containerElement, "wheel", this.onWheel, {
+                passive: false,
+            });
+        }
+        if (options.useGesture) {
+            addEvent(containerElement, "gesturestart", this.onGestureStart, {
+                passive: false,
+            });
+            addEvent(containerElement, "gesturechange", this.onGestureChange, {
+                passive: false,
+            });
+        }
+        this.resize();
+    }
+    private render() {
+        const {
+            offsetX,
+            offsetY,
+            zoom = DEFAULT_OPTIONS.zoom,
+            translateZ = 0,
+        } = this;
+        const {
+            useTransform = DEFAULT_OPTIONS.useTransform,
+        } = this.options;
+        const nextOffsetX = -offsetX * zoom;
+        const nextOffsetY = -offsetY * zoom;
+
+        this.scrollAreaElement.style.cssText
+            = `width:calc(100% + ${this.getScrollAreaWidth()}px);`
+            + `height:calc(100% + ${this.getScrollAreaHeight()}px);`;
+
+        const viewportStyle = this.viewportElement.style;
+
+        if (useTransform === false) {
+            viewportStyle.cssText += `position: relative; top: ${nextOffsetY}px; left: ${nextOffsetX}px;`;
+        } else {
+            viewportStyle.cssText += `transform-origin: 0 0;transform:translate3d(${nextOffsetX}px, ${nextOffsetY}px, ${translateZ}px) scale(${zoom});`;
+        }
+        this.renderScroll();
+    }
+    private renderScroll() {
+        const {
+            containerWidth,
+            containerHeight,
+            zoom,
+        } = this;
+        const scrollLeft = this.getScrollLeft(true) * zoom;
+        const scrollTop = this.getScrollTop(true) * zoom;
+        const scrollWidth = this.getScrollWidth(true);
+        const scrollHeight = this.getScrollHeight(true);
+
+        this.horizontalScrollbar.render(
+            this.displayHorizontalScroll,
+            scrollLeft,
+            containerWidth,
+            scrollWidth,
+        );
+        this.verticalScrollbar.render(
+            this.displayVerticalScroll,
+            scrollTop,
+            containerHeight,
+            scrollHeight,
+        );
+    }
+    private move(scrollLeft: number, scrollTop: number) {
+        const wrapperElement = this.wrapperElement;
+
+        wrapperElement.scrollLeft = scrollLeft;
+        wrapperElement.scrollTop = scrollTop;
+    }
+    private _onScroll = () => {
+        const { scrollLeft, scrollTop } = this.wrapperElement;
+        const {
+            zoom = DEFAULT_OPTIONS.zoom,
+        } = this;
+        const deltaX = scrollLeft - this.scrollLeft;
+        const deltaY = scrollTop - this.scrollTop;
+        const viewerScrollLeft = this.getScrollLeft();
+        const viewerScrollTop = this.getScrollTop();
+
+        if (this.isLoop) {
+            this.isLoop = false;
+        }
+        this.scrollLeft = scrollLeft;
+        this.scrollTop = scrollTop;
+        this.scrollTo(
+            viewerScrollLeft + deltaX / zoom,
+            viewerScrollTop + deltaY / zoom,
+        );
+    }
+    private onWheel = (e: WheelEvent) => {
+        const options = this.options;
+        const maxPinchWheel = options.maxPinchWheel || Infinity;
+
+        const isKeydown = e[`${this.wheelPinchKey}Key`] || e.ctrlKey;
+
+        if (options.useWheelPinch &amp;&amp; isKeydown) {
+            let deltaY = e.deltaY;
+            const sign = deltaY >= 0 ? 1 : -1;
+            const distance = Math.min(maxPinchWheel, Math.abs(deltaY));
+
+
+            deltaY = sign * distance;
+            const delta = -deltaY;
+            const scale = Math.max(1 + delta * (options.wheelScale || 0.01), TINY_NUM);
+
+            clearTimeout(this._tempRectTimer);
+            this._tempRectTimer = window.setTimeout(() => {
+                this._tempRect = null;
+            }, 100);
+            this._triggerPinch({
+                distance,
+                scale,
+                rotation: 0,
+                zoom: this.zoom * scale,
+                inputEvent: e,
+                isWheel: true,
+                clientX: e.clientX,
+                clientY: e.clientY,
+                ratioX: 0,
+                ratioY: 0,
+            });
+        } else if (options.useWheelScroll) {
+            const zoom = this.zoom;
+
+            let deltaX = e.deltaX;
+            let deltaY = e.deltaY;
+
+            if (e.shiftKey &amp;&amp; !deltaX) {
+                deltaX = deltaY;
+                deltaY = 0;
+            }
+            this.scrollBy(deltaX / zoom, deltaY / zoom);
+        } else {
+            return;
+        }
+        e.preventDefault();
+    }
+    private onGestureStart = (e: any) => {
+        this._tempScale = this.zoom;
+        this._setClientRect();
+        e.preventDefault();
+    }
+    private onGestureChange = (e: any) => {
+        e.preventDefault();
+        if (this.gesto.isFlag() || !this._tempScale) {
+            this._tempScale = 0;
+            return;
+        }
+        const scale = e.scale;
+
+        this._triggerPinch({
+            distance: 0,
+            scale,
+            rotation: e.rotation,
+            inputEvent: e,
+            isWheel: true,
+            zoom: this._tempScale * scale,
+            clientX: e.clientX,
+            clientY: e.clientY,
+            ratioX: 0,
+            ratioY: 0,
+        });
+    }
+    private onGestureEnd = () => {
+
+    }
+    private _startZoomAnimation(dest: number, options: AnimationOptions) {
+        if (!dest) {
+            return;
+        }
+        const duration = options.duration;
+        const easing = options.easing || DEFAULT_EASING;
+
+        startAnimation(
+            distRatio => this._setZoom(
+                this.zoom + dest * distRatio,
+            ),
+            next => {
+                this._zoomTimer = requestAnimationFrame(next);
+            },
+            {
+                easing,
+                duration,
+            },
+        );
+    }
+    private _startScrollAnimation(dest: number[], options: AnimationOptions) {
+        if (!dest[0] &amp;&amp; !dest[1]) {
+            return;
+        }
+        const duration = options.duration;
+        const easing = options.easing || DEFAULT_EASING;
+
+        startAnimation(
+            distRatio => this._scrollBy(
+                dest[0] * distRatio,
+                dest[1] * distRatio,
+            ),
+            next => {
+                this._scrollTimer = requestAnimationFrame(next);
+            },
+            {
+                easing,
+                duration,
+            },
+        );
+    }
+    private _startScrollAnimationBySpeed(speed: number[]) {
+        if (!speed || (!speed[0] &amp;&amp; !speed[1])) {
+            return;
+        }
+        const a = -0.0006;
+        const duration = getDuration(speed, a);
+        const destPos = getDestPos(speed, a);
+
+        return this._startScrollAnimation(destPos, {
+            duration,
+        })
+
+    }
+    private _pauseScrollAnimation() {
+        cancelAnimationFrame(this._scrollTimer);
+    }
+    private _pauseZoomAnimation() {
+        cancelAnimationFrame(this._zoomTimer);
+    }
+    private getScrollAreaWidth() {
+        const [min, max] = this.getRangeX(true);
+        return min || max ? this.margin * 2 : 0;
+    }
+    private getScrollAreaHeight() {
+        const [min, max] = this.getRangeY(true);
+        return min || max ? this.margin * 2 : 0;
+    }
+    private _triggerPinch(event: OnPinch) {
+        const {
+            clientX,
+            clientY,
+            zoom,
+        } = event;
+        if (this.useAutoZoom) {
+            this._zoomByClient(event.zoom, clientX, clientY);
+        }
+        if (!this._tempRect) {
+            this._setClientRect();
+        }
+        const zoomRange = this.zoomRange;
+        const {
+            left,
+            top,
+            width,
+            height,
+        } = this._tempRect;
+        const ratioX = (clientX - left) / width * 100;
+        const ratioY = (clientY - top) / height * 100;
+
+        this.trigger("pinch", {
+            ...event,
+            zoom: between(zoom, zoomRange[0], zoomRange[1]),
+            ratioX,
+            ratioY,
+        });
+    }
+    private _setClientRect() {
+        const rect = this.getContainer().getBoundingClientRect();
+        this._tempRect = {
+            left: rect.left,
+            top: rect.top,
+            width: rect.width,
+            height: rect.height,
+        };
+    }
+    private _zoomByClient(zoom: number, clientX: number, clientY: number) {
+        if (!this._tempRect) {
+            this._setClientRect();
+        }
+        const {
+            left,
+            top,
+            width,
+            height,
+        } = this._tempRect;
+        const options = this.options;;
+
+        const originalZoomOffsetX = options.zoomOffsetX;
+        const originalZoomOffsetY = options.zoomOffsetY;
+
+        options.zoomOffsetX = `${(clientX - left) / width * 100}%`;
+        options.zoomOffsetY = `${(clientY - top) / height * 100}%`;
+
+        this._setZoom(zoom);
+
+        options.zoomOffsetX = originalZoomOffsetX;
+        options.zoomOffsetY = originalZoomOffsetY;
+    }
+    private _setZoom(zoom: number) {
+        const {
+            containerWidth,
+            containerHeight,
+            zoom: prevZoom,
+            zoomRange
+        } = this;
+        let {
+            zoomOffsetX = DEFAULT_OPTIONS.zoomOffsetX,
+            zoomOffsetY = DEFAULT_OPTIONS.zoomOffsetY,
+        } = this;
+
+
+        const scrollLeft = this.getScrollLeft();
+        const scrollTop = this.getScrollTop();
+        const nextZoom = between(zoom, zoomRange[0], zoomRange[1]);
+
+        this.options.zoom = nextZoom;
+
+        const nextScrollLeft = this.getScrollLeft();
+        const nextScrollTop = this.getScrollTop();
+
+        const zoomX = convertUnitSize(`${zoomOffsetX}`, containerWidth);
+        const zoomY = convertUnitSize(`${zoomOffsetY}`, containerHeight);
+
+        const centerX = scrollLeft + zoomX / prevZoom;
+        const centerY = scrollTop + zoomY / prevZoom;
+
+        const nextCenterX = nextScrollLeft + zoomX / nextZoom;
+        const nextCenterY = nextScrollTop + zoomY / nextZoom;
+
+        this._scrollBy(centerX - nextCenterX, centerY - nextCenterY);
+        this.render();
+    }
+    private _scrollBy(deltaX: number, deltaY: number) {
+        return this._scrollTo(this.getScrollLeft() + deltaX, this.getScrollTop() + deltaY);
+    }
+    private _scrollTo(x: number, y: number) {
+        const {
+            scrollLeft: prevScrollLeft,
+            scrollTop: prevScrollTop,
+        } = this;
+        this._scrollToType("horizontal", x);
+        this._scrollToType("vertical", y);
+
+        const scrollLeft = this.scrollLeft;
+        const scrollTop = this.scrollTop;
+        this.render();
+        const nextScrollAbsoluteLeft = this.getScrollLeft();
+        const nextScrollAbsoluteTop = this.getScrollTop();
+
+        this._emitScrollEvent(nextScrollAbsoluteLeft, nextScrollAbsoluteTop);
+
+        if (Math.round(prevScrollLeft) !== scrollLeft || Math.round(prevScrollTop) !== scrollTop) {
+            this.isLoop = true;
+            this.move(scrollLeft, scrollTop);
+            requestAnimationFrame(() => {
+                if (!this.isLoop) {
+                    return;
+                }
+                this.isLoop = false;
+                const {
+                    scrollLeft: requestScrollLeft,
+                    scrollTop: requestScrollTop,
+                } = this.wrapperElement;
+
+                this.scrollLeft = requestScrollLeft;
+                this.scrollTop = requestScrollTop;
+
+                if (
+                    scrollLeft !== Math.round(requestScrollLeft)
+                    || scrollTop !== Math.round(requestScrollTop)
+                ) {
+                    this._scrollTo(nextScrollAbsoluteLeft, nextScrollAbsoluteTop);
+                }
+            });
+            return false;
+        }
+        return true;
+    }
+    private _scrollToType(type: "horizontal" | "vertical", coord: number) {
+        const names = NAMES[type];
+        const {
+            zoom = DEFAULT_OPTIONS.zoom,
+            margin = DEFAULT_OPTIONS.margin,
+            threshold = DEFAULT_OPTIONS.threshold,
+        } = this;
+        const prevScrollPos = this[`scroll${names.pos}`];
+        const [minCoord, maxCoord] = this[`getRange${names.coord}`](true, true);
+
+        let scrollPos = Math.round(prevScrollPos);
+
+        const scrollAreaSize = this[`getScrollArea${names.size}`]();
+        const zoomCoord = coord * zoom;
+
+        if (minCoord === maxCoord) {
+            scrollPos = minCoord;
+            coord = minCoord / zoom;
+        } else if (zoomCoord - threshold &lt;= minCoord) {
+            const minThreshold = Math.max(0, zoomCoord - minCoord);
+
+            scrollPos = minThreshold;
+            coord = (minCoord + minThreshold) / zoom;
+        } else if (zoomCoord + threshold >= maxCoord) {
+            const maxThreshold = Math.max(0, maxCoord - zoomCoord);
+
+            scrollPos = scrollAreaSize - maxThreshold;
+            coord = (maxCoord - maxThreshold) / zoom;
+        } else if (scrollPos &lt; threshold) {
+            scrollPos += margin;
+        } else if (scrollPos > scrollAreaSize - threshold) {
+            scrollPos -= margin;
+        }
+
+        scrollPos = Math.round(scrollPos);
+
+        this[`scroll${names.pos}`] = scrollPos;
+        this[`offset${names.coord}`] = coord - scrollPos / zoom;
+    }
+    private _getRangeCoord(type: "vertical" | "horizontal", isZoom?: boolean, isReal?: boolean) {
+        const {
+            margin = DEFAULT_OPTIONS.margin,
+            zoom = DEFAULT_OPTIONS.zoom,
+            threshold,
+        } = this;
+        const names = NAMES[type];
+        const rangeCoord = checkDefault(this[`range${names.coord}`], DEFAULT_OPTIONS[`range${names.coord}`]);
+        const rangeOffsetCoord = checkDefault(this[`rangeOffset${names.coord}`], DEFAULT_OPTIONS[`rangeOffset${names.coord}`]);
+        const range = getRange(
+            this[`getScroll${names.pos}`](),
+            margin,
+            rangeCoord,
+            threshold,
+            isReal,
+        );
+
+        if (!isZoom) {
+            return [range[0] + rangeOffsetCoord[0], range[1] + rangeOffsetCoord[1]];
+        }
+        return [
+            range[0] * zoom + rangeOffsetCoord[0],
+            Math.max(this[`viewport${names.size}`] * zoom - this[`container${names.size}`], range[1] * zoom + rangeOffsetCoord[1]),
+        ];
+    }
+    private _emitScrollEvent(scrollLeft: number, scrollTop: number) {
+        const prevScrollLeft = this._asLeft;
+        const prevScrollTop = this._asTop;
+
+        if (prevScrollLeft === scrollLeft &amp;&amp; prevScrollTop === scrollTop) {
+            return;
+        }
+        this._asLeft = scrollLeft;
+        this._asTop = scrollTop;
+
+        /**
+         * The `scroll` event fires when the document view or an element has been scrolled.
+         * @memberof InfiniteViewer
+         * @event scroll
+         * @param {InfiniteViewer.OnScroll} - Parameters for the scroll event
+         * @example
+         * import InfiniteViewer from "infinite-viewer";
+         *
+         * const viewer = new InfiniteViewer(
+         *   document.querySelector(".container"),
+         *   document.querySelector(".viewport"),
+         * ).on("scroll", () => {
+         *   console.log(viewer.getScrollLeft(), viewer.getScrollTop());
+         * });
+         */
+        this.trigger("scroll", {
+            scrollLeft,
+            scrollTop,
+        });
+    }
+}
+
+interface InfiniteViewer extends InfiniteViewerProperties { }
+
+export default InfiniteViewer;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+<style>
+
+
+nav li[file="packages/infinite-viewer/src/infiniteviewermanager"]:after {
+    display: none;
+}
+nav li[file="packages/infinite-viewer/src/infiniteviewermanager"] h4, nav li[file="packages/infinite-viewer/src/infiniteviewermanager"] ul {
+    display: block;
+}
+</style>
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/daybrush/jsdoc">JSDoc 0.4.3</a> on Tue Oct 04 2022 02:48:11 GMT+0900 (대한민국 표준시) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/utils.min.js"></script>
+<script src="scripts/search.js"></script>
+<script src="scripts/custom.js"></script>
+</body>
+</html>

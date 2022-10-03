@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>node_modules/@scena/event-emitter/src/EventEmitter.ts - Documentation</title>
+    <title>packages/infinite-viewer/src/types.ts - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -14,7 +14,7 @@
     <link type="text/css" rel="stylesheet" href="styles/daybrush.css">
     <link type="text/css" rel="stylesheet" href="styles/custom.css">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <meta name="description" content="node_modules/@scena/event-emitter/src/EventEmitter.ts - Documentation"/>
+    <meta name="description" content="packages/infinite-viewer/src/types.ts - Documentation"/>
 
 </head>
 <body>
@@ -32,7 +32,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">node_modules/@scena/event-emitter/src/EventEmitter.ts</h1>
+    <h1 class="page-title">packages/infinite-viewer/src/types.ts</h1>
     
 
     
@@ -42,220 +42,235 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { findIndex, isObject } from "@daybrush/utils";
-import { EventListener, EventHash, EventInfo, EventOptions, OnEvent, TargetParam } from "./types";
+            <pre class="prettyprint source linenums"><code>import { PROPERTIES, METHODS } from "./consts";
+import InfiniteViewer from "./InfiniteViewer";
+import {
+    OnDrag as OnParentDrag
+} from "gesto";
 
 /**
- * Implement EventEmitter on object or component.
+ * @typedef
+ * @memberof InfiniteViewer
  */
-class EventEmitter&lt;Events extends {} = { [key: string]: { [key: string]: any } }> {
-
-    private _events: {
-        [name: string]: EventInfo[],
-    } = {};
-    public on&lt;Name extends keyof Events, Param = Events[Name]>(
-        eventName: Name, listener: EventListener&lt;Param, this>): this;
-    public on(events: EventHash&lt;Events, this>): this;
+export interface InfiniteViewerOptions {
     /**
-     * Add a listener to the registered event.
-     * @param - Name of the event to be added
-     * @param - listener function of the event to be added
-     * @example
-     * import EventEmitter from "@scena/event-emitter";
-     * cosnt emitter = new EventEmitter();
-     *
-     * // Add listener in "a" event
-     * emitter.on("a", () => {
-     * });
-     * // Add listeners
-     * emitter.on({
-     *  a: () => {},
-     *  b: () => {},
-     * });
+     * viewer's zoom
+     * @default 1
      */
-    public on(eventName: string | object, listener?: EventListener&lt;Events[any], this>): this {
-        if (isObject(eventName)) {
-            for (const name in eventName) {
-                this.on&lt;any>(name, eventName[name]);
-            }
-        } else {
-            this._addEvent(eventName, listener, {});
-        }
-        return this;
-    }
-    public off&lt;Name extends keyof Events, Param = Events[Name]>(
-        eventName?: Name, listener?: EventListener&lt;Param, this>): this;
-    public off(events: EventHash&lt;Events, this>): this;
+    zoom: number;
     /**
-     * Remove listeners registered in the event target.
-     * @param - Name of the event to be removed
-     * @param - listener function of the event to be removed
-     * @example
-     * import EventEmitter from "@scena/event-emitter";
-     * cosnt emitter = new EventEmitter();
-     *
-     * // Remove all listeners.
-     * emitter.off();
-     *
-     * // Remove all listeners in "A" event.
-     * emitter.off("a");
-     *
-     *
-     * // Remove "listener" listener in "a" event.
-     * emitter.off("a", listener);
+     * Horizontal scroll range [Left, Right]
+     * @default [-Infinity, Infinity]
      */
-    public off(eventName?: string | object, listener?: EventListener&lt;Events[any], this>): this {
-        if (!eventName) {
-            this._events = {};
-        } else if(isObject(eventName)) {
-            for (const name in eventName) {
-                this.off&lt;any>(name);
-            }
-        } else if (!listener) {
-            this._events[eventName] = [];
-        } else {
-            const events = this._events[eventName];
-
-            if (events) {
-                const index = findIndex(events, e => e.listener === listener);
-
-                if (index > -1) {
-                    events.splice(index, 1);
-                }
-            }
-        }
-        return this;
-    }
+    rangeX: number[];
     /**
-     * Add a disposable listener and Use promise to the registered event.
-     * @param - Name of the event to be added
-     * @param - disposable listener function of the event to be added
-     * @example
-     * import EventEmitter from "@scena/event-emitter";
-     * cosnt emitter = new EventEmitter();
-     *
-     * // Add a disposable listener in "a" event
-     * emitter.once("a", () => {
-     * });
-     *
-     * // Use Promise
-     * emitter.once("a").then(e => {
-     * });
+     * Vertical scroll range [Top, Bottom]
+     * @default [-Infinity, Infinity]
      */
-    public once&lt;Name extends keyof Events &amp; string, Param = Events[Name]>(
-        eventName: Name, listener?: EventListener&lt;Param, this>): Promise&lt;OnEvent&lt;Param, this>> {
-        if (listener) {
-            this._addEvent(eventName, listener, { once: true });
-        }
-        return new Promise&lt;OnEvent&lt;Param, this>>(resolve => {
-            this._addEvent(eventName, resolve, { once: true });
-        });
-    }
-    public emit&lt;Name extends keyof Events, Param = Events[Name]>(
-        eventName: {} extends Param ? Name : never): boolean;
-    public emit&lt;Name extends keyof Events, Param = Events[Name]>(
-        eventName: Name, param: TargetParam&lt;Param>): boolean;
+    rangeY: number[];
     /**
-     * Fires an event to call listeners.
-     * @param - Event name
-     * @param - Event parameter
-     * @return If false, stop the event.
-     * @example
-     *
-     * import EventEmitter from "@scena/event-emitter";
-     *
-     *
-     * const emitter = new EventEmitter();
-     *
-     * emitter.on("a", e => {
-     * });
-     *
-     *
-     * emitter.emit("a", {
-     *   a: 1,
-     * });
+     * Horizontal scroll range offset not affected by zoom [Left, Right]
+     * @default [0, 0]
      */
-    public emit(eventName: string, param: TargetParam&lt;any> = {}): boolean {
-        const events = this._events[eventName];
-
-        if (!eventName || !events) {
-            return true;
-        }
-        let isStop = false;
-
-        param.eventType = eventName;
-        param.stop = () => {
-            isStop = true;
-        };
-        param.currentTarget = this;
-
-
-        [...events].forEach(info => {
-            info.listener(param);
-            if (info.once) {
-                this.off&lt;any>(eventName, info.listener);
-            }
-        });
-
-        return !isStop;
-    }
-    public trigger&lt;Name extends keyof Events, Param = Events[Name]>(eventName: {} extends TargetParam&lt;Param> ? Name : never): boolean;
-    public trigger&lt;Name extends keyof Events, Param = Events[Name]>(eventName: Name, param: TargetParam&lt;Param>): boolean;
+    rangeOffsetX: number[];
     /**
-     * Fires an event to call listeners.
-     * @param - Event name
-     * @param - Event parameter
-     * @return If false, stop the event.
-     * @example
-     *
-     * import EventEmitter from "@scena/event-emitter";
-     *
-     *
-     * const emitter = new EventEmitter();
-     *
-     * emitter.on("a", e => {
-     * });
-     *
-     *
-     * emitter.emit("a", {
-     *   a: 1,
-     * });
-     *//**
-     * Fires an event to call listeners.
-     * @param - Event name
-     * @param - Event parameter
-     * @return If false, stop the event.
-     * @example
-     *
-     * import EventEmitter from "@scena/event-emitter";
-     *
-     *
-     * const emitter = new EventEmitter();
-     *
-     * emitter.on("a", e => {
-     * });
-     *
-     * // emit
-     * emitter.trigger("a", {
-     *   a: 1,
-     * });
+     * Vertical scroll range offset not affected by zoom [Top, Bottom]
+     * @default [0, 0]
      */
-    public trigger&lt;Name extends keyof Events>(eventName: Name, param: TargetParam&lt;any>= {}): boolean {
-        return this.emit&lt;any>(eventName, param);
-    }
+    rangeOffsetY: number[];
+    /**
+     * Offset left position for zoom operation
+     * @default "50%"
+     */
+    zoomOffsetX: number | string;
+    /**
+     * Offset top position for zoom operation.
+     * @default "50%"
+     */
+    zoomOffsetY: number | string;
+    /**
+     * Whether to pinch the scroll motion when the touch event is activated.
+     * @default false
+     */
+    usePinch: boolean;
+    /**
+     * Whether to use mouse drag
+     */
+    useMouseDrag: boolean;
+    /**
+     * Threshold at which pinch can be operated when the usePinch option is used.
+     * @default 50
+     */
+    pinchThreshold: number;
+    /**
+     * Whether zoom automatically updates when pinch occurs through wheel, gesture, or touch
+     * @default false
+     */
+    useAutoZoom: boolean;
+    /**
+     * Set the zoom range.
+     * @default [0.001, Infinity]
+     */
+    zoomRange: number[];
+    /**
+     * Whether to use wheel pinch. you can pinch using the ctrl key.
+     * @default true
+     */
+    useWheelPinch: boolean;
+    /**
+     * Key to use wheel pinch
+     * @default "ctrl"
+     */
+    wheelPinchKey: "ctrl" | "meta" | "alt" | "shift",
+    /**
+     * Whether to use wheel scroll. You can scroll smoothly by using the wheel.
+     * @default IS_SAFARI
+     */
+    useWheelScroll: boolean;
+    /**
+     * Whether to use gestures using trackpad or magic mouse.
+     * @default true
+     */
+    useGesture: boolean;
+    /**
+     * The max value of the wheel for pinch. If the wheel weight is too large, it can be adjusted.
+     * @default Infinity
+     */
+    maxPinchWheel: number;
+    /**
+     * Wheel of the delta scale.
+     * @default 0.01
+     */
+    wheelScale: number;
+    /**
+     * add nonce property to style for CSP
+     * @default ""
+     */
+    cspNonce: string;
+    /**
+     * Whether to show vertical scroll bar
+     * @default true
+     */
+    displayVerticalScroll: boolean;
+    /**
+     * Whether to show horizontal scroll bar
+     * @default true
+     */
+    displayHorizontalScroll: boolean;
 
-    private _addEvent(eventName: string, listener: EventListener&lt;Events[any], this>, options: Partial&lt;EventOptions>) {
-        const events = this._events;
-
-        events[eventName] = events[eventName] || [];
-
-        const listeners = events[eventName];
-
-        listeners.push({ listener, ...options });
-    }
+    /**
+     * Margin to determine the scroll area.
+     * @default 500
+     */
+    margin: number;
+    /**
+     * The size of the area to be infinite scrolled.
+     * @default 100
+     */
+    threshold: number;
+    /**
+     * Whether to use the transform property. If you don't use it, you can't use zoom.
+     * @default true
+     */
+    useTransform: boolean;
+    /**
+     * Set translateZ transform.
+     * @default 0
+     */
+    translateZ: number;
+    /**
+     * Whether to use the resize observer
+     * @default false
+     */
+    useResizeObserver: boolean;
+    wrapperElement: HTMLElement;
+    scrollAreaElement: HTMLElement;
+    verticalScrollElement: HTMLElement;
+    horizontalScrollElement: HTMLElement;
 }
-
-export default EventEmitter;
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface AnimationOptions {
+    easing?: (t: number) => number;
+    duration: number;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface OnScroll {
+    scrollLeft: number;
+    scrollTop: number;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface OnAbortPinch {
+    inputEvent: any;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface OnDragStart {
+    inputEvent: any;
+    stop(): void;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ * @extends Gesto.OnDrag
+ */
+export interface OnDrag extends OnParentDrag {
+    inputEvent: any;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface OnDragEnd {
+    isDrag: boolean;
+    isDouble: boolean;
+    inputEvent: any;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface OnPinchStart {
+    inputEvent: any;
+    stop(): void;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface OnPinch {
+    rotation: number;
+    distance: number;
+    scale: number;
+    zoom: number;
+    isWheel: boolean;
+    inputEvent: any;
+    clientX: number;
+    clientY: number;
+    ratioX: number;
+    ratioY: number;
+}
+export interface InfiniteViewerEvents {
+    scroll: OnScroll;
+    abortPinch: OnAbortPinch;
+    dragStart: OnDragStart;
+    drag: OnDrag;
+    dragEnd: OnDragEnd;
+    pinchStart: OnPinchStart;
+    pinch: OnPinch;
+}
+export type InfiniteViewerProperties = { [P in typeof PROPERTIES[number]]: InfiniteViewerOptions[P] };
+export type InfiniteViewerMethods = { [P in typeof METHODS[number]]: InfiniteViewer[P] };
 </code></pre>
         </article>
     </section>
@@ -267,10 +282,10 @@ export default EventEmitter;
 <style>
 
 
-nav li[file="node_modules/@scena/event-emitter/src/eventemitter"]:after {
+nav li[file="packages/infinite-viewer/src/types"]:after {
     display: none;
 }
-nav li[file="node_modules/@scena/event-emitter/src/eventemitter"] h4, nav li[file="node_modules/@scena/event-emitter/src/eventemitter"] ul {
+nav li[file="packages/infinite-viewer/src/types"] h4, nav li[file="packages/infinite-viewer/src/types"] ul {
     display: block;
 }
 </style>
