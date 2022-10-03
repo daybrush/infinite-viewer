@@ -204,6 +204,7 @@ export const METHODS = [
     "getScrollHeight",
     "scrollTo",
     "scrollBy",
+    "zoomBy",
     "scrollCenter",
     "getContainer",
     "getViewport",
