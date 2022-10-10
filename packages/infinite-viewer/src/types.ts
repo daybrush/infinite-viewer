@@ -150,7 +150,32 @@ export interface InfiniteViewerOptions {
  */
 export interface AnimationOptions {
     easing?: (t: number) => number;
-    duration: number;
+    duration?: number;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ * @extends InfiniteViewer.AnimationOptions
+ */
+ export interface ScrollOptions extends AnimationOptions {
+    /**
+     * How to calculate delta and scroll amount
+     * Whether to use it as an offset method before zoom is calculated
+     * @default false
+     */
+    absolute?: boolean;
+}
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ * @extends InfiniteViewer.AnimationOptions
+ */
+ export interface ZoomOptions extends AnimationOptions {
+    /**
+     * how to calculate zoom offset
+     * @default "screen"
+     */
+    zoomBase?: "screen" | "viewport";
 }
 /**
  * @typedef

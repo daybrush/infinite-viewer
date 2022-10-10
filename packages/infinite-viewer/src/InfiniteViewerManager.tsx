@@ -3,7 +3,7 @@ import Gesto from "gesto";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { camelize, IObject, addEvent, removeEvent, addClass, convertUnitSize, between } from "@daybrush/utils";
-import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents, OnPinch, AnimationOptions } from "./types";
+import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents, OnPinch, AnimationOptions, ScrollOptions, ZoomOptions } from "./types";
 import {
     PROPERTIES, injector, CLASS_NAME, TINY_NUM,
     DEFAULT_OPTIONS,
@@ -54,6 +54,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     private scrollTop: number = 0;
     private _scrollTimer = 0;
     private _zoomTimer = 0;
+
     private dragFlag: boolean = false;
     private isLoop: boolean = false;
     private _tempScale: number = 1;
@@ -163,12 +164,19 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     /**
      * Scroll the element to the center
      */
-    public scrollCenter(options?: AnimationOptions) {
+    public scrollCenter(options?: ScrollOptions) {
         this.resize();
 
         const zoom = this.zoom;
-        const left = -(this.containerWidth / zoom - this.viewportWidth) / 2;
-        const top = -(this.containerHeight / zoom - this.viewportHeight) / 2;
+
+        let left = -(this.containerWidth / zoom - this.viewportWidth) / 2;
+        let top = -(this.containerHeight / zoom - this.viewportHeight) / 2;
+
+        if (options?.absolute) {
+            left *= zoom;
+            top *= zoom;
+        }
+
 
         return this.scrollTo(left, top, options);
     }
@@ -197,10 +205,17 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     /**
      * Scrolls the container by the given amount.
      */
-    public scrollBy(deltaX: number, deltaY: number, options?: AnimationOptions) {
+    public scrollBy(deltaX: number, deltaY: number, options?: ScrollOptions) {
         this._pauseScrollAnimation();
         if (!options || !options.duration) {
-            return this.scrollTo(this.getScrollLeft() + deltaX, this.getScrollTop() + deltaY);
+            let scrollLeft = this.getScrollLeft();
+            let scrollTop = this.getScrollTop();
+
+            if (options?.absolute) {
+                scrollLeft *= this.zoom;
+                scrollTop *= this.zoom;
+            }
+            return this._scrollTo(scrollLeft + deltaX, scrollTop + deltaY, options);
         } else {
             this._startScrollAnimation([deltaX, deltaY], options);
             return true;
@@ -211,18 +226,25 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
      * @param scrollLeft
      * @param scrollTop
      */
-    public scrollTo(x: number, y: number, options?: AnimationOptions) {
+    public scrollTo(x: number, y: number, options?: ScrollOptions) {
         this._pauseScrollAnimation();
         if (!options || !options.duration) {
-            return this._scrollTo(x, y);
+            return this._scrollTo(x, y, options);
         } else {
-            return this.scrollBy(x - this.getScrollLeft(), y - this.getScrollTop(), options);
+            let scrollLeft = this.getScrollLeft();
+            let scrollTop = this.getScrollTop();
+
+            if (options?.absolute) {
+                scrollLeft *= this.zoom;
+                scrollTop *= this.zoom;
+            }
+            return this.scrollBy(x - scrollLeft, y - scrollTop, options);
         }
     }
     /**
      * Set viewer zoom by the given amount
      */
-    public zoomBy(deltaZoom: number, options?: AnimationOptions) {
+    public zoomBy(deltaZoom: number, options?: ZoomOptions) {
         this._pauseZoomAnimation();
 
         if (!options || !options.duration) {
@@ -661,7 +683,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     private onGestureEnd = () => {
 
     }
-    private _startZoomAnimation(dest: number, options: AnimationOptions) {
+    private _startZoomAnimation(dest: number, options: ZoomOptions) {
         if (!dest) {
             return;
         }
@@ -671,6 +693,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         startAnimation(
             distRatio => this._setZoom(
                 this.zoom + dest * distRatio,
+                options.zoomBase,
             ),
             next => {
                 this._zoomTimer = requestAnimationFrame(next);
@@ -685,6 +708,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         if (!dest[0] && !dest[1]) {
             return;
         }
+        console.log("SC A", dest, options);
         const duration = options.duration;
         const easing = options.easing || DEFAULT_EASING;
 
@@ -692,6 +716,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             distRatio => this._scrollBy(
                 dest[0] * distRatio,
                 dest[1] * distRatio,
+                options,
             ),
             next => {
                 this._scrollTimer = requestAnimationFrame(next);
@@ -717,9 +742,11 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     }
     private _pauseScrollAnimation() {
         cancelAnimationFrame(this._scrollTimer);
+        this._scrollTimer = 0;
     }
     private _pauseZoomAnimation() {
         cancelAnimationFrame(this._zoomTimer);
+        this._zoomTimer = 0;
     }
     private getScrollAreaWidth() {
         const [min, max] = this.getRangeX(true);
@@ -785,12 +812,15 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         options.zoomOffsetX = `${(clientX - left) / width * 100}%`;
         options.zoomOffsetY = `${(clientY - top) / height * 100}%`;
 
-        this._setZoom(zoom);
+        this._setZoom(zoom, "screen");
 
         options.zoomOffsetX = originalZoomOffsetX;
         options.zoomOffsetY = originalZoomOffsetY;
     }
-    private _setZoom(zoom: number) {
+    private _setZoom(
+        zoom: number,
+        zoomBase?: "screen" | "viewport",
+    ) {
         const {
             containerWidth,
             containerHeight,
@@ -812,8 +842,16 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         const nextScrollLeft = this.getScrollLeft();
         const nextScrollTop = this.getScrollTop();
 
-        const zoomX = convertUnitSize(`${zoomOffsetX}`, containerWidth);
-        const zoomY = convertUnitSize(`${zoomOffsetY}`, containerHeight);
+        let zoomX = 0;
+        let zoomY = 0;
+
+        if (zoomBase === "viewport") {
+            zoomX = (-scrollLeft + convertUnitSize(`${zoomOffsetX}`, this.viewportWidth)) * prevZoom;
+            zoomY = (-scrollTop + convertUnitSize(`${zoomOffsetY}`, this.viewportHeight)) * prevZoom;
+        } else {
+            zoomX = convertUnitSize(`${zoomOffsetX}`, containerWidth);
+            zoomY = convertUnitSize(`${zoomOffsetY}`, containerHeight);
+        }
 
         const centerX = scrollLeft + zoomX / prevZoom;
         const centerY = scrollTop + zoomY / prevZoom;
@@ -824,16 +862,25 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         this._scrollBy(centerX - nextCenterX, centerY - nextCenterY);
         this.render();
     }
-    private _scrollBy(deltaX: number, deltaY: number) {
-        return this._scrollTo(this.getScrollLeft() + deltaX, this.getScrollTop() + deltaY);
+    private _scrollBy(deltaX: number, deltaY: number, options?: ScrollOptions) {
+        let scrollLeft = this.getScrollLeft();
+        let scrollTop = this.getScrollTop();
+
+        if (options?.absolute) {
+            scrollLeft *= this.zoom;
+            scrollTop *= this.zoom;
+        }
+        return this._scrollTo(scrollLeft + deltaX, scrollTop + deltaY, options);
     }
-    private _scrollTo(x: number, y: number) {
+    private _scrollTo(x: number, y: number, options?: ScrollOptions) {
         const {
             scrollLeft: prevScrollLeft,
             scrollTop: prevScrollTop,
         } = this;
-        this._scrollToType("horizontal", x);
-        this._scrollToType("vertical", y);
+
+        const isAbsolute = options?.absolute;
+        this._scrollToType("horizontal", x, isAbsolute);
+        this._scrollToType("vertical", y, isAbsolute);
 
         const scrollLeft = this.scrollLeft;
         const scrollTop = this.scrollTop;
@@ -870,7 +917,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         }
         return true;
     }
-    private _scrollToType(type: "horizontal" | "vertical", coord: number) {
+    private _scrollToType(type: "horizontal" | "vertical", coord: number, isAbsolute?: boolean) {
         const names = NAMES[type];
         const {
             zoom = DEFAULT_OPTIONS.zoom,
@@ -883,6 +930,10 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         let scrollPos = Math.round(prevScrollPos);
 
         const scrollAreaSize = this[`getScrollArea${names.size}`]();
+
+        if (isAbsolute) {
+            coord = coord / zoom;
+        }
         const zoomCoord = coord * zoom;
 
         if (minCoord === maxCoord) {
