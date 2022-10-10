@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.0](https://github.com/daybrush/infinite-viewer/compare/0.17.0...0.18.0) (2022-10-10)
+### :sparkles: Packages
+* `infinite-viewer` 0.18.0
+* `lit-infinite-viewer` 0.17.0
+* `preact-infinite-viewer` 0.15.0
+* `react-infinite-viewer` 0.18.0
+* `svelte-infinite-viewer` 0.17.0
+* `vue-infinite-viewer` 0.17.0
+* `vue3-infinite-viewer` 0.7.0
+* `ngx-infinite-viewer` 0.17.0
+
+
+### :rocket: New Features
+
+* `infinite-viewer`
+    * add zoomBase, absolute option properties #34 ([c3850d6](https://github.com/daybrush/infinite-viewer/commit/c3850d654549af8d3cf393827356f107d7b69687))
+
+
+### :memo: Documentation
+
+* `infinite-viewer`
+    * fix ScrollOptions docs ([7dc089e](https://github.com/daybrush/infinite-viewer/commit/7dc089e96da2d5f45c4709bd2ba74714df1e2d41))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([5fe5410](https://github.com/daybrush/infinite-viewer/commit/5fe5410328336014b62b899bfbdd642768372563))
+
+
+
 ## [0.17.0](https://github.com/daybrush/infinite-viewer/compare/0.16.5...0.17.0) (2022-10-03)
 ### :sparkles: Packages
 * `infinite-viewer` 0.17.0

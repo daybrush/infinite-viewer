@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.17.0...infinite-viewer@0.18.0) (2022-10-10)
+
+
+### :rocket: New Features
+
+* add zoomBase, absolute option properties #34 ([c3850d6](https://github.com/daybrush/infinite-viewer/commit/c3850d654549af8d3cf393827356f107d7b69687))
+
+
+### :memo: Documentation
+
+* fix ScrollOptions docs ([7dc089e](https://github.com/daybrush/infinite-viewer/commit/7dc089e96da2d5f45c4709bd2ba74714df1e2d41))
+
+
+### :mega: Other
+
+* publish packages ([5fe5410](https://github.com/daybrush/infinite-viewer/commit/5fe5410328336014b62b899bfbdd642768372563))
+
+
+
 ## [0.17.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.16.5...infinite-viewer@0.17.0) (2022-10-03)
 
 
