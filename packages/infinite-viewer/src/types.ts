@@ -160,7 +160,7 @@ export interface AnimationOptions {
  export interface ScrollOptions extends AnimationOptions {
     /**
      * How to calculate delta and scroll amount
-     * Whether to use it as an offset method before zoom is calculated
+     * Whether to calculate scroll amount based on screen
      * @default false
      */
     absolute?: boolean;
