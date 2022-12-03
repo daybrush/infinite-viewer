@@ -160,7 +160,7 @@ export interface AnimationOptions {
 export interface ScrollOptions extends AnimationOptions {
     /**
      * How to calculate delta and scroll amount
-     * Whether to calculate scroll amount based on screen (offset)
+     * Whether to calculate scroll amount based on screen (client)
      * @default false
      */
     absolute?: boolean;
@@ -178,7 +178,7 @@ export interface GetScollPosOptions {
     range?: boolean;
     /**
      * How to get scroll pos
-     * Whether to calculate scroll amount based on screen (offset)
+     * Whether to calculate scroll amount based on screen (client)
      * @default false
      */
     absolute?: boolean;
