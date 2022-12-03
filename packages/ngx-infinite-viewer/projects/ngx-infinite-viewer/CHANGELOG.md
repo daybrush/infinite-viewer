@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.0](https://github.com/daybrush/infinite-viewer/compare/ngx-infinite-viewer@0.17.0...ngx-infinite-viewer@0.18.0) (2022-12-03)
+
+
+### :mega: Other
+
+* publish packages ([a278865](https://github.com/daybrush/infinite-viewer/commit/a27886520517db13db611cbede6861be1b7f090a))
+
+
+
 ## [0.17.0](https://github.com/daybrush/infinite-viewer/compare/ngx-infinite-viewer@0.16.0...ngx-infinite-viewer@0.17.0) (2022-10-10)
 
 

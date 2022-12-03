@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.0](https://github.com/daybrush/infinite-viewer/blob/master/packages/vue-infinite-viewer/compare/vue3-infinite-viewer@0.7.0...vue3-infinite-viewer@0.8.0) (2022-12-03)
+
+
+### :bug: Bug Fix
+
+* fix tsconfig for comments ([7314648](https://github.com/daybrush/infinite-viewer/blob/master/packages/vue-infinite-viewer/commit/73146488f0a9308aa4db99a473269ddb744e18af))
+
+
+### :mega: Other
+
+* publish packages ([a278865](https://github.com/daybrush/infinite-viewer/blob/master/packages/vue-infinite-viewer/commit/a27886520517db13db611cbede6861be1b7f090a))
+
+
+
 ## [0.7.0](https://github.com/daybrush/infinite-viewer/blob/master/packages/vue-infinite-viewer/compare/vue3-infinite-viewer@0.6.0...vue3-infinite-viewer@0.7.0) (2022-10-10)
 
 
