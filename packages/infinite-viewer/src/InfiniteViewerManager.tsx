@@ -2,7 +2,7 @@ import EventEmitter from "@scena/event-emitter";
 import Gesto from "gesto";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
-import { camelize, IObject, addEvent, removeEvent, addClass, convertUnitSize, between } from "@daybrush/utils";
+import { camelize, IObject, addEvent, removeEvent, addClass, convertUnitSize, between, isObject } from "@daybrush/utils";
 import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents, OnPinch, AnimationOptions, ScrollOptions, ZoomOptions, GetScollPosOptions } from "./types";
 import {
     PROPERTIES, injector, CLASS_NAME, TINY_NUM,
@@ -131,22 +131,40 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     /**
      * Gets the number of pixels that an element's content is scrolled vertically.
      */
-    public getScrollTop(options: GetScollPosOptions = {}) {
+    public getScrollTop(options: GetScollPosOptions | boolean = {}) {
+        let range = false;
+        let absolute = false;
+
+        if (isObject(options)) {
+            range = options.range;
+            absolute = options.absolute;
+        } else {
+            range = options;
+        }
         const zoom = this.zoom;
         const pos = this.scrollTop / zoom + this.offsetY
-            + (options.range ? abs(this.getRangeY()[0]) : 0);
+            + (range ? abs(this.getRangeY()[0]) : 0);
 
-        return options.absolute ? pos * zoom : pos;
+        return absolute ? pos * zoom : pos;
     }
     /**
      * Gets the number of pixels that an element's content is scrolled vertically.
      */
-    public getScrollLeft(options: GetScollPosOptions = {}) {
+    public getScrollLeft(options: GetScollPosOptions | boolean = {}) {
+        let range = false;
+        let absolute = false;
+
+        if (isObject(options)) {
+            range = options.range;
+            absolute = options.absolute;
+        } else {
+            range = options;
+        }
         const zoom = this.zoom;
         const pos = this.scrollLeft / zoom + this.offsetX
-            + (options.range ? abs(this.getRangeX()[0]) : 0);
+            + (range ? abs(this.getRangeX()[0]) : 0);
 
-        return options.absolute ? pos * zoom : pos;
+        return absolute ? pos * zoom : pos;
     }
     /**
      * Gets measurement of the width of an element's content with overflow
