@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.19.1](https://github.com/daybrush/infinite-viewer/compare/0.19.0...0.19.1) (2022-12-03)
+### :sparkles: Packages
+* `infinite-viewer` 0.19.1
+* `lit-infinite-viewer` 0.18.1
+* `preact-infinite-viewer` 0.16.1
+* `react-infinite-viewer` 0.19.1
+* `svelte-infinite-viewer` 0.18.1
+* `vue-infinite-viewer` 0.18.1
+* `vue3-infinite-viewer` 0.8.1
+* `ngx-infinite-viewer` 0.18.1
+
+
+### :bug: Bug Fix
+
+* `infinite-viewer`
+    * fix getScrollPos first param type ([ee3aecc](https://github.com/daybrush/infinite-viewer/commit/ee3aecc9104a6dc16173cf37078e18cb4bd413c2))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([f988006](https://github.com/daybrush/infinite-viewer/commit/f98800609ce749dfd28da11af42448c310ef252f))
+
+
+
 ## [0.19.0](https://github.com/daybrush/infinite-viewer/compare/0.18.0...0.19.0) (2022-12-03)
 ### :sparkles: Packages
 * `infinite-viewer` 0.19.0

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.19.1](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.19.0...infinite-viewer@0.19.1) (2022-12-03)
+
+
+### :bug: Bug Fix
+
+* fix getScrollPos first param type ([ee3aecc](https://github.com/daybrush/infinite-viewer/commit/ee3aecc9104a6dc16173cf37078e18cb4bd413c2))
+
+
+### :mega: Other
+
+* publish packages ([f988006](https://github.com/daybrush/infinite-viewer/commit/f98800609ce749dfd28da11af42448c310ef252f))
+
+
+
 ## [0.19.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.18.0...infinite-viewer@0.19.0) (2022-12-03)
 
 
