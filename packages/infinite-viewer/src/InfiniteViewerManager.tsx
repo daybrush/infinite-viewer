@@ -3,7 +3,7 @@ import Gesto from "gesto";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { camelize, IObject, addEvent, removeEvent, addClass, convertUnitSize, between } from "@daybrush/utils";
-import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents, OnPinch, AnimationOptions, ScrollOptions, ZoomOptions } from "./types";
+import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents, OnPinch, AnimationOptions, ScrollOptions, ZoomOptions, GetScollPosOptions } from "./types";
 import {
     PROPERTIES, injector, CLASS_NAME, TINY_NUM,
     DEFAULT_OPTIONS,
@@ -130,19 +130,23 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     }
     /**
      * Gets the number of pixels that an element's content is scrolled vertically.
-     * @param - Get absolute top position
      */
-    public getScrollTop(isAbsolute?: boolean) {
-        return this.scrollTop / this.zoom + this.offsetY
-            + (isAbsolute ? abs(this.getRangeY()[0]) : 0);
+    public getScrollTop(options: GetScollPosOptions = {}) {
+        const zoom = this.zoom;
+        const pos = this.scrollTop / zoom + this.offsetY
+            + (options.range ? abs(this.getRangeY()[0]) : 0);
+
+        return options.absolute ? pos * zoom : pos;
     }
     /**
      * Gets the number of pixels that an element's content is scrolled vertically.
-     * @param - Get absolute left position
      */
-    public getScrollLeft(isAbsolute?: boolean) {
-        return this.scrollLeft / this.zoom + this.offsetX
-            + (isAbsolute ? abs(this.getRangeX()[0]) : 0);
+    public getScrollLeft(options: GetScollPosOptions = {}) {
+        const zoom = this.zoom;
+        const pos = this.scrollLeft / zoom + this.offsetX
+            + (options.range ? abs(this.getRangeX()[0]) : 0);
+
+        return options.absolute ? pos * zoom : pos;
     }
     /**
      * Gets measurement of the width of an element's content with overflow
@@ -562,8 +566,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             containerHeight,
             zoom,
         } = this;
-        const scrollLeft = this.getScrollLeft(true) * zoom;
-        const scrollTop = this.getScrollTop(true) * zoom;
+        const scrollLeft = this.getScrollLeft({ range: true }) * zoom;
+        const scrollTop = this.getScrollTop({ range: true }) * zoom;
         const scrollWidth = this.getScrollWidth(true);
         const scrollHeight = this.getScrollHeight(true);
 

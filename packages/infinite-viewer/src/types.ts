@@ -157,20 +157,39 @@ export interface AnimationOptions {
  * @memberof InfiniteViewer
  * @extends InfiniteViewer.AnimationOptions
  */
- export interface ScrollOptions extends AnimationOptions {
+export interface ScrollOptions extends AnimationOptions {
     /**
      * How to calculate delta and scroll amount
-     * Whether to calculate scroll amount based on screen
+     * Whether to calculate scroll amount based on screen (offset)
      * @default false
      */
     absolute?: boolean;
 }
+
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ */
+export interface GetScollPosOptions {
+    /**
+     * Whether to get scroll value including range
+     * @default false
+     */
+    range?: boolean;
+    /**
+     * How to get scroll pos
+     * Whether to calculate scroll amount based on screen (offset)
+     * @default false
+     */
+    absolute?: boolean;
+}
+
 /**
  * @typedef
  * @memberof InfiniteViewer
  * @extends InfiniteViewer.AnimationOptions
  */
- export interface ZoomOptions extends AnimationOptions {
+export interface ZoomOptions extends AnimationOptions {
     /**
      * how to calculate zoom offset
      * @default "screen"

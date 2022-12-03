@@ -144,6 +144,34 @@
         color: black;
         font-weight: bold;
     }
+
+    .component .logo:after {
+        content: "";
+        height: calc(100% + 46px);
+        width: calc(100% + 46px);
+        position: absolute;
+        opacity: 1;
+        left: -23px;
+        top: -23px;
+        background:
+            linear-gradient(to right, black 0.5rem, transparent 0.5rem) 0 0,
+            linear-gradient(to right, black 0.5rem, transparent 0.5rem) 0 100%,
+            linear-gradient(to left, black 0.5rem, transparent 0.5rem) 100% 0,
+            linear-gradient(to left, black 0.5rem, transparent 0.5rem) 100% 100%,
+            linear-gradient(to bottom, black 0.5rem, transparent 0.5rem) 0 0,
+            linear-gradient(to bottom, black 0.5rem, transparent 0.5rem) 100% 0,
+            linear-gradient(to top, black 0.5rem, transparent 0.5rem) 0 100%,
+            linear-gradient(to top, black 0.5rem, transparent 0.5rem) 100% 100%;
+            background-repeat: no-repeat;
+            background-size: 1.875rem 1.875rem;
+            /* ,
+
+
+            linear-gradient(to bottom, black 0.5rem, transparent 0.5rem) 100% 100%,
+            linear-gradient(to top, black 0.5rem, transparent 0.5rem) 0 100%,
+            linear-gradient(to top, black 0.5rem, transparent 0.5rem) 100% 100%, */
+
+    }
 </style>
 <div class="app">
     <div class="reset"></div>
@@ -189,7 +217,8 @@
 <!-- <script src="../../selecto/dist/selecto.js"></script> -->
 <script src="https://daybrush.com/selecto/release/latest/dist/selecto.js"></script>
 <script src="https://daybrush.com/guides/release/latest/dist/guides.js"></script>
-<script src="https://daybrush.com/moveable/release/latest/dist/moveable.js"></script>
+<script src="../../../../moveable/packages/moveable/dist/moveable.js"></script>
+<!-- <script src="https://daybrush.com/moveable/release/latest/dist/moveable.js"></script> -->
 <script src="https://daybrush.com/moveable-helper/release/latest/dist/moveable-helper.js"></script>
 <script>
     let targets = [];
@@ -200,21 +229,33 @@
         rotatable: true,
         snappable: true,
         snapCenter: true,
+        scrollable: true,
+        scrollContainer: () => viewer.getContainer(),
+        getScrollPosition: ({ direction }) => {
+            return [
+                viewer.getScrollLeft({ absolute: true }),
+                viewer.getScrollTop({ absolute: true }),
+            ];
+        },
+        scrollThreshold: 30,
+        scrollThrottleTime: 30,
     });
     const helper = MoveableHelper.create();
     moveable
-        .on("dragStart", helper.onDragStart)
-        .on("drag", helper.onDrag)
-        .on("dragGroupStart", helper.onDragGroupStart)
-        .on("dragGroup", helper.onDragGroup)
-        .on("scaleStart", helper.onScaleStart)
-        .on("scale", helper.onScale)
-        .on("scaleGroupStart", helper.onScaleGroupStart)
-        .on("scaleGroup", helper.onScaleGroup)
-        .on("rotateStart", helper.onRotateStart)
-        .on("rotate", helper.onRotate)
-        .on("rotateGroupStart", helper.onRotateGroupStart)
-        .on("rotateGroup", helper.onRotateGroup)
+        .on("drag", e => {
+            console.log('DD', e.delta, e.dist, e.style.transform);
+        })
+        .on("render", e => {
+            e.target.style.cssText += e.cssText;
+        })
+        .on("renderGroup", e => {
+            e.events.forEach(ev => {
+                ev.target.style.cssText += ev.cssText;
+            });
+        })
+        .on("scroll", ({ direction }) => {
+            viewer.scrollBy(direction[0] * 10, direction[1] * 10);
+        })
         .on("snap", e => {
             // console.log(e);
         });
@@ -304,8 +345,8 @@
             throttleTime: 30,
             getScrollPosition: ({ direction }) => {
                 return [
-                    viewer.getScrollLeft(),
-                    viewer.getScrollTop(),
+                    viewer.getScrollLeft({ absolute: true }),
+                    viewer.getScrollTop({ absolute: true }),
                 ];
             }
         }
@@ -337,7 +378,8 @@
     });
 
     requestAnimationFrame(() => {
-        viewer.scrollCenter();
+        // viewer.scrollCenter();
+        viewer.setZoom(0.5);
     });
 
     window.addEventListener("resize", () => {

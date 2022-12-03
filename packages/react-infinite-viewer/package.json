@@ -8,7 +8,7 @@
   "types": "declaration/index.d.ts",
   "scripts": {
     "lint": "tslint -c tslint.json 'src/react-infinite-viewer/**/*.ts' 'src/react-infinite-viewer/**/*.tsx'",
-    "start": "react-scripts start",
+    "start": "SKIP_PREFLIGHT_CHECK=true react-scripts start",
     "build": "rollup -c && npm run declaration && print-sizes ./dist ",
     "declaration": "rm -rf declaration && tsc -p tsconfig.declaration.json",
     "packages": "pvu --path=../ --update=preact-infinite-viewer --build=preact-infinite-viewer --publish=preact-infinite-viewer"

@@ -7253,6 +7253,14 @@ daybrush-jsdoc-template@^1.7.0:
     "@daybrush/jsdoc" "^0.4.0"
     "@daybrush/utils" "^1.6.0"
 
+daybrush-jsdoc-template@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.npmjs.org/daybrush-jsdoc-template/-/daybrush-jsdoc-template-1.8.0.tgz#ea0aaa4eb9e5304fd89682d07330413ccddafb21"
+  integrity sha512-/d+XmFMaBxys49djBMpHUfER3f22OTKKKIfkg/JGY4oXf4hG5rH7PCFhyvk86jvJ6PP5okc+j3MXK60jreB3qQ==
+  dependencies:
+    "@daybrush/jsdoc" "^0.4.0"
+    "@daybrush/utils" "^1.6.0"
+
 de-indent@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
