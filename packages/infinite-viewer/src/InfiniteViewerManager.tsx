@@ -730,7 +730,6 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         if (!dest[0] && !dest[1]) {
             return;
         }
-        console.log("SC A", dest, options);
         const duration = options.duration;
         const easing = options.easing || DEFAULT_EASING;
 
