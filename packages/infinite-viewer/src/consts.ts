@@ -219,6 +219,9 @@ export const METHODS = [
     "getRangeX",
     "getRangeY",
     "resize",
+    "getZoom",
+    "getZoomX",
+    "getZoomY",
 ] as const;
 
 export const TINY_NUM = 0.000001;
