@@ -92,6 +92,8 @@ export const DEFAULT_OPTIONS = {
     margin: 500,
     threshold: 100,
     zoom: 1,
+    zoomX: 1,
+    zoomY: 1,
     rangeX: [-Infinity, Infinity],
     rangeY: [-Infinity, Infinity],
     rangeOffsetX: [0, 0],
@@ -119,6 +121,7 @@ export const DEFAULT_OPTIONS = {
     translateZ: 0,
     useGesture: true,
     useResizeObserver: false,
+    pinchDirection: "all" as const,
 };
 
 export const DEFAULT_EASING = (x: number) => 1 - Math.pow(1 - x, 3);
@@ -148,6 +151,8 @@ export const PROPERTIES = [
     "zoomOffsetX",
     "zoomOffsetY",
     "zoom",
+    "zoomX",
+    "zoomY",
     "rangeX",
     "rangeY",
     "rangeOffsetX",
@@ -164,6 +169,7 @@ export const PROPERTIES = [
     "useAutoZoom",
     "wheelPinchKey",
     "zoomRange",
+    "pinchDirection",
 ] as const;
 
 /**

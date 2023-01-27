@@ -11,6 +11,7 @@ import {
 export interface InfiniteViewerOptions {
     /**
      * viewer's zoom
+     * If you use the zoomX and zoomY properties, don't use the zoom property.
      * @default 1
      */
     zoom: number;
@@ -113,7 +114,6 @@ export interface InfiniteViewerOptions {
      * @default true
      */
     displayHorizontalScroll: boolean;
-
     /**
      * Margin to determine the scroll area.
      * @default 500
@@ -139,9 +139,40 @@ export interface InfiniteViewerOptions {
      * @default false
      */
     useResizeObserver: boolean;
+    /**
+     * viewer's zoomX
+     * If you use the zoom property, don't use the zoomX and zoomY properties.
+     * @since 0.20.0
+     */
+    zoomX: number;
+    /**
+     * viewer's zoomY
+     * If you use the zoom property, don't use the zoomX and zoomY properties.
+     * @since 0.20.0
+     */
+    zoomY: number;
+    /**
+     * pinch direction
+     * If only one direction is set, only the zoom value in that direction is changed.
+     * @since 0.20.0
+     * @default "all"
+     */
+    pinchDirection: "all" | "horizontal" | "vertical";
+    /**
+     * @private
+     */
     wrapperElement: HTMLElement;
+    /**
+     * @private
+     */
     scrollAreaElement: HTMLElement;
+    /**
+     * @private
+     */
     verticalScrollElement: HTMLElement;
+    /**
+     * @private
+     */
     horizontalScrollElement: HTMLElement;
 }
 /**
@@ -253,6 +284,14 @@ export interface OnPinch {
     distance: number;
     scale: number;
     zoom: number;
+    /**
+     * @since 0.20.0
+     */
+    zoomX: number;
+    /**
+     * @since 0.20.0
+     */
+    zoomY: number;
     isWheel: boolean;
     inputEvent: any;
     clientX: number;

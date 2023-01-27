@@ -1738,10 +1738,33 @@
   dependencies:
     "@daybrush/utils" "^0.10.3"
 
-"@daybrush/jsdoc@^0.4.0", "@daybrush/jsdoc@^0.4.1", "@daybrush/jsdoc@^0.4.3":
+"@daybrush/jsdoc@^0.4.0":
   version "0.4.3"
   resolved "https://registry.npmjs.org/@daybrush/jsdoc/-/jsdoc-0.4.3.tgz#9073899e099e5faa5a7e8d34dcd22766b84e1681"
   integrity sha512-0ZbqoitrE060eNOFQzW+TdzNqQSTQnWYHMqwLhrsFpPZy8GzorTdZwNll9XxKcDFoTR0sphcv1OKh9odHfLuvw==
+  dependencies:
+    "@babel/parser" "^7.2.3"
+    "@babel/types" "^7.2.2"
+    "@daybrush/utils" "^1.6.0"
+    ast-parser "^0.2.0"
+    bluebird "~3.5.0"
+    catharsis "~0.8.9"
+    escape-string-regexp "~1.0.5"
+    js2xmlparser "~3.0.0"
+    klaw "~2.0.0"
+    markdown-it "~8.3.1"
+    markdown-it-named-headers "~0.0.4"
+    marked "~0.3.6"
+    mkdirp "~0.5.1"
+    requizzle "~0.2.1"
+    strip-json-comments "~2.0.1"
+    taffydb "2.6.2"
+    underscore "~1.8.3"
+
+"@daybrush/jsdoc@^0.4.5":
+  version "0.4.5"
+  resolved "https://registry.npmjs.org/@daybrush/jsdoc/-/jsdoc-0.4.5.tgz#4659645e76c2c993f4ddd5640168431a31083301"
+  integrity sha512-rp8P7u/3mRTiPX9W6N6ZTPBVXEnn8qY8W44KjEne2dbfcBAa7j3POM4+yPVDi7oHmUET8iqYgbqE4uybQpUi2g==
   dependencies:
     "@babel/parser" "^7.2.3"
     "@babel/types" "^7.2.2"
@@ -1791,7 +1814,7 @@
   dependencies:
     prototype-minify "^1.0.0"
 
-"@daybrush/utils@1.6.0", "@daybrush/utils@^0.10.0", "@daybrush/utils@^0.10.1", "@daybrush/utils@^0.10.3", "@daybrush/utils@^0.11.0", "@daybrush/utils@^1.0.0", "@daybrush/utils@^1.1.1", "@daybrush/utils@^1.3.1", "@daybrush/utils@^1.4.0", "@daybrush/utils@^1.6.0", "@daybrush/utils@^1.7.1", "@daybrush/utils@^1.9.1":
+"@daybrush/utils@^0.10.0", "@daybrush/utils@^0.10.1", "@daybrush/utils@^0.10.3", "@daybrush/utils@^0.11.0", "@daybrush/utils@^1.0.0", "@daybrush/utils@^1.1.1", "@daybrush/utils@^1.3.1", "@daybrush/utils@^1.4.0", "@daybrush/utils@^1.6.0", "@daybrush/utils@^1.7.1", "@daybrush/utils@^1.9.1":
   version "1.10.0"
   resolved "https://registry.npmjs.org/@daybrush/utils/-/utils-1.10.0.tgz#2a2235269b960b7ffaf05ca2e75379ea1fb58204"
   integrity sha512-IDT0DWAGcjxb2+WMr8pHrVTkHVKdilBumX1SubXJUlowN4rMSLphwDxvMNfv+vQOrdCPXSoPVZ3mhfrHsQ9Xow==
@@ -3044,11 +3067,11 @@
     picomatch "^2.2.2"
 
 "@scena/dragscroll@^0.2.1", "@scena/dragscroll@^1.2.0":
-  version "1.2.1"
-  resolved "https://registry.npmjs.org/@scena/dragscroll/-/dragscroll-1.2.1.tgz#123b9dca1b41e5fce695ff6c9556c909df42df5c"
-  integrity sha512-bVJGC9ZpShoQB1yTRXYRhkAzC6KAlvlRPEiPb4tz15lda5F5va1wX1oeZpLTxmmHkf0x/AeVI1eolWihkILS4Q==
+  version "1.4.0"
+  resolved "https://registry.npmjs.org/@scena/dragscroll/-/dragscroll-1.4.0.tgz#220b2430c16119cd3e70044ee533a5b9a43cffd7"
+  integrity sha512-3O8daaZD9VXA9CP3dra6xcgt/qrm0mg0xJCwiX6druCteQ9FFsXffkF8PrqxY4Z4VJ58fFKEa0RlKqbsi/XnRA==
   dependencies:
-    "@daybrush/utils" "1.6.0"
+    "@daybrush/utils" "^1.6.0"
     "@scena/event-emitter" "^1.0.2"
 
 "@scena/event-emitter@^1.0.2", "@scena/event-emitter@^1.0.5":
@@ -3453,9 +3476,9 @@
     "@types/react" "^16"
 
 "@types/react@^16", "@types/react@^16.9.17":
-  version "16.14.32"
-  resolved "https://registry.npmjs.org/@types/react/-/react-16.14.32.tgz#d4e4fe5ece3c27fcb4608b1f4a614f7dec881392"
-  integrity sha512-hvEy4vGVADbtj/U6+CA5SRC5QFIjdxD7JslAie8EuAYZwhYY9bgforpXNyF1VFzhnkEOesDy1278t1wdjN74cw==
+  version "16.14.35"
+  resolved "https://registry.npmjs.org/@types/react/-/react-16.14.35.tgz#9d3cf047d85aca8006c4776693124a5be90ee429"
+  integrity sha512-NUEiwmSS1XXtmBcsm1NyRRPYjoZF2YTE89/5QiLt5mlGffYK9FQqOKuOLuXNrjPQV04oQgaZG+Yq02ZfHoFyyg==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -7253,10 +7276,10 @@ daybrush-jsdoc-template@^1.7.0:
     "@daybrush/jsdoc" "^0.4.0"
     "@daybrush/utils" "^1.6.0"
 
-daybrush-jsdoc-template@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.npmjs.org/daybrush-jsdoc-template/-/daybrush-jsdoc-template-1.8.0.tgz#ea0aaa4eb9e5304fd89682d07330413ccddafb21"
-  integrity sha512-/d+XmFMaBxys49djBMpHUfER3f22OTKKKIfkg/JGY4oXf4hG5rH7PCFhyvk86jvJ6PP5okc+j3MXK60jreB3qQ==
+daybrush-jsdoc-template@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.npmjs.org/daybrush-jsdoc-template/-/daybrush-jsdoc-template-1.9.0.tgz#37928594472ea1a85c3e3a942773aa9e86d92fc0"
+  integrity sha512-SEDdYXExYNDIYayTyiZSYnijwyT8tqmtDy2VOEdLOG1Oi2A4LWvKeYkjURF+8uTFawC6r3HDETaA9ldU752ufQ==
   dependencies:
     "@daybrush/jsdoc" "^0.4.0"
     "@daybrush/utils" "^1.6.0"
@@ -9381,9 +9404,9 @@ gensync@^1.0.0-beta.1, gensync@^1.0.0-beta.2:
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
 
 gesto@^1.12.2, gesto@^1.13.0:
-  version "1.13.3"
-  resolved "https://registry.npmjs.org/gesto/-/gesto-1.13.3.tgz#2d66c8de7dae80ddc7b580cb6e360d15e11263fc"
-  integrity sha512-OIOS19KzUWAqYrdV/g/j0WRbuCDorA3/E8+kBUGSV+AW9sgzrKtB3HuGTK8mfZQRJw21QRxrM5awZiR6qTd49g==
+  version "1.15.1"
+  resolved "https://registry.npmjs.org/gesto/-/gesto-1.15.1.tgz#16eb927f5319995abca37bafafe90d423be0becf"
+  integrity sha512-mqdBeVeYpymupHojEEyH33u0KvL/hbG6gKbqoQKoR7aeWrN82CIXYZkAo4Ie81PUhxS5HNDdmJVcSzqOpPm0JQ==
   dependencies:
     "@daybrush/utils" "^1.7.1"
     "@scena/event-emitter" "^1.0.2"

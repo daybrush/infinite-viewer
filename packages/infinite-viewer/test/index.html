@@ -294,6 +294,7 @@
             useWheelScroll: true,
             zoomRange: [0.1, 10],
             maxPinchWheel: 10,
+            pinchDirection: "horizontal",
         }
     ).on("dragStart", e => {
         const target = e.inputEvent.target;
@@ -313,20 +314,24 @@
         selecto.triggerDragStart(e.inputEvent);
     }).on("scroll", e => {
         // console.log("Change SCROLL", e.scrollLeft);
-        const zoom = viewer.zoom;
-        horizontalGuides.scroll(e.scrollLeft, zoom);
-        horizontalGuides.scrollGuides(e.scrollTop, zoom);
+        const zoomX = viewer.zoomX;
+        const zoomY = viewer.zoomY;
+        horizontalGuides.scroll(e.scrollLeft, zoomX);
+        horizontalGuides.scrollGuides(e.scrollTop, zoomX);
 
-        verticalGuides.scroll(e.scrollTop, zoom);
-        verticalGuides.scrollGuides(e.scrollLeft, zoom);
+        verticalGuides.scroll(e.scrollTop, zoomY);
+        verticalGuides.scrollGuides(e.scrollLeft, zoomY);
     }).on("pinch", e => {
         // console.log(e);
         document.querySelector(".description").innerHTML = e.inputEvent.type;
-        const zoom = Math.max(0.1, e.zoom);
+        const zoomX = Math.max(0.1, e.zoomX);
+        const zoomY = Math.max(0.1, e.zoomY);
 
-        verticalGuides.zoom = zoom;
-        horizontalGuides.zoom = zoom;
-        viewer.zoom = zoom;
+        verticalGuides.zoom = zoomY;
+        horizontalGuides.zoom = zoomX;
+
+
+        viewer.setZoom([zoomX, zoomY]);
     })
 
     const selecto = new Selecto({
@@ -378,8 +383,12 @@
     });
 
     requestAnimationFrame(() => {
-        // viewer.scrollCenter();
-        viewer.setZoom(0.5);
+        viewer.scrollCenter({
+            duration: 1000,
+        });
+        viewer.setZoom(0.5, {
+            duration: 1000,
+        });
     });
 
     window.addEventListener("resize", () => {

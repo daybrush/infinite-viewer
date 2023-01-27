@@ -2,7 +2,7 @@ import EventEmitter from "@scena/event-emitter";
 import Gesto from "gesto";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
-import { camelize, IObject, addEvent, removeEvent, addClass, convertUnitSize, between, isObject } from "@daybrush/utils";
+import { camelize, IObject, addEvent, removeEvent, addClass, convertUnitSize, between, isObject, isArray } from "@daybrush/utils";
 import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents, OnPinch, AnimationOptions, ScrollOptions, ZoomOptions, GetScollPosOptions } from "./types";
 import {
     PROPERTIES, injector, CLASS_NAME, TINY_NUM,
@@ -57,7 +57,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
 
     private dragFlag: boolean = false;
     private isLoop: boolean = false;
-    private _tempScale: number = 1;
+    private _tempScale: number[] = [1, 1];
     private _tempRect: { top: number, left: number, width: number, height: number } | null = null;
     private _tempRectTimer: number | null = null;
     private _onDestroys: Array<() => void> = [];
@@ -141,7 +141,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         } else {
             range = options;
         }
-        const zoom = this.zoom;
+        const zoom = this.zoomY;
         const pos = this.scrollTop / zoom + this.offsetY
             + (range ? abs(this.getRangeY()[0]) : 0);
 
@@ -160,7 +160,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         } else {
             range = options;
         }
-        const zoom = this.zoom;
+        const zoom = this.zoomX;
         const pos = this.scrollLeft / zoom + this.offsetX
             + (range ? abs(this.getRangeX()[0]) : 0);
 
@@ -189,14 +189,15 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     public scrollCenter(options?: ScrollOptions) {
         this.resize();
 
-        const zoom = this.zoom;
+        const zoomX = this.zoomX;
+        const zoomY = this.zoomY;
 
-        let left = -(this.containerWidth / zoom - this.viewportWidth) / 2;
-        let top = -(this.containerHeight / zoom - this.viewportHeight) / 2;
+        let left = -(this.containerWidth / zoomX - this.viewportWidth) / 2;
+        let top = -(this.containerHeight / zoomY - this.viewportHeight) / 2;
 
         if (options?.absolute) {
-            left *= zoom;
-            top *= zoom;
+            left *= zoomX;
+            top *= zoomY;
         }
 
 
@@ -234,8 +235,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             let scrollTop = this.getScrollTop();
 
             if (options?.absolute) {
-                scrollLeft *= this.zoom;
-                scrollTop *= this.zoom;
+                scrollLeft *= this.zoomX;
+                scrollTop *= this.zoomY;
             }
             return this._scrollTo(scrollLeft + deltaX, scrollTop + deltaY, options);
         } else {
@@ -257,8 +258,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             let scrollTop = this.getScrollTop();
 
             if (options?.absolute) {
-                scrollLeft *= this.zoom;
-                scrollTop *= this.zoom;
+                scrollLeft *= this.zoomX;
+                scrollTop *= this.zoomY;
             }
             return this.scrollBy(x - scrollLeft, y - scrollTop, options);
         }
@@ -266,26 +267,59 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     /**
      * Set viewer zoom by the given amount
      */
-    public zoomBy(deltaZoom: number, options?: ZoomOptions) {
+    public zoomBy(deltaZoom: number | number[], options?: ZoomOptions) {
         this._pauseZoomAnimation();
+        const [deltaX, deltaY] = isArray(deltaZoom)
+        ? deltaZoom
+        : [deltaZoom, deltaZoom];
 
         if (!options || !options.duration) {
-            this._setZoom(this.zoom + deltaZoom);
+
+            this._setZoom([
+                this.zoomX + deltaX,
+                this.zoomY + deltaY,
+            ]);
         } else {
-            this._startZoomAnimation(deltaZoom, options);
+            this._startZoomAnimation([deltaX, deltaY], options);
         }
     }
     /**
      * Set viewer zoom
      */
-    public setZoom(zoom: number, options?: AnimationOptions) {
+    public setZoom(zoom: number | number[], options?: AnimationOptions) {
         this._pauseZoomAnimation();
 
         if (!options || !options.duration) {
             this._setZoom(zoom);
         } else {
-            this._startZoomAnimation(zoom - this.zoom, options);
+            const [zoomX, zoomY] = isArray(zoom)
+            ? zoom
+            : [zoom, zoom];
+            this._startZoomAnimation([
+                zoomX - this.zoomX,
+                zoomY - this.zoomY,
+            ], options);
         }
+    }
+    /**
+     * Get viewer zoom
+     */
+    public getZoom() {
+        return (this.zoomX + this.zoomY) / 2;
+    }
+    /**
+     * Get viewer zoomX
+     * @since 0.20.0
+     */
+    public getZoomX() {
+        return this.zoomX;
+    }
+    /**
+     * Get viewer zoom
+     * @since 0.20.0
+     */
+    public getZoomY() {
+        return this.zoomY;
     }
     /**
      * get x ranges
@@ -344,11 +378,11 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         this.verticalScrollbar = new ScrollBar("vertical", verticalScrollElement);
 
         this.horizontalScrollbar.on("scroll", e => {
-            this.scrollBy(e.delta / this.zoom, 0);
+            this.scrollBy(e.delta / this.zoomX, 0);
         });
 
         this.verticalScrollbar.on("scroll", e => {
-            this.scrollBy(0, e.delta / this.zoom);
+            this.scrollBy(0, e.delta / this.zoomY);
         });
 
         if (this.horizontalScrollbar.isAppend) {
@@ -470,8 +504,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                     inputEvent: e.inputEvent,
                 });
                 measureSpeed(e);
-                const zoom = this.zoom;
-                this.scrollBy(-e.deltaX / zoom, -e.deltaY / zoom);
+                this.scrollBy(-e.deltaX / this.zoomX, -e.deltaY / this.zoomY);
             } else if (!this.dragFlag && e.movement > options.pinchThreshold) {
                 this.dragFlag = true;
 
@@ -489,7 +522,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         }).on("pinchStart", ({ inputEvent, datas, stop }) => {
             inputEvent.preventDefault();
             this._pauseScrollAnimation();
-            datas.startZoom = this.zoom;
+            datas.startZoom = [this.zoomX, this.zoomY];
 
             const result = this.trigger("pinchStart", {
                 inputEvent,
@@ -499,13 +532,18 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             }
             this._setClientRect();
         }).on("pinch", e => {
+            const scale = e.scale;
+            const pinchDirection = this.options.pinchDirection;
+
             this._triggerPinch({
                 rotation: e.rotation,
                 distance: e.distance,
                 scale: e.scale,
                 inputEvent: e.inputEvent,
                 isWheel: false,
-                zoom: e.datas.startZoom * e.scale,
+                zoom: e.datas.startZoom * scale,
+                zoomX: this.zoomX * (pinchDirection === "vertical" ? 1 : scale),
+                zoomY: this.zoomY * (pinchDirection === "horizontal" ? 1 : scale),
                 clientX: e.clientX,
                 clientY: e.clientY,
                 ratioX: 0,
@@ -556,14 +594,15 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         const {
             offsetX,
             offsetY,
-            zoom = DEFAULT_OPTIONS.zoom,
+            zoomX = DEFAULT_OPTIONS.zoomX,
+            zoomY = DEFAULT_OPTIONS.zoomY,
             translateZ = 0,
         } = this;
         const {
             useTransform = DEFAULT_OPTIONS.useTransform,
         } = this.options;
-        const nextOffsetX = -offsetX * zoom;
-        const nextOffsetY = -offsetY * zoom;
+        const nextOffsetX = -offsetX * zoomX;
+        const nextOffsetY = -offsetY * zoomY;
 
         this.scrollAreaElement.style.cssText
             = `width:calc(100% + ${this.getScrollAreaWidth()}px);`
@@ -574,7 +613,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         if (useTransform === false) {
             viewportStyle.cssText += `position: relative; top: ${nextOffsetY}px; left: ${nextOffsetX}px;`;
         } else {
-            viewportStyle.cssText += `transform-origin: 0 0;transform:translate3d(${nextOffsetX}px, ${nextOffsetY}px, ${translateZ}px) scale(${zoom});`;
+            viewportStyle.cssText += `transform-origin: 0 0;transform:translate3d(${nextOffsetX}px, ${nextOffsetY}px, ${translateZ}px) scale(${zoomX}, ${zoomY});`;
         }
         this.renderScroll();
     }
@@ -582,10 +621,11 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         const {
             containerWidth,
             containerHeight,
-            zoom,
+            zoomX,
+            zoomY,
         } = this;
-        const scrollLeft = this.getScrollLeft({ range: true }) * zoom;
-        const scrollTop = this.getScrollTop({ range: true }) * zoom;
+        const scrollLeft = this.getScrollLeft({ range: true }) * zoomX;
+        const scrollTop = this.getScrollTop({ range: true }) * zoomY;
         const scrollWidth = this.getScrollWidth(true);
         const scrollHeight = this.getScrollHeight(true);
 
@@ -630,6 +670,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     }
     private onWheel = (e: WheelEvent) => {
         const options = this.options;
+        const pinchDirection = options.pinchDirection;
         const maxPinchWheel = options.maxPinchWheel || Infinity;
 
         const isKeydown = e[`${this.wheelPinchKey}Key`] || e.ctrlKey;
@@ -653,6 +694,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 scale,
                 rotation: 0,
                 zoom: this.zoom * scale,
+                zoomX: this.zoomX * (pinchDirection === "vertical" ? 1 : scale),
+                zoomY: this.zoomY * (pinchDirection === "horizontal" ? 1 : scale),
                 inputEvent: e,
                 isWheel: true,
                 clientX: e.clientX,
@@ -661,8 +704,6 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 ratioY: 0,
             });
         } else if (options.useWheelScroll) {
-            const zoom = this.zoom;
-
             let deltaX = e.deltaX;
             let deltaY = e.deltaY;
 
@@ -670,24 +711,27 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 deltaX = deltaY;
                 deltaY = 0;
             }
-            this.scrollBy(deltaX / zoom, deltaY / zoom);
+            this.scrollBy(deltaX / this.zoomX, deltaY / this.zoomY);
         } else {
             return;
         }
         e.preventDefault();
     }
     private onGestureStart = (e: any) => {
-        this._tempScale = this.zoom;
+        this._tempScale = [this.zoomX, this.zoomY];
         this._setClientRect();
         e.preventDefault();
     }
     private onGestureChange = (e: any) => {
         e.preventDefault();
         if (this.gesto.isFlag() || !this._tempScale) {
-            this._tempScale = 0;
+            this._tempScale =  [1, 1];
             return;
         }
         const scale = e.scale;
+        const zoomX = this._tempScale[0];
+        const zoomY = this._tempScale[1];
+        const pinchDirection = this.options.pinchDirection;
 
         this._triggerPinch({
             distance: 0,
@@ -695,7 +739,9 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             rotation: e.rotation,
             inputEvent: e,
             isWheel: true,
-            zoom: this._tempScale * scale,
+            zoom: (zoomX + zoomY) * scale / 2,
+            zoomX: zoomX * (pinchDirection === "vertical" ? 1 : scale),
+            zoomY: zoomY * (pinchDirection === "horizontal" ? 1 : scale),
             clientX: e.clientX,
             clientY: e.clientY,
             ratioX: 0,
@@ -705,7 +751,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     private onGestureEnd = () => {
 
     }
-    private _startZoomAnimation(dest: number, options: ZoomOptions) {
+    private _startZoomAnimation(dest: number[], options: ZoomOptions) {
         if (!dest) {
             return;
         }
@@ -714,7 +760,10 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
 
         startAnimation(
             distRatio => this._setZoom(
-                this.zoom + dest * distRatio,
+                [
+                    this.zoomX + dest[0] * distRatio,
+                    this.zoomY + dest[1] * distRatio,
+                ],
                 options.zoomBase,
             ),
             next => {
@@ -781,10 +830,11 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         const {
             clientX,
             clientY,
-            zoom,
+            zoomX,
+            zoomY,
         } = event;
         if (this.useAutoZoom) {
-            this._zoomByClient(event.zoom, clientX, clientY);
+            this._zoomByClient([zoomX, zoomY], clientX, clientY);
         }
         if (!this._tempRect) {
             this._setClientRect();
@@ -801,7 +851,9 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
 
         this.trigger("pinch", {
             ...event,
-            zoom: between(zoom, zoomRange[0], zoomRange[1]),
+            zoom: between((zoomX + zoomY) / 2, zoomRange[0], zoomRange[1]),
+            zoomX: between(zoomX, zoomRange[0], zoomRange[1]),
+            zoomY: between(zoomY, zoomRange[0], zoomRange[1]),
             ratioX,
             ratioY,
         });
@@ -815,7 +867,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             height: rect.height,
         };
     }
-    private _zoomByClient(zoom: number, clientX: number, clientY: number) {
+    private _zoomByClient(zoom: number[], clientX: number, clientY: number) {
         if (!this._tempRect) {
             this._setClientRect();
         }
@@ -839,13 +891,14 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         options.zoomOffsetY = originalZoomOffsetY;
     }
     private _setZoom(
-        zoom: number,
+        zoom: number | number[],
         zoomBase?: "screen" | "viewport",
     ) {
         const {
             containerWidth,
             containerHeight,
-            zoom: prevZoom,
+            zoomX: prevZoomX,
+            zoomY: prevZoomY,
             zoomRange
         } = this;
         let {
@@ -856,29 +909,36 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
 
         const scrollLeft = this.getScrollLeft();
         const scrollTop = this.getScrollTop();
-        const nextZoom = between(zoom, zoomRange[0], zoomRange[1]);
 
-        this.options.zoom = nextZoom;
+        const [zoomX, zoomY] = isArray(zoom) ? zoom : [zoom, zoom];
+        const nextZoomX = between(zoomX, zoomRange[0], zoomRange[1]);
+        const nextZoomY = between(zoomY, zoomRange[0], zoomRange[1]);
+        const options = this.options;
+
+        options.zoomX = nextZoomX;
+        options.zoomY = nextZoomY;
+        options.zoom = (nextZoomX + nextZoomY) / 2;
 
         const nextScrollLeft = this.getScrollLeft();
         const nextScrollTop = this.getScrollTop();
 
-        let zoomX = 0;
-        let zoomY = 0;
+
+        let zoomXPos = 0;
+        let zoomYPos = 0;
 
         if (zoomBase === "viewport") {
-            zoomX = (-scrollLeft + convertUnitSize(`${zoomOffsetX}`, this.viewportWidth)) * prevZoom;
-            zoomY = (-scrollTop + convertUnitSize(`${zoomOffsetY}`, this.viewportHeight)) * prevZoom;
+            zoomXPos = (-scrollLeft + convertUnitSize(`${zoomOffsetX}`, this.viewportWidth)) * prevZoomX;
+            zoomYPos = (-scrollTop + convertUnitSize(`${zoomOffsetY}`, this.viewportHeight)) * prevZoomY;
         } else {
-            zoomX = convertUnitSize(`${zoomOffsetX}`, containerWidth);
-            zoomY = convertUnitSize(`${zoomOffsetY}`, containerHeight);
+            zoomXPos = convertUnitSize(`${zoomOffsetX}`, containerWidth);
+            zoomYPos = convertUnitSize(`${zoomOffsetY}`, containerHeight);
         }
 
-        const centerX = scrollLeft + zoomX / prevZoom;
-        const centerY = scrollTop + zoomY / prevZoom;
+        const centerX = scrollLeft + zoomXPos / prevZoomX;
+        const centerY = scrollTop + zoomYPos / prevZoomY;
 
-        const nextCenterX = nextScrollLeft + zoomX / nextZoom;
-        const nextCenterY = nextScrollTop + zoomY / nextZoom;
+        const nextCenterX = nextScrollLeft + zoomXPos / nextZoomX;
+        const nextCenterY = nextScrollTop + zoomYPos / nextZoomY;
 
         this._scrollBy(centerX - nextCenterX, centerY - nextCenterY);
         this.render();
@@ -888,8 +948,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         let scrollTop = this.getScrollTop();
 
         if (options?.absolute) {
-            scrollLeft *= this.zoom;
-            scrollTop *= this.zoom;
+            scrollLeft *= this.zoomX;
+            scrollTop *= this.zoomY;
         }
         return this._scrollTo(scrollLeft + deltaX, scrollTop + deltaY, options);
     }
@@ -941,7 +1001,6 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     private _scrollToType(type: "horizontal" | "vertical", coord: number, isAbsolute?: boolean) {
         const names = NAMES[type];
         const {
-            zoom = DEFAULT_OPTIONS.zoom,
             margin = DEFAULT_OPTIONS.margin,
             threshold = DEFAULT_OPTIONS.threshold,
         } = this;
@@ -951,6 +1010,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         let scrollPos = Math.round(prevScrollPos);
 
         const scrollAreaSize = this[`getScrollArea${names.size}`]();
+        const zoom = this[`zoom${names.coord}`];
 
         if (isAbsolute) {
             coord = coord / zoom;
@@ -984,12 +1044,13 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     private _getRangeCoord(type: "vertical" | "horizontal", isZoom?: boolean, isReal?: boolean) {
         const {
             margin = DEFAULT_OPTIONS.margin,
-            zoom = DEFAULT_OPTIONS.zoom,
             threshold,
         } = this;
+
         const names = NAMES[type];
         const rangeCoord = checkDefault(this[`range${names.coord}`], DEFAULT_OPTIONS[`range${names.coord}`]);
         const rangeOffsetCoord = checkDefault(this[`rangeOffset${names.coord}`], DEFAULT_OPTIONS[`rangeOffset${names.coord}`]);
+        const zoom = this[`zoom${names.coord}`];
         const range = getRange(
             this[`getScroll${names.pos}`](),
             margin,

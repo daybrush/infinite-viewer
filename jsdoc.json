@@ -25,6 +25,7 @@
         "OnDragStart": "https://daybrush.com/gesto/release/latest/doc/Gesto.html#.OnDragStart"
     },
     "docdash": {
+        "repo": "daybrush/infinite-viewer",
         "menu": {
             "Github repo": {
                 "href": "https://github.com/daybrush/infinite-viewer",
