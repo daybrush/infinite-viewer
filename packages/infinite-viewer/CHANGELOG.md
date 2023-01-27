@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.20.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.19.1...infinite-viewer@0.20.0) (2023-01-27)
+
+
+### :rocket: New Features
+
+* add zoomX, zoomY,  pinchDirection #39 ([ea62972](https://github.com/daybrush/infinite-viewer/commit/ea62972f118ad87d1388fec33e110539c4feee03))
+
+
+### :bug: Bug Fix
+
+* remove console.log ([94b92a8](https://github.com/daybrush/infinite-viewer/commit/94b92a8bd291f1a60bb969365bbf3beb6fac1e78))
+
+
+### :mega: Other
+
+* publish packages ([ab41b10](https://github.com/daybrush/infinite-viewer/commit/ab41b100b2da4b3f5021cb843dd0731bbdea4a68))
+* publish packages ([0cc1800](https://github.com/daybrush/infinite-viewer/commit/0cc18007e64be634cc938dae905c78b7321498c3))
+
+
+
 ## [0.19.1](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.19.0...infinite-viewer@0.19.1) (2022-12-03)
 
 
