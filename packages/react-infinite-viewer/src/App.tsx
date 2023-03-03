@@ -1,6 +1,7 @@
 import React from "react";
 import InfiniteViewer from "./react-infinite-viewer/InfiniteViewer";
 import "./App.css";
+
 class App extends React.Component {
     public render() {
         return (

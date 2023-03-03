@@ -3,18 +3,7 @@
 </script>
 
 <style>
-  :global(.viewer) {
-    border: 1px solid black;
-    position: relative;
-    width: 800px;
-    height: 800px;
-  }
-  .viewport {
-    position: relative;
-    width: 400px;
-    height: 600px;
-    background: #f55;
-  }
+ 
 </style>
 
 <InfiniteViewer className="viewer">
