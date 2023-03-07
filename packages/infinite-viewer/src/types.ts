@@ -1,6 +1,7 @@
 import { PROPERTIES, METHODS } from "./consts";
 import InfiniteViewer from "./InfiniteViewer";
 import {
+    OnDragStart as OnParentDragStart,
     OnDrag as OnParentDrag
 } from "gesto";
 
@@ -226,6 +227,8 @@ export interface ZoomOptions extends AnimationOptions {
      * @default "screen"
      */
     zoomBase?: "screen" | "viewport";
+    zoomOffsetX?: number | string;
+    zoomOffsetY?: number | string;
 }
 /**
  * @typedef
@@ -245,10 +248,9 @@ export interface OnAbortPinch {
 /**
  * @typedef
  * @memberof InfiniteViewer
+ * @extends Gesto.OnDragStart
  */
-export interface OnDragStart {
-    inputEvent: any;
-    stop(): void;
+export interface OnDragStart extends OnParentDragStart {
 }
 /**
  * @typedef

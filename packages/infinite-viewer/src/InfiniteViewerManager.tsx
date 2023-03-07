@@ -55,6 +55,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     private _scrollTimer = 0;
     private _zoomTimer = 0;
 
+    private _viewportElement: HTMLElement | null = null;
     private dragFlag: boolean = false;
     private isLoop: boolean = false;
     private _tempScale: number[] = [1, 1];
@@ -67,28 +68,39 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
      * @sort 1
      */
     constructor(
-        private containerElement: HTMLElement,
-        private viewportElement: HTMLElement,
+        private _containerElement: HTMLElement,
+        viewportElement: HTMLElement | Partial<InfiniteViewerOptions> = {},
         options: Partial<InfiniteViewerOptions> = {},
     ) {
         super();
-        this.options = {
-            ...DEFAULT_OPTIONS,
-            ...options,
-        };
+
+
+        if (viewportElement instanceof Element) {
+            this._viewportElement = viewportElement;
+            this.options = {
+                ...DEFAULT_OPTIONS,
+                ...options,
+            };
+        } else {
+            this._viewportElement = _containerElement.nextElementSibling as HTMLElement;
+            this.options = {
+                ...DEFAULT_OPTIONS,
+                ...viewportElement,
+            };
+        }
         this.init();
     }
     /**
      * Get Container Element
      */
     public getContainer(): HTMLElement {
-        return this.containerElement;
+        return this._containerElement;
     }
     /**
      * Get Viewport Element
      */
     public getViewport(): HTMLElement {
-        return this.viewportElement;
+        return this._viewportElement;
     }
     /**
      * Get Wrapper Element
@@ -111,7 +123,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         this.verticalScrollbar.destroy();
         this.horizontalScrollbar.destroy();
         this.injectResult.destroy();
-        const containerElement = this.containerElement;
+        const containerElement = this._containerElement;
 
         this._onDestroys.forEach(callback => {
             callback();
@@ -124,8 +136,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
 
         this.gesto = null;
         this.injectResult = null;
-        this.containerElement = null;
-        this.viewportElement = null;
+        this._containerElement = null;
+        this._viewportElement = null;
         this.options = null;
     }
     /**
@@ -211,11 +223,11 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         const {
             offsetWidth: containerWidth,
             offsetHeight: containerHeight,
-        } = this.containerElement;
+        } = this._containerElement;
         const {
             offsetWidth: viewportWidth,
             offsetHeight: viewportHeight,
-        } = this.viewportElement;
+        } = this._viewportElement;
 
         this.containerWidth = containerWidth;
         this.containerHeight = containerHeight;
@@ -274,11 +286,10 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         : [deltaZoom, deltaZoom];
 
         if (!options || !options.duration) {
-
             this._setZoom([
                 this.zoomX + deltaX,
                 this.zoomY + deltaY,
-            ]);
+            ], options);
         } else {
             this._startZoomAnimation([deltaX, deltaY], options);
         }
@@ -286,11 +297,11 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     /**
      * Set viewer zoom
      */
-    public setZoom(zoom: number | number[], options?: AnimationOptions) {
+    public setZoom(zoom: number | number[], options?: ZoomOptions) {
         this._pauseZoomAnimation();
 
         if (!options || !options.duration) {
-            this._setZoom(zoom);
+            this._setZoom(zoom, options);
         } else {
             const [zoomX, zoomY] = isArray(zoom)
             ? zoom
@@ -338,7 +349,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         // infinite-viewer(container)
         // viewport
         // children
-        const containerElement = this.containerElement;
+        const containerElement = this._containerElement;
         const options = this.options;
 
         // vanilla
@@ -355,7 +366,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             this.wrapperElement = wrapperElement;
         } else {
             wrapperElement = document.createElement("div");
-            wrapperElement.insertBefore(this.viewportElement, null);
+            wrapperElement.insertBefore(this._viewportElement, null);
             containerElement.insertBefore(wrapperElement, null);
 
             this.wrapperElement = wrapperElement;
@@ -477,25 +488,27 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
          * });
          */
         this.gesto = new Gesto(containerElement, {
-            container: document.body,
+            container: window,
             events: ["touch", "mouse"],
-        }).on("dragStart", ({ inputEvent, datas, stop, isMouseEvent }) => {
-            if (!this.useMouseDrag && isMouseEvent) {
+        }).on("dragStart", e => {
+            const {
+                inputEvent,
+                stop,
+                datas,
+            } = e;
+            if (!this.useMouseDrag && e.isMouseEvent) {
                 stop();
                 return;
             }
             this._pauseScrollAnimation();
             this.dragFlag = false;
-            const result = this.trigger("dragStart", {
-                inputEvent,
-            });
+            const result = this.trigger("dragStart", e);
+
             if (result === false) {
                 stop();
                 return;
             }
-
             inputEvent.preventDefault();
-
             datas.startEvent = inputEvent;
         }).on("drag", e => {
             if (!this.options.usePinch || e.isPinch || (this.useMouseDrag && e.isMouseEvent)) {
@@ -560,8 +573,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 this.resize();
             });
 
-            observer.observe(this.viewportElement);
-            observer.observe(this.containerElement);
+            observer.observe(this._viewportElement);
+            observer.observe(this._containerElement);
 
 
             this._onDestroys.push(() => {
@@ -608,7 +621,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             = `width:calc(100% + ${this.getScrollAreaWidth()}px);`
             + `height:calc(100% + ${this.getScrollAreaHeight()}px);`;
 
-        const viewportStyle = this.viewportElement.style;
+        const viewportStyle = this._viewportElement.style;
 
         if (useTransform === false) {
             viewportStyle.cssText += `position: relative; top: ${nextOffsetY}px; left: ${nextOffsetX}px;`;
@@ -764,7 +777,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                     this.zoomX + dest[0] * distRatio,
                     this.zoomY + dest[1] * distRatio,
                 ],
-                options.zoomBase,
+                options,
             ),
             next => {
                 this._zoomTimer = requestAnimationFrame(next);
@@ -885,15 +898,18 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         options.zoomOffsetX = `${(clientX - left) / width * 100}%`;
         options.zoomOffsetY = `${(clientY - top) / height * 100}%`;
 
-        this._setZoom(zoom, "screen");
+        this._setZoom(zoom, {
+            zoomBase: "screen",
+        });
 
         options.zoomOffsetX = originalZoomOffsetX;
         options.zoomOffsetY = originalZoomOffsetY;
     }
     private _setZoom(
         zoom: number | number[],
-        zoomBase?: "screen" | "viewport",
+        zoomOptions: ZoomOptions = {},
     ) {
+        const zoomBase = zoomOptions.zoomBase;
         const {
             containerWidth,
             containerHeight,
@@ -905,6 +921,13 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             zoomOffsetX = DEFAULT_OPTIONS.zoomOffsetX,
             zoomOffsetY = DEFAULT_OPTIONS.zoomOffsetY,
         } = this;
+        if ("zoomOffsetX" in zoomOptions) {
+            zoomOffsetX = zoomOptions.zoomOffsetX;
+        }
+        if ("zoomOffsetY" in zoomOptions) {
+            zoomOffsetY = zoomOptions.zoomOffsetY;
+        }
+
 
 
         const scrollLeft = this.getScrollLeft();
