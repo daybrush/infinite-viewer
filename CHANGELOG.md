@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.21.0](https://github.com/daybrush/infinite-viewer/compare/0.20.0...0.21.0) (2023-03-08)
+### :sparkles: Packages
+* `infinite-viewer` 0.21.0
+* `lit-infinite-viewer` 0.20.0
+* `preact-infinite-viewer` 0.18.0
+* `react-infinite-viewer` 0.21.0
+* `svelte-infinite-viewer` 0.20.0
+* `vue-infinite-viewer` 0.20.0
+* `vue3-infinite-viewer` 0.10.0
+* `ngx-infinite-viewer` 0.20.0
+
+
+### :rocket: New Features
+
+* `infinite-viewer`
+    * add preventWheelClick prop #40 ([ec5e05f](https://github.com/daybrush/infinite-viewer/commit/ec5e05fe780b6b3dfa2c0a412acc88d6720e1227))
+    * add zoomOffsetX, zoomOffsetY in zoomOptions #41 ([0b62b82](https://github.com/daybrush/infinite-viewer/commit/0b62b829e35d26e9a177c73899251e940c85be68))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([3d23345](https://github.com/daybrush/infinite-viewer/commit/3d233455960c7afd2515c68ca26e1c00bf5bff1e))
+
+
+
 ## [0.20.0](https://github.com/daybrush/infinite-viewer/compare/0.19.1...0.20.0) (2023-01-27)
 ### :sparkles: Packages
 * `infinite-viewer` 0.20.0
