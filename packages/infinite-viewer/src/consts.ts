@@ -122,6 +122,7 @@ export const DEFAULT_OPTIONS = {
     useGesture: true,
     useResizeObserver: false,
     pinchDirection: "all" as const,
+    preventWheelClick: true,
 };
 
 export const DEFAULT_EASING = (x: number) => 1 - Math.pow(1 - x, 3);
@@ -178,6 +179,7 @@ export const PROPERTIES = [
 export const OPTIONS = [
     // ignore target, container,
     ...PROPERTIES,
+    "preventWheelClick",
     "useWheel",
     "useGesture",
     "cspNonce",

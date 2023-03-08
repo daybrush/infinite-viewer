@@ -490,6 +490,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         this.gesto = new Gesto(containerElement, {
             container: window,
             events: ["touch", "mouse"],
+            preventWheelClick: this.options.preventWheelClick,
         }).on("dragStart", e => {
             const {
                 inputEvent,

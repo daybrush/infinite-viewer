@@ -141,6 +141,11 @@ export interface InfiniteViewerOptions {
      */
     useResizeObserver: boolean;
     /**
+     * Whether to prevent dragging through the wheel button
+     * @default true
+     */
+    preventWheelClick: boolean;
+    /**
      * viewer's zoomX
      * If you use the zoom property, don't use the zoomX and zoomY properties.
      * @since 0.20.0
