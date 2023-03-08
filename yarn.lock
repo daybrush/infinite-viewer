@@ -10412,6 +10412,18 @@ infer-owner@^1.0.3, infer-owner@^1.0.4:
   resolved "https://registry.npmjs.org/infer-owner/-/infer-owner-1.0.4.tgz#c4cefcaa8e51051c2a40ba2ce8a3d27295af9467"
   integrity sha512-IClj+Xz94+d7irH5qRyfJonOdfTzuDaifE6ZPWfx0N0+/ATZCbuTPq2prFl526urkQd90WyUKIh1DfBQ2hMz9A==
 
+infinite-viewer@~0.20.0:
+  version "0.20.0"
+  resolved "https://registry.npmjs.org/infinite-viewer/-/infinite-viewer-0.20.0.tgz#74cf73a4ccbbbdb2b4cc111884c9bfd2d1671861"
+  integrity sha512-5DGwVkB20rWNQon1CyVikbXeXbZGP8YyzhhWhztfDVLZp2HH1rgTub7ym6U66V3HYiyaniCwLS1g9R6T6h3AdQ==
+  dependencies:
+    "@daybrush/utils" "^1.9.1"
+    "@egjs/agent" "^2.2.1"
+    "@scena/event-emitter" "^1.0.5"
+    css-styled "^1.0.1"
+    framework-utils "^1.1.0"
+    gesto "^1.13.0"
+
 inflight@^1.0.4:
   version "1.0.6"
   resolved "https://registry.npmjs.org/inflight/-/inflight-1.0.6.tgz#49bd6331d7d02d0c09bc910a1075ba8165b56df9"
