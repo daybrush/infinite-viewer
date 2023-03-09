@@ -82,7 +82,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 ...options,
             };
         } else {
-            this._viewportElement = _containerElement.nextElementSibling as HTMLElement;
+            this._viewportElement = _containerElement.children[0] as HTMLElement;
             this.options = {
                 ...DEFAULT_OPTIONS,
                 ...viewportElement,
