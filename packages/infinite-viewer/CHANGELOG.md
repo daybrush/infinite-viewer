@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.21.1](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.21.0...infinite-viewer@0.21.1) (2023-03-09)
+
+
+### :bug: Bug Fix
+
+* fix fist child option ([a850796](https://github.com/daybrush/infinite-viewer/commit/a8507968da6b3f6068f1379637b7b8753d8b854c))
+
+
+### :mega: Other
+
+* publish packages ([b331aee](https://github.com/daybrush/infinite-viewer/commit/b331aeefc684f815276d0fc4ec05f9955f59cd20))
+
+
+
 ## [0.21.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.20.0...infinite-viewer@0.21.0) (2023-03-08)
 
 
