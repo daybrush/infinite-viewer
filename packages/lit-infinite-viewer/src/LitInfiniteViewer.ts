@@ -1,7 +1,7 @@
 import { LitElement, html, customElement, property } from "lit-element";
 import VanillaInfiniteViewer, {
     InfiniteViewerProperties,
-    EVENTS, PROPERTIES, InfiniteViewerMethods, METHODS
+    EVENTS, PROPERTIES, InfiniteViewerMethods, METHODS, OPTIONS
 } from "infinite-viewer";
 import { Properties, withMethods, MethodInterface } from "framework-utils";
 import { camelize } from "@daybrush/utils";
@@ -20,7 +20,7 @@ export class LitInfiniteViewer extends LitElement {
     public firstUpdated() {
         const options: Partial<InfiniteViewerProperties> = {};
 
-        PROPERTIES.forEach(name => {
+        OPTIONS.forEach(name => {
             if (typeof this[name] !== "undefined") {
                 options[name as any] = this[name];
             }
