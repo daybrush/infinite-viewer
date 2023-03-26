@@ -1,6 +1,6 @@
 {
   "name": "react-infinite-viewer",
-  "version": "0.21.1",
+  "version": "0.22.0",
   "description": "React Infinite Viewer is Document Viewer Component with infinite scrolling.",
   "main": "./dist/infinite-viewer.cjs.js",
   "module": "./dist/infinite-viewer.esm.js",
@@ -47,7 +47,7 @@
     "typescript": "^4.5.0 <4.6.0"
   },
   "dependencies": {
-    "infinite-viewer": "~0.21.1"
+    "infinite-viewer": "~0.22.0"
   },
   "browserslist": {
     "production": [
