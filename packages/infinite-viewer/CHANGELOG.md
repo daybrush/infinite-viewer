@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.22.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.21.1...infinite-viewer@0.22.0) (2023-03-26)
+
+
+### :rocket: New Features
+
+* add zoomX, zoomY properties in scroll event ([6f371f0](https://github.com/daybrush/infinite-viewer/commit/6f371f073535ea0173667d375305043a1c580113))
+
+
+### :bug: Bug Fix
+
+* fix scroll behavior #45 #44 ([821c3d0](https://github.com/daybrush/infinite-viewer/commit/821c3d0964187102961f4d78419189966b6620f2))
+
+
+### :mega: Other
+
+* publish packages ([60c2a4a](https://github.com/daybrush/infinite-viewer/commit/60c2a4a4752b756189bc2cea63e5d6defe1e83f7))
+
+
+
 ## [0.21.1](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.21.0...infinite-viewer@0.21.1) (2023-03-09)
 
 

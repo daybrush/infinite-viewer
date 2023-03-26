@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.22.0](https://github.com/daybrush/infinite-viewer/compare/0.21.1...0.22.0) (2023-03-26)
+### :sparkles: Packages
+* `infinite-viewer` 0.22.0
+* `lit-infinite-viewer` 0.21.0
+* `preact-infinite-viewer` 0.19.0
+* `react-infinite-viewer` 0.22.0
+* `svelte-infinite-viewer` 0.21.0
+* `vue-infinite-viewer` 0.21.0
+* `vue3-infinite-viewer` 0.11.0
+* `ngx-infinite-viewer` 0.21.0
+
+
+### :rocket: New Features
+
+* `infinite-viewer`
+    * add zoomX, zoomY properties in scroll event ([6f371f0](https://github.com/daybrush/infinite-viewer/commit/6f371f073535ea0173667d375305043a1c580113))
+
+
+### :bug: Bug Fix
+
+* `infinite-viewer`
+    * fix scroll behavior #45 #44 ([821c3d0](https://github.com/daybrush/infinite-viewer/commit/821c3d0964187102961f4d78419189966b6620f2))
+* `lit-infinite-viewer`
+    * lit-infinite-viewer has sideeffects (#46) ([d16b50b](https://github.com/daybrush/infinite-viewer/commit/d16b50b9e6801702b319c81b0ce5c1ae456243fa))
+    * use OPTIONS in Lit element (#43) ([1bb569d](https://github.com/daybrush/infinite-viewer/commit/1bb569dea74251bcd10d0f743bb055a059f757a9))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([60c2a4a](https://github.com/daybrush/infinite-viewer/commit/60c2a4a4752b756189bc2cea63e5d6defe1e83f7))
+* `lit-infinite-viewer`
+    * update lit-infinite-viewer version ([8ccb979](https://github.com/daybrush/infinite-viewer/commit/8ccb979b27784542348d58ccec94d2640341f975))
+
+
+
 ## [0.21.1](https://github.com/daybrush/infinite-viewer/compare/0.21.0...0.21.1) (2023-03-09)
 ### :sparkles: Packages
 * `infinite-viewer` 0.21.1
