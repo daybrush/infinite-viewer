@@ -203,6 +203,12 @@ export interface ScrollOptions extends AnimationOptions {
     absolute?: boolean;
 }
 
+
+export interface InnerScrollOptions extends ScrollOptions {
+    zoom?: boolean
+}
+
+
 /**
  * @typedef
  * @memberof InfiniteViewer
@@ -242,6 +248,8 @@ export interface ZoomOptions extends AnimationOptions {
 export interface OnScroll {
     scrollLeft: number;
     scrollTop: number;
+    zoomX: number;
+    zoomY: number;
 }
 /**
  * @typedef

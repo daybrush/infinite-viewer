@@ -26,7 +26,7 @@
     }
 
     .viewport {
-        width: 1920px;
+        width: 1000px;
         height: 1080px;
         /* height: 600px; */
         border: 1px solid #eee;
@@ -294,7 +294,11 @@
             useWheelScroll: true,
             zoomRange: [0.1, 10],
             maxPinchWheel: 10,
-            pinchDirection: "horizontal",
+            rangeX: [-3000, -2000],
+            rangeY: [-3000, -2000],
+            // rangeX: [0, 1000],
+            // rangeY: [0, 1000],
+            // pinchDirection: "horizontal",
         }
     ).on("dragStart", e => {
         const target = e.inputEvent.target;
@@ -313,17 +317,15 @@
         // console.log("abort", e.inputEvent);
         selecto.triggerDragStart(e.inputEvent);
     }).on("scroll", e => {
-        // console.log("Change SCROLL", e.scrollLeft);
-        const zoomX = viewer.zoomX;
-        const zoomY = viewer.zoomY;
-        horizontalGuides.scroll(e.scrollLeft, zoomX);
-        horizontalGuides.scrollGuides(e.scrollTop, zoomX);
-
-        verticalGuides.scroll(e.scrollTop, zoomY);
-        verticalGuides.scrollGuides(e.scrollLeft, zoomY);
-    }).on("pinch", e => {
         // console.log(e);
+        horizontalGuides.scroll(e.scrollLeft, e.zoomX);
+        horizontalGuides.scrollGuides(e.scrollTop, e.zoomY);
+
+        verticalGuides.scroll(e.scrollTop, e.zoomY);
+        verticalGuides.scrollGuides(e.scrollLeft, e.zoomY);
+    }).on("pinch", e => {
         document.querySelector(".description").innerHTML = e.inputEvent.type;
+
         const zoomX = Math.max(0.1, e.zoomX);
         const zoomY = Math.max(0.1, e.zoomY);
 
