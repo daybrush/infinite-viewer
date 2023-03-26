@@ -3,15 +3,15 @@ import {
     SCROLL_BAR_CLASS_NAME, SCROLL_THUMB_CLASS_NAME,
     HORIZONTAL_SCROLL_BAR_CLASS_NAME, VERTICAL_SCROLL_BAR_CLASS_NAME
 } from "./consts";
-import { addClass, removeEvent, addEvent } from "@daybrush/utils";
+import { addClass, removeEvent, addEvent, throttle } from "@daybrush/utils";
 import EventEmitter from "@scena/event-emitter";
+import { abs } from "./utils";
 
 export default class ScrollBar extends EventEmitter {
     public isAppend: boolean = false;
     public thumbElement!: HTMLElement;
     public barElement!: HTMLElement;
     private gesto!: Gesto;
-    private pos: number = 0;
     private size: number = 0;
     private scrollSize: number = 0;
     private isHorizontal = false;
@@ -61,13 +61,22 @@ export default class ScrollBar extends EventEmitter {
                         const pos2 = pos1 + thumbSize;
                         const clientPos = e[isHorizontal ? "clientX" : "clientY"];
 
-                        if (pos1 <= clientPos && clientPos <= pos2) {
+                        const endPos = clientPos - pos2;
+                        const startPos = clientPos - pos1;
+
+                        if (0 <= startPos && endPos <= 0) {
                             return;
                         }
-                        const size = this.size;
-                        const delta = size * size / this.scrollSize;
+                        // thumbSize === containerSize
+                        // scrollWidth =
+                        this.scrollSize
+                        const clientScrollWidth = thumbSize / this.size * this.scrollSize;
+                        const pos = (0 < endPos ? endPos : startPos) / clientScrollWidth;
+                        const delta = pos * this.size;
 
-                        this.scrollBy(pos1 < clientPos ? delta : -delta);
+                        console.log(this.scrollSize, pos, delta);
+
+                        this.scrollBy(delta);
                     });
                 }, 100);
 
@@ -92,18 +101,25 @@ export default class ScrollBar extends EventEmitter {
             delta: this.scrollSize * ratio,
         });
     }
-    public render(isDisplay: boolean, pos: number, size: number, scrollSize: number) {
-        this.pos = pos;
-        this.size = size;
-        this.scrollSize = scrollSize;
-
-        const display = isDisplay && (scrollSize > size) ? "block" : "none";
+    public render(
+        isDisplay: boolean,
+        containerSize: number,
+        scrollRange: number[],
+    ) {
+        const [startMargin, endMargin] = scrollRange;
+        const scrollSizeOffset = throttle(abs(startMargin) + endMargin, 0.001);
+        const scrollSize = containerSize + scrollSizeOffset;
+        const display = isDisplay && scrollSizeOffset ? "block" : "none";
         const [dirName1, sizeName] = this.isHorizontal ? ["X", "width"] : ["Y", "height"];
+        const thumbSize = containerSize / scrollSize;
+        const thumbPos = endMargin / scrollSize / thumbSize;
 
+        this.size = containerSize;
+        this.scrollSize = scrollSize;
         this.barElement.style.cssText = `display: ${display};`;
         this.thumbElement.style.cssText
-            += `${sizeName}: ${size * size / scrollSize}px;`
-            + `transform: translate${dirName1}(${pos / scrollSize * size}px)`;
+            += `${sizeName}: ${thumbSize * 100}%;`
+            + `transform: translate${dirName1}(${thumbPos * 100}%)`;
     }
     public destroy() {
         removeEvent(this.barElement, "wheel", this.onWheel);
