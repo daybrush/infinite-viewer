@@ -3,7 +3,7 @@ import Gesto from "gesto";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { camelize, IObject, addEvent, removeEvent, addClass, convertUnitSize, between, isObject, isArray } from "@daybrush/utils";
-import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents, OnPinch, AnimationOptions, ScrollOptions, ZoomOptions, GetScollPosOptions, InnerScrollOptions } from "./types";
+import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents, OnPinch, AnimationOptions, ScrollOptions, ZoomOptions, GetScollPosOptions, InnerScrollOptions, ScrollCenterOptions } from "./types";
 import {
     PROPERTIES, injector, CLASS_NAME, TINY_NUM,
     DEFAULT_OPTIONS,
@@ -205,7 +205,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     /**
      * Scroll the element to the center
      */
-    public scrollCenter(options?: ScrollOptions) {
+    public scrollCenter(options: ScrollCenterOptions = {}) {
         this.resize();
 
         const zoomX = this.zoomX;
@@ -214,9 +214,15 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         let left = -(this.containerWidth / zoomX - this.viewportWidth) / 2;
         let top = -(this.containerHeight / zoomY - this.viewportHeight) / 2;
 
-        if (options?.absolute) {
+        if (options.absolute) {
             left *= zoomX;
             top *= zoomY;
+        }
+        if (options.horizontal === false) {
+            left = this.getScrollLeft();
+        }
+        if (options.vertical === false) {
+            top = this.getScrollTop();
         }
 
         return this.scrollTo(left, top, options);
@@ -321,6 +327,24 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 zoomY - this.zoomY,
             ], options);
         }
+    }
+    public getViewportWidth() {
+        return this.viewportWidth;
+    }
+    public getViewportHeight() {
+        return this.viewportWidth;
+    }
+    public getViewportScrollWidth() {
+        return this.viewportScrollWidth;
+    }
+    public getViewportScrollHeight() {
+        return this.viewportScrollHeight;
+    }
+    public getContainerWidth() {
+        return this.containerWidth;
+    }
+    public getContainerHeight() {
+        return this.containerHeight;
     }
     /**
      * Get viewer zoom

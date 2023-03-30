@@ -291,11 +291,11 @@
             // rangeY: [0, 0],
             // rangeOffsetX: [-200, 200],
             // rangeOffsetY: [-200, 200],
-            useWheelScroll: true,
+            // useWheelScroll: true,
             zoomRange: [0.1, 10],
             maxPinchWheel: 10,
-            rangeX: [-3000, -2000],
-            rangeY: [-3000, -2000],
+            // rangeX: [-3000, -2000],
+            // rangeY: [-3000, -2000],
             // rangeX: [0, 1000],
             // rangeY: [0, 1000],
             // pinchDirection: "horizontal",
@@ -385,11 +385,13 @@
     });
 
     requestAnimationFrame(() => {
-        viewer.scrollCenter({
+        const left = (viewer.getViewportWidth() - viewer.getContainerWidth() / viewer.getZoomX()) / 2
+        viewer.scrollTo(left, 0, {
             duration: 1000,
         });
         viewer.setZoom(0.5, {
             duration: 1000,
+            zoomOffsetY: 0,
         });
     });
 

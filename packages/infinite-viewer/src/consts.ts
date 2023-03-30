@@ -57,11 +57,13 @@ export const injector = styled(prefixCSS(PREFIX, `
     overflow: hidden;
 }
 .horizontal-scroll-bar {
-    width: 100%;
+    width: calc(100% - 20px);
+    right: 10px;
     height: 14px;
 }
 .vertical-scroll-bar {
-    height: 100%;
+    height: calc(100% - 20px);
+    bottom: 10px;
     width: 14px;
 }
 .scroll-thumb {
@@ -218,6 +220,12 @@ export const METHODS = [
     "getScrollTop",
     "getScrollWidth",
     "getScrollHeight",
+    "getContainerWidth",
+    "getContainerHeight",
+    "getViewportWidth",
+    "getViewportHeight",
+    "getViewportScrollWidth",
+    "getViewportScrollHeight",
     "scrollTo",
     "scrollBy",
     "zoomBy",

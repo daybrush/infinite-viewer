@@ -204,6 +204,16 @@ export interface ScrollOptions extends AnimationOptions {
 }
 
 
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ * @extends InfiniteViewer.ScrollOptions
+ */
+export interface ScrollCenterOptions extends ScrollOptions {
+    horizontal?: boolean;
+    vertical?: boolean;
+}
+
 export interface InnerScrollOptions extends ScrollOptions {
     zoom?: boolean
 }
