@@ -1,6 +1,6 @@
 import { LitElement, html, customElement, property } from "lit-element";
 import VanillaInfiniteViewer, {
-    InfiniteViewerProperties,
+    InfiniteViewerOptions,
     EVENTS, PROPERTIES, InfiniteViewerMethods, METHODS, OPTIONS
 } from "infinite-viewer";
 import { Properties, withMethods, MethodInterface } from "framework-utils";
@@ -18,7 +18,7 @@ export class LitInfiniteViewer extends LitElement {
     })
     private infiniteViewer!: VanillaInfiniteViewer;
     public firstUpdated() {
-        const options: Partial<InfiniteViewerProperties> = {};
+        const options: Partial<InfiniteViewerOptions> = {};
 
         OPTIONS.forEach(name => {
             if (typeof this[name] !== "undefined") {
@@ -74,7 +74,7 @@ export class LitInfiniteViewer extends LitElement {
         this.infiniteViewer.destroy();
     }
 }
-export interface LitInfiniteViewer extends InfiniteViewerProperties,
+export interface LitInfiniteViewer extends InfiniteViewerOptions,
     MethodInterface<InfiniteViewerMethods, VanillaInfiniteViewer, LitInfiniteViewer, {
         "click": "clickViewer",
         "scrollTo": "scrollToViewer",

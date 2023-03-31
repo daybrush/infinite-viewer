@@ -1,8 +1,8 @@
 import { MethodInterface } from "framework-utils";
-import VanillaInfiniteViewer, { InfiniteViewerProperties, InfiniteViewerMethods } from "infinite-viewer";
+import VanillaInfiniteViewer, { InfiniteViewerOptions, InfiniteViewerMethods } from "infinite-viewer";
 
 interface InfiniteViewerInterface
-    extends InfiniteViewerProperties,
+    extends InfiniteViewerOptions,
     MethodInterface<
     InfiniteViewerMethods,
     VanillaInfiniteViewer,

@@ -1,4 +1,4 @@
-import { InfiniteViewerEvents, InfiniteViewerProperties } from "infinite-viewer";
+import { InfiniteViewerEvents, InfiniteViewerOptions } from "infinite-viewer";
 
 export interface InfiniteViewerEventNames {
     onScroll: "scroll";
@@ -12,6 +12,7 @@ export interface InfiniteViewerEventNames {
 export type InfiniteViewerEventProps = {
     [key in keyof InfiniteViewerEventNames]: (e: InfiniteViewerEvents[InfiniteViewerEventNames[key]]) => any;
 };
-export type InfiniteViewerProps = InfiniteViewerProperties & InfiniteViewerEventProps & {
+export type InfiniteViewerProps = InfiniteViewerOptions & InfiniteViewerEventProps & {
+    className?: string;
     [key: string]: any;
 };

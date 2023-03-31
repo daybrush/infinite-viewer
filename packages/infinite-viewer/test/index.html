@@ -385,7 +385,7 @@
     });
 
     requestAnimationFrame(() => {
-        const left = (viewer.getViewportWidth() - viewer.getContainerWidth() / viewer.getZoomX()) / 2
+        const left = (viewer.getViewportWidth() - viewer.getContainerWidth() / viewer.getZoomX()) / 2;
         viewer.scrollTo(left, 0, {
             duration: 1000,
         });

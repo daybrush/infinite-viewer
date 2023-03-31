@@ -1,28 +1,15 @@
-import VanillaInfiniteViewer, { InfiniteViewerMethods } from "infinite-viewer";
+import { SvelteComponentDev } from "svelte/internal";
+import VanillaInfiniteViewer, {
+    InfiniteViewerOptions,
+    InfiniteViewerMethods,
+} from "infinite-viewer";
 import { MethodInterface } from "framework-utils";
 
-
-interface ComponentOptions {
-    target: HTMLElement;
-    anchor?: HTMLElement | null;
-    props?: {};
-    hydrate?: boolean;
-    intro?: boolean;
+export default class InfiniteViewerComponent<T={}> extends SvelteComponentDev {
+    $$prop_def: InfiniteViewerOptions & T;
+    getInstance(): VanillaInfiniteViewer;
+}
+export default interface InfiniteViewerComponent extends MethodInterface<InfiniteViewerMethods, VanillaInfiniteViewer, InfiniteViewerComponent> {
 }
 
-interface InfiniteViewerComponent extends MethodInterface<InfiniteViewerMethods, VanillaInfiniteViewer, InfiniteViewerComponent> {
-    new(options: ComponentOptions): any;
-    // client-side methods
-    $set(props: {}): void;
-    $on(event: string, callback: (event: CustomEvent) => void): void;
-    $destroy(): void;
-    // server-side methods
-    render(props?: {}): {
-        html: string;
-        css: { code: string; map: string | null };
-        head?: string;
-    };
-}
-
-export default InfiniteViewerComponent;
 export * from "infinite-viewer";
