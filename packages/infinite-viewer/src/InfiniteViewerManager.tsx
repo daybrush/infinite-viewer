@@ -2,13 +2,13 @@ import EventEmitter from "@scena/event-emitter";
 import Gesto from "gesto";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
-import { camelize, IObject, addEvent, removeEvent, addClass, convertUnitSize, between, isObject, isArray } from "@daybrush/utils";
+import { camelize, IObject, addEvent, removeEvent, addClass, convertUnitSize, between, isObject, isArray, isString } from "@daybrush/utils";
 import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents, OnPinch, AnimationOptions, ScrollOptions, ZoomOptions, GetScollPosOptions, InnerScrollOptions, ScrollCenterOptions } from "./types";
 import {
     PROPERTIES, injector, CLASS_NAME, TINY_NUM,
     DEFAULT_OPTIONS,
     WRAPPER_CLASS_NAME, SCROLL_AREA_CLASS_NAME,
-    HORIZONTAL_SCROLL_BAR_CLASS_NAME, VERTICAL_SCROLL_BAR_CLASS_NAME, NAMES, DEFAULT_EASING, RESTRICT_WRAPPER_CLASS_NAME
+    HORIZONTAL_SCROLL_BAR_CLASS_NAME, VERTICAL_SCROLL_BAR_CLASS_NAME, NAMES, DEFAULT_EASING,
 } from "./consts";
 import { measureSpeed, getDuration, getDestPos, abs, getRange, checkDefault, startAnimation } from "./utils";
 import ScrollBar from "./ScrollBar";
@@ -58,7 +58,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
     private _zoomTimer = 0;
 
     private _viewportElement: HTMLElement | null = null;
-    private _restrictWrapperElement: HTMLElement | null = null;
+    private _wheelContainerElement: HTMLElement | null = null;
     private dragFlag: boolean = false;
     private isLoop: boolean = false;
     private _tempScale: number[] = [1, 1];
@@ -100,6 +100,12 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         return this._containerElement;
     }
     /**
+     * Get Wheel Container Element
+     */
+    public getWheelContainer(): HTMLElement {
+        return this._wheelContainerElement;
+    }
+    /**
      * Get Viewport Element
      */
     public getViewport(): HTMLElement {
@@ -132,7 +138,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             callback();
         });
         removeEvent(this.wrapperElement, "scroll", this._onScroll);
-        removeEvent(containerElement, "wheel", this.onWheel);
+        removeEvent(this._wheelContainerElement, "wheel", this.onWheel);
         removeEvent(containerElement, "gesturestart", this.onGestureStart);
         removeEvent(containerElement, "gesturechange", this.onGestureChange);
         removeEvent(containerElement, "gesturesend", this.onGestureEnd);
@@ -391,7 +397,6 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             || containerElement.querySelector(`.${WRAPPER_CLASS_NAME}`);
         let scrollAreaElement = options.scrollAreaElement
             || containerElement.querySelector(`.${SCROLL_AREA_CLASS_NAME}`);
-        let restrictElement = containerElement.querySelector<HTMLElement>(`.${RESTRICT_WRAPPER_CLASS_NAME}`);
         const horizontalScrollElement = options.horizontalScrollElement
             || containerElement.querySelector(`.${HORIZONTAL_SCROLL_BAR_CLASS_NAME}`);
         const verticalScrollElement = options.verticalScrollElement
@@ -399,13 +404,9 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
 
         if (!wrapperElement) {
             wrapperElement = document.createElement("div");
-            // restrictElement = document.createElement("div");
-
-            // restrictElement.insertBefore(this._viewportElement, null);
             wrapperElement.insertBefore(this._viewportElement, null);
             containerElement.insertBefore(wrapperElement, null);
         }
-        this._restrictWrapperElement = restrictElement;
         this.wrapperElement = wrapperElement;
 
         if (!scrollAreaElement) {
@@ -440,6 +441,22 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         this.injectResult = injector.inject(containerElement, {
             nonce: this.options.cspNonce,
         });
+
+        const wheelContainerOption = options.wheelContainer;
+        let wheelContainerElement: HTMLElement | null = null;
+
+        if (wheelContainerOption) {
+            if (isString(wheelContainerOption)) {
+                wheelContainerElement = document.querySelector(wheelContainerOption);
+            } else if (wheelContainerOption instanceof Node) {
+                wheelContainerElement = wheelContainerOption;
+            } else if ("value" in wheelContainerOption || "current" in wheelContainerOption) {
+                wheelContainerElement = wheelContainerOption.current || wheelContainerOption.value;
+            }
+        }
+        wheelContainerElement ||= containerElement;
+        this._wheelContainerElement = wheelContainerElement;
+
         /**
          * the `dragStart` event fires when `touchstart` does occur.
          * @memberof InfiniteViewer
@@ -625,7 +642,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         }
 
         if (options.useWheelPinch || options.useWheelScroll) {
-            addEvent(containerElement, "wheel", this.onWheel, {
+            addEvent(wheelContainerElement, "wheel", this.onWheel, {
                 passive: false,
             });
         }
@@ -661,24 +678,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             = `width:calc(100% + ${this.getScrollAreaWidth()}px);`
             + `height:calc(100% + ${this.getScrollAreaHeight()}px);`;
 
-        // const wrapperStyle = this._restrictWrapperElement.style;
         const viewportStyle = this._viewportElement.style;
-        // const restrictOffsetX = containerWidth > rangeX[1] ? containerWidth - rangeX[1]: 0;
-        // const restrictOffsetY = containerHeight > rangeY[1] ? containerHeight - rangeY[1] : 0;
 
-        // // wrapperStyle.overflowX = "visible";
-        // // wrapperStyle.overflowY = "visible";
-        // // wrapperStyle.overflowClipMargin = "0px";
-
-        // // if (restrictOffsetX) {
-        // //     wrapperStyle.overflowX = "clip";
-        // // }
-        // // if (restrictOffsetY) {
-        // //     wrapperStyle.overflowY = "clip";
-        // // }
-
-        // nextOffsetX -= restrictOffsetX;
-        // nextOffsetX -= restrictOffsetY;
         if (useTransform === false) {
             viewportStyle.cssText += `position: relative; left: ${nextOffsetX}px; top: ${nextOffsetY}px; `;
 

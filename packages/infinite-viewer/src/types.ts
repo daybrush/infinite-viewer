@@ -101,6 +101,14 @@ export interface InfiniteViewerOptions {
      */
     wheelScale: number;
     /**
+     * The container element to which the wheel event applies
+     * @default containerElement
+     */
+    wheelContainer?: HTMLElement | string | {
+        current?: HTMLElement | undefined | null;
+        value?: HTMLElement | undefined | null;
+    };
+    /**
      * add nonce property to style for CSP
      * @default ""
      */

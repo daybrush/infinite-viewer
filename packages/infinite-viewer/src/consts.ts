@@ -9,7 +9,6 @@ export const IS_SAFARI = agent.browser.name === "safari";
 export const PREFIX = "infinite-viewer-";
 
 export const WRAPPER_CLASS_NAME = `${PREFIX}wrapper`;
-export const RESTRICT_WRAPPER_CLASS_NAME = `${PREFIX}restrict-wrapper`;
 export const SCROLL_AREA_CLASS_NAME = `${PREFIX}scroll-area`;
 
 export const SCROLL_BAR_CLASS_NAME = `${PREFIX}scroll-bar`;
