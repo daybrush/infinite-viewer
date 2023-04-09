@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.0](https://github.com/daybrush/infinite-viewer/compare/0.23.0...0.24.0) (2023-04-09)
+### :sparkles: Packages
+* `infinite-viewer` 0.24.0
+* `lit-infinite-viewer` 0.23.0
+* `preact-infinite-viewer` 0.21.0
+* `react-infinite-viewer` 0.24.0
+* `svelte-infinite-viewer` 0.23.0
+* `vue-infinite-viewer` 0.23.0
+* `vue3-infinite-viewer` 0.13.0
+* `ngx-infinite-viewer` 0.23.0
+
+
+### :rocket: New Features
+
+* `infinite-viewer`
+    * add wheelContainer option ([e6d251d](https://github.com/daybrush/infinite-viewer/commit/e6d251d0708bf5bdbaacfc12c13aa98eca7a6427))
+
+
+### :bug: Bug Fix
+
+* `vue3-infinite-viewer`, `vue-infinite-viewer`, `svelte-infinite-viewer`, `react-infinite-viewer`, `lit-infinite-viewer`, `infinite-viewer`
+    * update prop types ([fd622b0](https://github.com/daybrush/infinite-viewer/commit/fd622b05facc759dda28d1897e689642f88dbed8))
+
+
+### :mega: Other
+
+* All
+    * update packages ([7f71e05](https://github.com/daybrush/infinite-viewer/commit/7f71e052a12f56bd5e1f662181ce1b28bb8004a0))
+* `vue3-infinite-viewer`, `vue-infinite-viewer`, `svelte-infinite-viewer`, `react-infinite-viewer`, `preact-infinite-viewer`, `lit-infinite-viewer`
+    * update types ([f5ed1ed](https://github.com/daybrush/infinite-viewer/commit/f5ed1ed526854f04cce3797286b0486b165fe466))
+
+
+
 ## [0.23.0](https://github.com/daybrush/infinite-viewer/compare/0.22.0...0.23.0) (2023-03-30)
 ### :sparkles: Packages
 * `infinite-viewer` 0.23.0

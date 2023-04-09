@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.23.0...infinite-viewer@0.24.0) (2023-04-09)
+
+
+### :rocket: New Features
+
+* add wheelContainer option ([e6d251d](https://github.com/daybrush/infinite-viewer/commit/e6d251d0708bf5bdbaacfc12c13aa98eca7a6427))
+
+
+### :bug: Bug Fix
+
+* update prop types ([fd622b0](https://github.com/daybrush/infinite-viewer/commit/fd622b05facc759dda28d1897e689642f88dbed8))
+
+
+### :mega: Other
+
+* update packages ([7f71e05](https://github.com/daybrush/infinite-viewer/commit/7f71e052a12f56bd5e1f662181ce1b28bb8004a0))
+
+
+
 ## [0.23.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.22.0...infinite-viewer@0.23.0) (2023-03-30)
 
 
