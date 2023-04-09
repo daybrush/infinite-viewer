@@ -197,6 +197,7 @@ export const OPTIONS = [
     "verticalScrollElement",
     "horizontalScrollElement",
     "useResizeObserver",
+    "wheelContainer",
 ] as const;
 
 /**
@@ -239,6 +240,7 @@ export const METHODS = [
     "getZoom",
     "getZoomX",
     "getZoomY",
+    "getWheelContainer",
 ] as const;
 
 export const TINY_NUM = 0.000001;
