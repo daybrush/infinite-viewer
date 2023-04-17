@@ -67,14 +67,9 @@ export default class ScrollBar extends EventEmitter {
                         if (0 <= startPos && endPos <= 0) {
                             return;
                         }
-                        // thumbSize === containerSize
-                        // scrollWidth =
-                        this.scrollSize
                         const clientScrollWidth = thumbSize / this.size * this.scrollSize;
                         const pos = (0 < endPos ? endPos : startPos) / clientScrollWidth;
                         const delta = pos * this.size;
-
-                        console.log(this.scrollSize, pos, delta);
 
                         this.scrollBy(delta);
                     });
@@ -88,17 +83,17 @@ export default class ScrollBar extends EventEmitter {
             if (!e.datas.isThumb) {
                 return;
             }
-            this.scrollBy(this.isHorizontal ? e.deltaX : e.deltaY);
+            this.scrollBy(this.isHorizontal ? e.deltaX : e.deltaY, true);
         });
         addEvent(this.barElement, "wheel", this.onWheel, {
             passive: false,
         });
     }
-    public scrollBy(delta: number) {
+    public scrollBy(delta: number, isAbsolute?: boolean) {
         const ratio = delta / this.size;
 
         this.trigger("scroll", {
-            delta: this.scrollSize * ratio,
+            delta: isAbsolute ? delta : this.scrollSize * ratio,
         });
     }
     public render(
@@ -109,14 +104,14 @@ export default class ScrollBar extends EventEmitter {
         const [startMargin, endMargin] = scrollRange;
         const scrollSizeOffset = throttle(abs(startMargin) + endMargin, 0.001);
         const scrollSize = containerSize + scrollSizeOffset;
-        const display = isDisplay && scrollSizeOffset ? "block" : "none";
+        const opacity = isDisplay && scrollSizeOffset ? "1" : "";
         const [dirName1, sizeName] = this.isHorizontal ? ["X", "width"] : ["Y", "height"];
         const thumbSize = containerSize / scrollSize;
         const thumbPos = endMargin / scrollSize / thumbSize;
 
         this.size = containerSize;
         this.scrollSize = scrollSize;
-        this.barElement.style.cssText = `display: ${display};`;
+        this.thumbElement.style.opacity = opacity;
         this.thumbElement.style.cssText
             += `${sizeName}: ${thumbSize * 100}%;`
             + `transform: translate${dirName1}(${thumbPos * 100}%)`;
