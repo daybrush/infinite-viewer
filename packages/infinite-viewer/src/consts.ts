@@ -26,6 +26,7 @@ export const injector = styled(prefixCSS(PREFIX, `
     width: 100%;
     height: 100%;
     overflow: auto;
+    scrollbar-width: none;
     top: 0;
     left: 0;
     will-change: scroll-position;
@@ -76,24 +77,27 @@ export const injector = styled(prefixCSS(PREFIX, `
     width: 6px;
     height: 6px;
     transition: all ease 0.2s;
+    opacity: 0;
+}
+.scroll-bar:hover .scroll-thumb {
+    border-radius: 5px;
+    opacity: 1;
 }
 .horizontal-scroll-bar .scroll-thumb {
     margin: 4px 0px;
-    transition-property: margin, height, border-radius;
+    transition-property: opacity, margin, height, border-radius;
 }
 .vertical-scroll-bar .scroll-thumb {
     margin: 0px 4px;
-    transition-property: margin, width, border-radius;
+    transition-property: opacity, margin, width, border-radius;
 }
 .horizontal-scroll-bar:hover .scroll-thumb {
     height: 10px;
     margin: 2px 0px;
-    border-radius: 5px;
 }
 .vertical-scroll-bar:hover .scroll-thumb {
     width: 10px;
     margin: 0px 2px;
-    border-radius: 5px;
 }
 `));
 
