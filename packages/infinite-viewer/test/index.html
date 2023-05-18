@@ -385,14 +385,27 @@
     });
 
     requestAnimationFrame(() => {
-        const left = (viewer.getViewportWidth() - viewer.getContainerWidth() / viewer.getZoomX()) / 2;
-        viewer.scrollTo(left, 0, {
-            duration: 1000,
+        // const left = (viewer.getViewportWidth() - viewer.getContainerWidth() / viewer.getZoomX()) / 2;
+        // viewer.scrollTo(left, 0, {
+        //     duration: 1000,
+        // });
+
+        // viewer.scrollTo(-100, -60, {
+        //     // duration: 0,
+        // });
+        requestAnimationFrame(() => {
+            viewer.setTo({
+                x: -600,
+                y: -600,
+                zoom: 0.5,
+                duration: 1000,
+            });
         });
-        viewer.setZoom(0.5, {
-            duration: 1000,
-            zoomOffsetY: 0,
-        });
+        // viewer.setZoom(0.5, {
+        //     duration: 1000,
+        //     zoomOffsetY: 0,
+        //     zoomOffsetX: 0,
+        // });
     });
 
     window.addEventListener("resize", () => {

@@ -211,6 +211,34 @@ export interface ScrollOptions extends AnimationOptions {
     absolute?: boolean;
 }
 
+/**
+ * @typedef
+ * @memberof InfiniteViewer
+ * @extends InfiniteViewer.AnimationOptions
+ * @since 0.25.0
+ */
+export interface SetOptions extends AnimationOptions {
+    /**
+     * coordinate x to move
+     */
+    x?: number;
+    /**
+     * coordinate y to move
+     */
+    y?: number;
+    /**
+     * coordinate x to move
+     */
+    zoom?: number | number[];
+    /**
+     * The x, y coordinates of the zoom operation based on the viewport
+     */
+    zoomOffsetX?: number | string;
+    /**
+     * The x, y coordinates of the zoom operation based on the viewport
+     */
+    zoomOffsetY?: number | string;
+}
 
 /**
  * @typedef
@@ -255,7 +283,7 @@ export interface ZoomOptions extends AnimationOptions {
      * how to calculate zoom offset
      * @default "screen"
      */
-    zoomBase?: "screen" | "viewport";
+    zoomBase?: "screen" | "viewport" | "fixed";
     zoomOffsetX?: number | string;
     zoomOffsetY?: number | string;
 }

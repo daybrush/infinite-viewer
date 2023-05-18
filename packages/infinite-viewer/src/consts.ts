@@ -245,6 +245,8 @@ export const METHODS = [
     "getZoomX",
     "getZoomY",
     "getWheelContainer",
+    "setTo",
+    "setBy",
 ] as const;
 
 export const TINY_NUM = 0.000001;

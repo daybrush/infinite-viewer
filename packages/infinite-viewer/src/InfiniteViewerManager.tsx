@@ -3,7 +3,7 @@ import Gesto from "gesto";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
 import { camelize, IObject, addEvent, removeEvent, addClass, convertUnitSize, between, isObject, isArray, isString } from "@daybrush/utils";
-import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents, OnPinch, AnimationOptions, ScrollOptions, ZoomOptions, GetScollPosOptions, InnerScrollOptions, ScrollCenterOptions } from "./types";
+import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents, OnPinch, AnimationOptions, ScrollOptions, ZoomOptions, GetScollPosOptions, InnerScrollOptions, ScrollCenterOptions, SetOptions } from "./types";
 import {
     PROPERTIES, injector, CLASS_NAME, TINY_NUM,
     DEFAULT_OPTIONS,
@@ -258,6 +258,68 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
 
         this.render();
         this._scrollBy(0, 0);
+    }
+    /**
+     * Move to that position or zoom.
+     * @since 0.25.0
+     */
+    public setTo(options: SetOptions) {
+        const {
+            x = this.getScrollLeft(),
+            y = this.getScrollTop(),
+            zoom = [this.getZoomX(), this.getZoomY()],
+            duration,
+        } = options;
+        const {
+            zoomX: prevZoomX,
+            zoomY: prevZoomY,
+            zoomRange,
+        } = this;
+        let {
+            zoomOffsetX = DEFAULT_OPTIONS.zoomOffsetX,
+            zoomOffsetY = DEFAULT_OPTIONS.zoomOffsetY,
+        } = this;
+        if ("zoomOffsetX" in options) {
+            zoomOffsetX = options.zoomOffsetX;
+        }
+        if ("zoomOffsetY" in options) {
+            zoomOffsetY = options.zoomOffsetY;
+        }
+
+        const [zoomX, zoomY] = isArray(zoom) ? zoom : [zoom, zoom];
+        const nextZoomX = between(zoomX, zoomRange[0], zoomRange[1]);
+        const nextZoomY = between(zoomY, zoomRange[0], zoomRange[1]);
+        const zoomXPos = convertUnitSize(`${zoomOffsetX}`, this.viewportWidth) * (1 / prevZoomX - 1 / nextZoomX);
+        const zoomYPos = convertUnitSize(`${zoomOffsetY}`, this.viewportHeight) * (1 / prevZoomY - 1 / nextZoomY);
+
+        this.scrollTo(x - zoomXPos, y - zoomYPos, {
+            duration,
+        });
+        this.setZoom(zoom, {
+            zoomOffsetX,
+            zoomOffsetY,
+            duration,
+            zoomBase: "fixed",
+        });
+    }
+    /**
+     * Move by the position or zoom delta value.
+     * @since 0.25.0
+     */
+    public setBy(options: SetOptions) {
+        const {
+            x = 0,
+            y = 0,
+            zoom = [0, 0],
+        } = options;
+        const [zoomX, zoomY] = isArray(zoom) ? zoom : [zoom, zoom];
+
+        this.setTo({
+            ...options,
+            x: this.getScrollLeft() + x,
+            y: this.getScrollTop() + y,
+            zoom: [this.zoomX + zoomX, this.zoomY + zoomY],
+        });
     }
     /**
      * Scrolls the container by the given amount.
@@ -1007,7 +1069,10 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         let zoomXPos = 0;
         let zoomYPos = 0;
 
-        if (zoomBase === "viewport") {
+        if (zoomBase === "fixed") {
+            zoomXPos = convertUnitSize(`${zoomOffsetX}`, this.viewportWidth);
+            zoomYPos = convertUnitSize(`${zoomOffsetY}`, this.viewportHeight);
+        } else if (zoomBase === "viewport") {
             zoomXPos = (-scrollLeft + convertUnitSize(`${zoomOffsetX}`, this.viewportWidth)) * prevZoomX;
             zoomYPos = (-scrollTop + convertUnitSize(`${zoomOffsetY}`, this.viewportHeight)) * prevZoomY;
         } else {
@@ -1021,9 +1086,13 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         const nextCenterX = nextScrollLeft + zoomXPos / nextZoomX;
         const nextCenterY = nextScrollTop + zoomYPos / nextZoomY;
 
-        this._scrollBy(centerX - nextCenterX, centerY - nextCenterY, {
-            zoom: !!(nextZoomX - prevZoomX || nextZoomY - prevZoomY),
-        });
+        this._scrollBy(
+            centerX - nextCenterX,
+            centerY - nextCenterY,
+            {
+                zoom: !!(nextZoomX - prevZoomX || nextZoomY - prevZoomY),
+            },
+        );
         this.render();
     }
     private _scrollBy(deltaX: number, deltaY: number, options?: InnerScrollOptions) {
