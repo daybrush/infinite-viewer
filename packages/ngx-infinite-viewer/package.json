@@ -9,6 +9,7 @@
     "test": "ng test"
   },
   "private": true,
+  "lernaHelperPublishPath": "./dist/ngx-infinite-viewer",
   "dependencies": {
     "@angular/animations": "~13.3.0",
     "@angular/common": "~13.3.0",
