@@ -1,6 +1,6 @@
 {
   "name": "ngx-infinite-viewer",
-  "version": "0.23.1",
+  "version": "0.24.0",
   "description": "Angular Infinite Viewer is Document Viewer Component with infinite scrolling.",
   "repository": {
     "type": "git",
@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/daybrush/infinite-viewer#readme",
   "dependencies": {
-    "infinite-viewer": "~0.24.1"
+    "infinite-viewer": "~0.25.0"
   }
 }
