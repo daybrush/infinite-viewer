@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.25.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.24.0...infinite-viewer@0.25.0) (2023-05-18)
+
+
+### :rocket: New Features
+
+* add setTo, setBy method #49 ([4eb1005](https://github.com/daybrush/infinite-viewer/commit/4eb100585975add6a37a6b5fe2fe0da3d15f44b0))
+
+
+### :bug: Bug Fix
+
+* fix firefox native scrollbar #48 ([3e6dad0](https://github.com/daybrush/infinite-viewer/commit/3e6dad06beb2ce515bb2fda956f192767665a98e))
+* fix scroll value #45 ([0045eec](https://github.com/daybrush/infinite-viewer/commit/0045eec2eb426729af022cbb08924af401031f52))
+
+
+### :mega: Other
+
+* publish packages ([9fe16d3](https://github.com/daybrush/infinite-viewer/commit/9fe16d35f4c550dbdcfb5b527e4ed53476067a7d))
+* publish packages ([5791102](https://github.com/daybrush/infinite-viewer/commit/579110248f87ca469c67998da17a9618f30d3484))
+
+
+
 ## [0.24.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.23.0...infinite-viewer@0.24.0) (2023-04-09)
 
 

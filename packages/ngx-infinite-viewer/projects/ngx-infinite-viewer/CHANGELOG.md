@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.0](https://github.com/daybrush/infinite-viewer/compare/ngx-infinite-viewer@0.23.0...ngx-infinite-viewer@0.24.0) (2023-05-18)
+
+
+### :memo: Documentation
+
+* fix README ([a3b7821](https://github.com/daybrush/infinite-viewer/commit/a3b7821da065412d639ea3c4f91ca1a7dfb1f07f))
+
+
+### :mega: Other
+
+* publish packages ([9fe16d3](https://github.com/daybrush/infinite-viewer/commit/9fe16d35f4c550dbdcfb5b527e4ed53476067a7d))
+* publish packages ([5791102](https://github.com/daybrush/infinite-viewer/commit/579110248f87ca469c67998da17a9618f30d3484))
+
+
+
 ## [0.23.0](https://github.com/daybrush/infinite-viewer/compare/ngx-infinite-viewer@0.22.0...ngx-infinite-viewer@0.23.0) (2023-04-09)
 
 
