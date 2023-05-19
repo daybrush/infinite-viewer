@@ -1,6 +1,6 @@
 {
     "name": "infinite-viewer",
-    "version": "0.25.0",
+    "version": "0.25.1",
     "description": "Infinite Viewer is Document Viewer Component with infinite scrolling up, down, left and right.",
     "main": "./dist/infinite-viewer.cjs.js",
     "module": "./dist/infinite-viewer.esm.js",
