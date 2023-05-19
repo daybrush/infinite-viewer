@@ -1,0 +1,4 @@
+// auto
+// eslint-disable-next-line max-len
+export const ANGULAR_INFINITE_VIEWER_INPUTS: ["margin","threshold","zoomOffsetX","zoomOffsetY","zoom","zoomX","zoomY","rangeX","rangeY","rangeOffsetX","rangeOffsetY","usePinch","useMouseDrag","pinchThreshold","maxPinchWheel","wheelScale","displayVerticalScroll","displayHorizontalScroll","translateZ","useAutoZoom","wheelPinchKey","zoomRange","pinchDirection"] = ["margin","threshold","zoomOffsetX","zoomOffsetY","zoom","zoomX","zoomY","rangeX","rangeY","rangeOffsetX","rangeOffsetY","usePinch","useMouseDrag","pinchThreshold","maxPinchWheel","wheelScale","displayVerticalScroll","displayHorizontalScroll","translateZ","useAutoZoom","wheelPinchKey","zoomRange","pinchDirection"];
+export const ANGULAR_INFINITE_VIEWER_OUTPUTS: ["scroll","abortPinch","dragStart","dragEnd","pinchStart","pinch"] = ["scroll","abortPinch","dragStart","dragEnd","pinchStart","pinch"];

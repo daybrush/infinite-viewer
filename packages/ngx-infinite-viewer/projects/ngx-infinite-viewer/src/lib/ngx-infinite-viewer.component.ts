@@ -6,7 +6,7 @@ import VanillaInfiniteViewer, {
   PROPERTIES, EVENTS, InfiniteViewerProperties, InfiniteViewerOptions, OPTIONS,
 } from 'infinite-viewer';
 import { NgxInfiniteViewerInterface } from './ngx-infinite-viewer.interface';
-import { NgxInfiniteViewerEvents } from './types';
+import { ANGULAR_INFINITE_VIEWER_INPUTS, ANGULAR_INFINITE_VIEWER_OUTPUTS } from './consts';
 
 
 @Component({
@@ -24,57 +24,17 @@ import { NgxInfiniteViewerEvents } from './types';
   </div>
 
   `,
-  styles: []
+  styles: [],
+  inputs: ANGULAR_INFINITE_VIEWER_INPUTS,
+  outputs: ANGULAR_INFINITE_VIEWER_OUTPUTS,
 })
 export class NgxInfiniteViewerComponent
   extends NgxInfiniteViewerInterface
-  implements OnDestroy, AfterViewInit, OnChanges {
+  implements OnDestroy, AfterViewInit, OnChanges, InfiniteViewerOptions {
   @ViewChild('scrollAreaElement', { static: false }) scrollAreaElementRef!: ElementRef;
   @ViewChild('wrapperElement', { static: false }) wrapperElementRef!: ElementRef;
   @ViewChild('horizontalScrollElement', { static: false }) horizontalScrollElementRef!: ElementRef;
   @ViewChild('verticalScrollElement', { static: false }) verticalScrollElementRef!: ElementRef;
-  // @Input() margin!: InfiniteViewerProperties['margin'];
-  // @Input() threshold: InfiniteViewerProperties['threshold'];
-  // @Input() zoom: InfiniteViewerProperties['zoom'];
-  // @Input() rangeX: InfiniteViewerProperties['rangeX'];
-  // @Input() rangeY: InfiniteViewerProperties['rangeY'];
-  // @Input() pinchThreshold: InfiniteViewerProperties['pinchThreshold'];
-  // @Input() usePinch: InfiniteViewerProperties['usePinch'];
-  // @Input() cspNonce: InfiniteViewerOptions['cspNonce'];
-  // @Input() wheelScale: InfiniteViewerOptions['wheelScale'];
-  // @Input() displayVerticalScroll: InfiniteViewerOptions['displayVerticalScroll'];
-  // @Input() displayHorizontalScroll: InfiniteViewerOptions['displayHorizontalScroll'];
-
-  // @Input() useWheelScroll: InfiniteViewerOptions['useWheelScroll'];
-  // @Input() useWheelPinch: InfiniteViewerOptions['useWheelPinch'];
-
-  // @Input() zoomOffsetX: InfiniteViewerOptions['zoomOffsetX'];
-  // @Input() zoomOffsetY: InfiniteViewerOptions['zoomOffsetY'];
-  // @Input() translateZ: InfiniteViewerOptions['translateZ'];
-  // @Input() rangeOffsetX: InfiniteViewerOptions['rangeOffsetX'];
-  // @Input() rangeOffsetY: InfiniteViewerOptions['rangeOffsetY'];
-  // @Input() maxPinchWheel: InfiniteViewerOptions['maxPinchWheel'];
-  // @Input() useGesture: InfiniteViewerOptions['useGesture'];
-  // @Input() useTransform: InfiniteViewerOptions['useTransform'];
-  // @Input() wrapperElement: InfiniteViewerOptions['wrapperElement'];
-  // @Input() scrollAreaElement: InfiniteViewerOptions['scrollAreaElement'];
-  // @Input() verticalScrollElement: InfiniteViewerOptions['verticalScrollElement'];
-  // @Input() useResizeObserver: InfiniteViewerOptions['useResizeObserver'];
-
-  // @Input() horizontalScrollElement: InfiniteViewerOptions['horizontalScrollElement'];
-
-  // @Output() useMouseDrag: InfiniteViewerOptions['useMouseDrag'];
-  // @Output() useAutoZoom: InfiniteViewerOptions['useAutoZoom'];
-  // @Output() zoomRange: InfiniteViewerOptions['zoomRange'];
-  // @Output() wheelPinchKey: InfiniteViewerOptions['wheelPinchKey'];
-
-  // @Output() scroll: NgxInfiniteViewerEvents['scroll'];
-  // @Output() dragStart: NgxInfiniteViewerEvents['dragStart'];
-  // @Output() drag: NgxInfiniteViewerEvents['drag'];
-  // @Output() dragEnd: NgxInfiniteViewerEvents['dragEnd'];
-  // @Output() pinchStart: NgxInfiniteViewerEvents['pinchStart'];
-  // @Output() pinch: NgxInfiniteViewerEvents['pinch'];
-  // @Output() abortPinch: NgxInfiniteViewerEvents['abortPinch'];
 
   constructor(public containerElementRef: ElementRef) {
     super();
@@ -85,7 +45,7 @@ export class NgxInfiniteViewerComponent
 
   ngAfterViewInit(): void {
     const options: Partial<InfiniteViewerProperties> = {};
-    PROPERTIES.forEach((name) => {
+    OPTIONS.forEach((name) => {
       if (name in this && typeof this[name] !== 'undefined') {
         (options as any)[name] = this[name];
       }
