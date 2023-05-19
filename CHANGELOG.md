@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.25.1](https://github.com/daybrush/infinite-viewer/compare/0.25.0...0.25.1) (2023-05-19)
+### :sparkles: Packages
+* `infinite-viewer` 0.25.1
+* `lit-infinite-viewer` 0.24.1
+* `preact-infinite-viewer` 0.22.1
+* `react-infinite-viewer` 0.25.1
+* `svelte-infinite-viewer` 0.24.1
+* `vue-infinite-viewer` 0.24.1
+* `vue3-infinite-viewer` 0.14.1
+* `ngx-infinite-viewer` 0.24.1
+
+
+### :bug: Bug Fix
+
+* `ngx-infinite-viewer`, `infinite-viewer`
+    * fix angular inputs, outputs #50 ([b1f9301](https://github.com/daybrush/infinite-viewer/commit/b1f9301d310356294baf9827a9c4e992af16d7a4))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([a6eccd7](https://github.com/daybrush/infinite-viewer/commit/a6eccd765bbb50bc0ead2c4997756914d53141bb))
+
+
+
 ## [0.25.0](https://github.com/daybrush/infinite-viewer/compare/0.0.0...0.25.0) (2023-05-18)
 ### :sparkles: Packages
 * `infinite-viewer` 0.25.0
