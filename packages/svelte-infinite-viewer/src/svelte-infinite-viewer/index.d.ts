@@ -5,8 +5,11 @@ import { InfiniteViewerMethods, InfiniteViewerOptions, InfiniteViewerEvents } fr
 export type SvelteInfiniteViewerEvents = {
     [key in keyof InfiniteViewerEvents]: CustomEvent<InfiniteViewerEvents[key]>;
 }
+export interface SvelteInfiniteViewerProps extends Partial<InfiniteViewerOptions> {
+    className?: string;
+}
 export default class InfiniteViewerComponent extends SvelteComponentTyped<
-    Partial<InfiniteViewerOptions>,
+    SvelteInfiniteViewerProps,
     SvelteInfiniteViewerEvents
 > { }
 

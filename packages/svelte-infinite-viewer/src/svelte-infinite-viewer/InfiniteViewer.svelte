@@ -71,7 +71,7 @@
     });
   });
   onDestroy(() => {
-    infiniteViewer.destroy();
+    infiniteViewer && infiniteViewer.destroy();
   });
 </script>
 <div class={`${className || ''} ${CLASS_NAME}`} bind:this={containerElement}>
