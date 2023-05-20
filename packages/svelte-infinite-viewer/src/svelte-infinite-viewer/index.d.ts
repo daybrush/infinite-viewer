@@ -6,7 +6,7 @@ export type SvelteInfiniteViewerEvents = {
     [key in keyof InfiniteViewerEvents]: CustomEvent<InfiniteViewerEvents[key]>;
 }
 export default class InfiniteViewerComponent extends SvelteComponentTyped<
-    InfiniteViewerOptions,
+    Partial<InfiniteViewerOptions>,
     SvelteInfiniteViewerEvents
 > { }
 
