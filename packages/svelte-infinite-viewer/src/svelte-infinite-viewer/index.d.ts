@@ -1,15 +1,15 @@
-import { SvelteComponentDev } from "svelte/internal";
-import VanillaInfiniteViewer, {
-    InfiniteViewerOptions,
-    InfiniteViewerMethods,
-} from "infinite-viewer";
-import { MethodInterface } from "framework-utils";
+/// <reference types="svelte" />
+import { SvelteComponentTyped } from "svelte";
+import { InfiniteViewerMethods, InfiniteViewerOptions, InfiniteViewerEvents } from "infinite-viewer";
 
-export default class InfiniteViewerComponent<T={}> extends SvelteComponentDev {
-    $$prop_def: InfiniteViewerOptions & T;
-    getInstance(): VanillaInfiniteViewer;
+export type SvelteInfiniteViewerEvents = {
+    [key in keyof InfiniteViewerEvents]: CustomEvent<InfiniteViewerEvents[key]>;
 }
-export default interface InfiniteViewerComponent extends MethodInterface<InfiniteViewerMethods, VanillaInfiniteViewer, InfiniteViewerComponent> {
-}
+export default class InfiniteViewerComponent<T = {}> extends SvelteComponentTyped<
+    InfiniteViewerOptions & T,
+    SvelteInfiniteViewerEvents
+> { }
 
+export default interface InfiniteViewerComponent extends InfiniteViewerMethods {
+}
 export * from "infinite-viewer";
