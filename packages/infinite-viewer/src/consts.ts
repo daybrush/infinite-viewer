@@ -136,6 +136,7 @@ export const DEFAULT_OPTIONS = {
     useResizeObserver: false,
     pinchDirection: "all" as const,
     preventWheelClick: true,
+    useBounceScrollBar: false,
 };
 
 export const DEFAULT_EASING = (x: number) => 1 - Math.pow(1 - x, 3);
@@ -202,6 +203,7 @@ export const OPTIONS = [
     "horizontalScrollElement",
     "useResizeObserver",
     "wheelContainer",
+    "useBounceScrollBar",
 ] as const;
 
 /**

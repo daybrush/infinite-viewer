@@ -1,4 +1,4 @@
-import Gesto from "gesto";
+import Gesto, { OnDrag, OnDragStart } from "gesto";
 import {
     SCROLL_BAR_CLASS_NAME, SCROLL_THUMB_CLASS_NAME,
     HORIZONTAL_SCROLL_BAR_CLASS_NAME, VERTICAL_SCROLL_BAR_CLASS_NAME
@@ -11,13 +11,13 @@ export default class ScrollBar extends EventEmitter {
     public isAppend: boolean = false;
     public thumbElement!: HTMLElement;
     public barElement!: HTMLElement;
-    private gesto!: Gesto;
-    private size: number = 0;
-    private scrollSize: number = 0;
-    private isHorizontal = false;
+    protected gesto!: Gesto;
+    protected size: number = 0;
+    protected scrollSize: number = 0;
+    protected isHorizontal = false;
 
     constructor(
-        private type: "horizontal" | "vertical",
+        public type: "horizontal" | "vertical",
         container?: HTMLElement,
     ) {
         super();
@@ -47,45 +47,14 @@ export default class ScrollBar extends EventEmitter {
         this.isHorizontal = isHorizontal;
         this.gesto = new Gesto(barElement, {
             container: window,
-        }).on("dragStart", e => {
-            const target = e.inputEvent.target;
-            const datas = e.datas;
-            const isThumb = this.thumbElement === target;
-
-            if (!isThumb) {
-                setTimeout(() => {
-                    requestAnimationFrame(() => {
-                        const thumbRect = this.thumbElement.getBoundingClientRect();
-                        const pos1 = thumbRect[isHorizontal ? "left" : "top"];
-                        const thumbSize = thumbRect[isHorizontal ? "width" : "height"];
-                        const pos2 = pos1 + thumbSize;
-                        const clientPos = e[isHorizontal ? "clientX" : "clientY"];
-
-                        const endPos = clientPos - pos2;
-                        const startPos = clientPos - pos1;
-
-                        if (0 <= startPos && endPos <= 0) {
-                            return;
-                        }
-                        const clientScrollWidth = thumbSize / this.size * this.scrollSize;
-                        const pos = (0 < endPos ? endPos : startPos) / clientScrollWidth;
-                        const delta = pos * this.size;
-
-                        this.scrollBy(delta);
-                    });
-                }, 100);
-
-            }
-            datas.isThumb = isThumb;
-            e.inputEvent.stopPropagation();
-            e.inputEvent.preventDefault();
-        }).on("drag", e => {
-            if (!e.datas.isThumb) {
-                return;
-            }
-            this.scrollBy(this.isHorizontal ? e.deltaX : e.deltaY, true);
-        });
-        addEvent(this.barElement, "wheel", this.onWheel, {
+        }).on(
+            "dragStart",
+            e => this._onDragStart(e),
+        ).on(
+            "drag",
+            e => this._onDrag(e),
+        );
+        addEvent(this.barElement, "wheel", this._onWheel, {
             passive: false,
         });
     }
@@ -96,7 +65,9 @@ export default class ScrollBar extends EventEmitter {
             delta: isAbsolute ? delta : this.scrollSize * ratio,
         });
     }
-    public render(
+    public render = () => {
+    }
+    public renderDefault(
         isDisplay: boolean,
         containerSize: number,
         scrollRange: number[],
@@ -117,11 +88,51 @@ export default class ScrollBar extends EventEmitter {
             + `transform: translate${dirName1}(${thumbPos * 100}%)`;
     }
     public destroy() {
-        removeEvent(this.barElement, "wheel", this.onWheel);
+        removeEvent(this.barElement, "wheel", this._onWheel);
         this.gesto.off();
         this.off();
     }
-    private onWheel = (e: WheelEvent) => {
+    protected _onDragStart = (e: OnDragStart) => {
+        const isHorizontal = this.isHorizontal;
+        const target = e.inputEvent.target;
+        const datas = e.datas;
+        const isThumb = this.thumbElement === target;
+
+        if (!isThumb) {
+            setTimeout(() => {
+                requestAnimationFrame(() => {
+                    const thumbRect = this.thumbElement.getBoundingClientRect();
+                    const pos1 = thumbRect[isHorizontal ? "left" : "top"];
+                    const thumbSize = thumbRect[isHorizontal ? "width" : "height"];
+                    const pos2 = pos1 + thumbSize;
+                    const clientPos = e[isHorizontal ? "clientX" : "clientY"];
+
+                    const endPos = clientPos - pos2;
+                    const startPos = clientPos - pos1;
+
+                    if (0 <= startPos && endPos <= 0) {
+                        return;
+                    }
+                    const clientScrollWidth = thumbSize / this.size * this.scrollSize;
+                    const pos = (0 < endPos ? endPos : startPos) / clientScrollWidth;
+                    const delta = pos * this.size;
+
+                    this.scrollBy(delta);
+                });
+            }, 100);
+
+        }
+        datas.isThumb = isThumb;
+        e.inputEvent.stopPropagation();
+        e.inputEvent.preventDefault();
+    };
+    protected _onDrag = (e: OnDrag) => {
+        if (!e.datas.isThumb) {
+            return;
+        }
+        this.scrollBy(this.isHorizontal ? e.deltaX : e.deltaY, true);
+    };
+    protected _onWheel = (e: WheelEvent) => {
         const delta = this.isHorizontal ? e.deltaX : e.deltaY;
 
         if (delta) {

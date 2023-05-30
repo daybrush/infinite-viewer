@@ -86,6 +86,12 @@ export interface InfiniteViewerOptions {
      */
     useWheelScroll: boolean;
     /**
+     * Whether or not to use a scroll bar in the form of a bounce
+     * An early version of InfiniteViewer's scroll bar.
+     * @default false
+     */
+    useBounceScrollBar: boolean;
+    /**
      * Whether to use gestures using trackpad or magic mouse.
      * @default true
      */

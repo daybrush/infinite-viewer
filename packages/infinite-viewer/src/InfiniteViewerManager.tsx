@@ -12,6 +12,7 @@ import {
 } from "./consts";
 import { measureSpeed, getDuration, getDestPos, abs, getRange, checkDefault, startAnimation } from "./utils";
 import ScrollBar from "./ScrollBar";
+import BounceScrollBar from "./BounceScrollBar";
 
 @Properties(PROPERTIES as any, (prototype, property) => {
     const attributes: IObject<any> = {
@@ -483,8 +484,87 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         // addClass(restrictElement, RESTRICT_WRAPPER_CLASS_NAME);
         addClass(scrollAreaElement, SCROLL_AREA_CLASS_NAME);
 
-        this.horizontalScrollbar = new ScrollBar("horizontal", horizontalScrollElement);
-        this.verticalScrollbar = new ScrollBar("vertical", verticalScrollElement);
+        if (options.useBounceScrollBar) {
+            const horizontalBar = new BounceScrollBar(
+                "horizontal",
+                horizontalScrollElement,
+            );
+            const verticalBar = new BounceScrollBar(
+                "vertical",
+                verticalScrollElement,
+            );
+
+            horizontalBar.render = () => {
+                const {
+                    containerWidth,
+                    zoomX,
+                } = this;
+                const scrollPos = this.getScrollLeft(true) * zoomX;
+                const range = this.getRangeX(true);
+                const scrollSize =  containerWidth + abs(range[0]) + abs(range[1]);
+
+                horizontalBar.renderBounce(
+                    this.displayHorizontalScroll,
+                    scrollPos,
+                    containerWidth,
+                    scrollSize,
+                );
+            };
+            verticalBar.render = () => {
+                const {
+                    containerHeight,
+                    zoomY,
+                } = this;
+                const scrollPos = this.getScrollTop(true) * zoomY;
+                const range = this.getRangeY(true);
+                const scrollSize =  containerHeight + abs(range[0]) + abs(range[1]);
+
+                verticalBar.renderBounce(
+                    this.displayVerticalScroll,
+                    scrollPos,
+                    containerHeight,
+                    scrollSize,
+                );
+            };
+            this.horizontalScrollbar = horizontalBar;
+            this.verticalScrollbar = verticalBar;
+        } else {
+            const horizontalBar = new ScrollBar(
+                "horizontal",
+                horizontalScrollElement,
+            );
+            const verticalBar = new ScrollBar(
+                "vertical",
+                verticalScrollElement,
+            );
+
+            horizontalBar.render = () => {
+                const {
+                    containerWidth,
+                    zoomX,
+                } = this;
+
+                horizontalBar.renderDefault(
+                    this.displayHorizontalScroll,
+                    containerWidth / zoomX,
+                    this._getScrollRangeX(),
+                );
+            };
+            verticalBar.render = () => {
+                const {
+                    containerHeight,
+                    zoomY,
+                } = this;
+
+                verticalBar.renderDefault(
+                    this.displayVerticalScroll,
+                    containerHeight / zoomY,
+                    this._getScrollRangeY(),
+                );
+            };
+            this.horizontalScrollbar = horizontalBar;
+            this.verticalScrollbar = verticalBar;
+        }
 
         this.horizontalScrollbar.on("scroll", e => {
             this.scrollBy(e.delta / this.zoomX, 0);
@@ -759,23 +839,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         this.renderScroll();
     }
     private renderScroll() {
-        const {
-            containerWidth,
-            containerHeight,
-            zoomX,
-            zoomY,
-        } = this;
-
-        this.horizontalScrollbar.render(
-            this.displayHorizontalScroll,
-            containerWidth / zoomX,
-            this._getScrollRangeX(),
-        );
-        this.verticalScrollbar.render(
-            this.displayVerticalScroll,
-            containerHeight / zoomY,
-            this._getScrollRangeY(),
-        );
+        this.horizontalScrollbar.render();
+        this.verticalScrollbar.render();
     }
     private move(scrollLeft: number, scrollTop: number) {
         const wrapperElement = this.wrapperElement;
