@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.25.0](https://github.com/daybrush/infinite-viewer/blob/master/packages/svelte-infinite-viewer/compare/svelte-infinite-viewer@0.24.1...svelte-infinite-viewer@0.25.0) (2023-05-30)
+
+
+### :rocket: New Features
+
+* support svelte types ([64be9df](https://github.com/daybrush/infinite-viewer/blob/master/packages/svelte-infinite-viewer/commit/64be9df53025b49f6760b4a6600ea4baa2ae6733))
+
+
+### :bug: Bug Fix
+
+* fix className prop for svelte ([a6d6476](https://github.com/daybrush/infinite-viewer/blob/master/packages/svelte-infinite-viewer/commit/a6d6476d41c4d4d597c3885dca472e8b74ed57a0))
+* fix svelte partial type ([512e4b1](https://github.com/daybrush/infinite-viewer/blob/master/packages/svelte-infinite-viewer/commit/512e4b191bd823aa3c14219c0eb5ab754459bff7))
+* fix svelte props type ([c53ba0b](https://github.com/daybrush/infinite-viewer/blob/master/packages/svelte-infinite-viewer/commit/c53ba0b2fbabcebb8d5b8243984014853762571b))
+
+
+### :mega: Other
+
+* publish packages ([3a87518](https://github.com/daybrush/infinite-viewer/blob/master/packages/svelte-infinite-viewer/commit/3a8751838224c542c8952a05f6b1e7c7080ff048))
+
+
+
 ## [0.24.1](https://github.com/daybrush/infinite-viewer/blob/master/packages/svelte-infinite-viewer/compare/svelte-infinite-viewer@0.24.0...svelte-infinite-viewer@0.24.1) (2023-05-19)
 
 

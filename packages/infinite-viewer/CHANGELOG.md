@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.27.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.25.1...infinite-viewer@0.27.0) (2023-05-30)
+
+
+### :rocket: New Features
+
+* add useBounceScrollBar option #51 ([03b6e92](https://github.com/daybrush/infinite-viewer/commit/03b6e928c9c2228e0f7635d3a69a83929ea51346))
+
+
+### :mega: Other
+
+* publish packages ([3a87518](https://github.com/daybrush/infinite-viewer/commit/3a8751838224c542c8952a05f6b1e7c7080ff048))
+
+
+
 ## [0.25.1](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.25.0...infinite-viewer@0.25.1) (2023-05-19)
 
 
