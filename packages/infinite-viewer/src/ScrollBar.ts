@@ -130,7 +130,7 @@ export default class ScrollBar extends EventEmitter {
         if (!e.datas.isThumb) {
             return;
         }
-        this.scrollBy(this.isHorizontal ? e.deltaX : e.deltaY, true);
+        this.scrollBy(this.isHorizontal ? e.deltaX : e.deltaY);
     };
     protected _onWheel = (e: WheelEvent) => {
         const delta = this.isHorizontal ? e.deltaX : e.deltaY;
