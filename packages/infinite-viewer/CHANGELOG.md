@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.27.1](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.27.0...infinite-viewer@0.27.1) (2023-05-31)
+
+
+### :bug: Bug Fix
+
+* fix scroll bar delta #51 ([22d6fac](https://github.com/daybrush/infinite-viewer/commit/22d6fac71df6a7f4fd65777f4b25c4850018bb7d))
+
+
+### :mega: Other
+
+* publish packages ([d658909](https://github.com/daybrush/infinite-viewer/commit/d65890919f233dc5eec527aeb9b31c8b9487a919))
+
+
+
 ## [0.27.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.25.1...infinite-viewer@0.27.0) (2023-05-30)
 
 

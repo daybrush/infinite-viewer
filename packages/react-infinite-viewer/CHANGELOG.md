@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.26.1](https://github.com/daybrush/infinite-viewer/blob/master/packages/react-infinite-viewer/compare/react-infinite-viewer@0.26.0...react-infinite-viewer@0.26.1) (2023-05-31)
+
+
+### :mega: Other
+
+* publish packages ([d658909](https://github.com/daybrush/infinite-viewer/blob/master/packages/react-infinite-viewer/commit/d65890919f233dc5eec527aeb9b31c8b9487a919))
+
+
+
 ## [0.26.0](https://github.com/daybrush/infinite-viewer/blob/master/packages/react-infinite-viewer/compare/react-infinite-viewer@0.25.1...react-infinite-viewer@0.26.0) (2023-05-30)
 
 

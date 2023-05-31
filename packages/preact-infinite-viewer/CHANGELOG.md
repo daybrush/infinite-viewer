@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.1](https://github.com/daybrush/infinite-viewer/blob/master/packages/preact-infinite-viewer/compare/preact-infinite-viewer@0.23.0...preact-infinite-viewer@0.23.1) (2023-05-31)
+
+
+### :mega: Other
+
+* publish packages ([d658909](https://github.com/daybrush/infinite-viewer/blob/master/packages/preact-infinite-viewer/commit/d65890919f233dc5eec527aeb9b31c8b9487a919))
+
+
+
 ## [0.23.0](https://github.com/daybrush/infinite-viewer/blob/master/packages/preact-infinite-viewer/compare/preact-infinite-viewer@0.22.1...preact-infinite-viewer@0.23.0) (2023-05-30)
 
 
