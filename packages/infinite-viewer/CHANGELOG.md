@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.28.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.27.1...infinite-viewer@0.28.0) (2023-06-01)
+
+
+### :rocket: New Features
+
+* add useOverflowScroll option ([c50ea5e](https://github.com/daybrush/infinite-viewer/commit/c50ea5e5b32fe7b7bbe83b377fded5967e4f2014))
+
+
+### :mega: Other
+
+* publish packages ([e24b6d5](https://github.com/daybrush/infinite-viewer/commit/e24b6d5d79530d3844fc8ca5ecfb7a306e6bb9b0))
+
+
+
 ## [0.27.1](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.27.0...infinite-viewer@0.27.1) (2023-05-31)
 
 
