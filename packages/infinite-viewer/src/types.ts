@@ -92,6 +92,11 @@ export interface InfiniteViewerOptions {
      */
     useBounceScrollBar: boolean;
     /**
+     * Whether to scroll when the content is larger than the screen even if the range is limited
+     * @default false
+     */
+    useOverflowScroll: boolean;
+    /**
      * Whether to use gestures using trackpad or magic mouse.
      * @default true
      */

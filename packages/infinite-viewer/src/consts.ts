@@ -137,6 +137,7 @@ export const DEFAULT_OPTIONS = {
     pinchDirection: "all" as const,
     preventWheelClick: true,
     useBounceScrollBar: false,
+    useOverflowScroll: false,
 };
 
 export const DEFAULT_EASING = (x: number) => 1 - Math.pow(1 - x, 3);
@@ -184,6 +185,7 @@ export const PROPERTIES = [
     "wheelPinchKey",
     "zoomRange",
     "pinchDirection",
+    "useOverflowScroll",
 ] as const;
 
 /**

@@ -65,34 +65,30 @@ export default class ScrollBar extends EventEmitter {
             delta: isAbsolute ? delta : this.scrollSize * ratio,
         });
     }
-    public render = () => {
-    }
-    public renderDefault(
+    public render(
         isDisplay: boolean,
-        containerSize: number,
-        scrollRange: number[],
+        pos: number,
+        size: number,
+        scrollSize: number,
     ) {
-        const [startMargin, endMargin] = scrollRange;
-        const scrollSizeOffset = throttle(abs(startMargin) + endMargin, 0.001);
-        const scrollSize = containerSize + scrollSizeOffset;
-        const opacity = isDisplay && scrollSizeOffset ? "1" : "";
-        const [dirName1, sizeName] = this.isHorizontal ? ["X", "width"] : ["Y", "height"];
-        const thumbSize = containerSize / scrollSize;
-        const thumbPos = endMargin / scrollSize / thumbSize;
-
-        this.size = containerSize;
+        this.size = size;
         this.scrollSize = scrollSize;
-        this.thumbElement.style.opacity = opacity;
+
+        const opacity = isDisplay && (throttle(scrollSize - size, 0.001) > 0) ? 1 : 0;
+        const [dirName1, sizeName] = this.isHorizontal ? ["X", "width"] : ["Y", "height"];
+        const sizeP = size / scrollSize * 100;
+        const posP = Math.max(0, pos) / scrollSize * 100;
+
         this.thumbElement.style.cssText
-            += `${sizeName}: ${thumbSize * 100}%;`
-            + `transform: translate${dirName1}(${thumbPos * 100}%)`;
+            += `${sizeName}: ${sizeP}%;opacity: ${opacity};`
+            + `transform: translate${dirName1}(${100 / sizeP * posP}%)`;
     }
     public destroy() {
         removeEvent(this.barElement, "wheel", this._onWheel);
         this.gesto.off();
         this.off();
     }
-    protected _onDragStart = (e: OnDragStart) => {
+    protected _onDragStart = (e: OnDragStart<Gesto>) => {
         const isHorizontal = this.isHorizontal;
         const target = e.inputEvent.target;
         const datas = e.datas;
@@ -107,25 +103,20 @@ export default class ScrollBar extends EventEmitter {
                     const pos2 = pos1 + thumbSize;
                     const clientPos = e[isHorizontal ? "clientX" : "clientY"];
 
-                    const endPos = clientPos - pos2;
-                    const startPos = clientPos - pos1;
-
-                    if (0 <= startPos && endPos <= 0) {
+                    if (pos1 <= clientPos && clientPos <= pos2) {
                         return;
                     }
-                    const clientScrollWidth = thumbSize / this.size * this.scrollSize;
-                    const pos = (0 < endPos ? endPos : startPos) / clientScrollWidth;
-                    const delta = pos * this.size;
+                    const size = this.size;
+                    const delta = size * size / this.scrollSize;
 
-                    this.scrollBy(delta);
+                    this.scrollBy(pos1 < clientPos ? delta : -delta);
                 });
             }, 100);
-
         }
         datas.isThumb = isThumb;
         e.inputEvent.stopPropagation();
         e.inputEvent.preventDefault();
-    };
+    }
     protected _onDrag = (e: OnDrag) => {
         if (!e.datas.isThumb) {
             return;
