@@ -2,7 +2,7 @@ import EventEmitter from "@scena/event-emitter";
 import Gesto from "gesto";
 import { InjectResult } from "css-styled";
 import { Properties } from "framework-utils";
-import { camelize, IObject, addEvent, removeEvent, addClass, convertUnitSize, between, isObject, isArray, isString } from "@daybrush/utils";
+import { camelize, IObject, addEvent, removeEvent, addClass, convertUnitSize, between, isObject, isArray, isString, isNode, getDocument, getWindow } from "@daybrush/utils";
 import { InfiniteViewerOptions, InfiniteViewerProperties, InfiniteViewerEvents, OnPinch, AnimationOptions, ScrollOptions, ZoomOptions, GetScollPosOptions, InnerScrollOptions, ScrollCenterOptions, SetOptions } from "./types";
 import {
     PROPERTIES, injector, CLASS_NAME, TINY_NUM,
@@ -78,7 +78,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         super();
 
 
-        if (viewportElement instanceof Element) {
+        if (isNode(viewportElement)) {
             this._viewportElement = viewportElement;
             this.options = {
                 ...DEFAULT_OPTIONS,
@@ -453,6 +453,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         // children
         const containerElement = this._containerElement;
         const options = this.options;
+        const doc = getDocument(containerElement);
+        const win = getWindow(containerElement);
 
         // vanilla
         let wrapperElement = options.wrapperElement
@@ -465,14 +467,14 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             || containerElement.querySelector(`.${VERTICAL_SCROLL_BAR_CLASS_NAME}`);
 
         if (!wrapperElement) {
-            wrapperElement = document.createElement("div");
+            wrapperElement = doc.createElement("div");
             wrapperElement.insertBefore(this._viewportElement, null);
             containerElement.insertBefore(wrapperElement, null);
         }
         this.wrapperElement = wrapperElement;
 
         if (!scrollAreaElement) {
-            scrollAreaElement = document.createElement("div");
+            scrollAreaElement = doc.createElement("div");
 
             wrapperElement.insertBefore(scrollAreaElement, wrapperElement.firstChild);
         }
@@ -484,10 +486,12 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         addClass(scrollAreaElement, SCROLL_AREA_CLASS_NAME);
 
         const horizontalBar = new ScrollBar(
+            containerElement,
             "horizontal",
             horizontalScrollElement,
         );
         const verticalBar = new ScrollBar(
+            containerElement,
             "vertical",
             verticalScrollElement,
         );
@@ -517,8 +521,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
 
         if (wheelContainerOption) {
             if (isString(wheelContainerOption)) {
-                wheelContainerElement = document.querySelector(wheelContainerOption);
-            } else if (wheelContainerOption instanceof Node) {
+                wheelContainerElement = doc.querySelector(wheelContainerOption);
+            } else if (isNode(wheelContainerOption)) {
                 wheelContainerElement = wheelContainerOption;
             } else if ("value" in wheelContainerOption || "current" in wheelContainerOption) {
                 wheelContainerElement = wheelContainerOption.current || wheelContainerOption.value;
@@ -610,7 +614,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
          * });
          */
         this.gesto = new Gesto(containerElement, {
-            container: window,
+            container: getWindow(containerElement),
             events: ["touch", "mouse"],
             preventWheelClick: this.options.preventWheelClick ?? true,
         }).on("dragStart", e => {
@@ -692,7 +696,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         addEvent(wrapperElement, "scroll", this._onScroll);
 
         if (options.useResizeObserver) {
-            const observer = new ResizeObserver(() => {
+            const observer = new win.ResizeObserver(() => {
                 this.resize();
             });
 
@@ -704,10 +708,10 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
                 observer.disconnect();
             });
         } else {
-            addEvent(window, "resize", this.resize);
+            addEvent(win, "resize", this.resize);
 
             this._onDestroys.push(() => {
-                removeEvent(window, "resize", this.resize);
+                removeEvent(win, "resize", this.resize);
             })
         }
 

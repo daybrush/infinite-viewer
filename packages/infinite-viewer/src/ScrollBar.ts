@@ -3,7 +3,7 @@ import {
     SCROLL_BAR_CLASS_NAME, SCROLL_THUMB_CLASS_NAME,
     HORIZONTAL_SCROLL_BAR_CLASS_NAME, VERTICAL_SCROLL_BAR_CLASS_NAME
 } from "./consts";
-import { addClass, removeEvent, addEvent, throttle } from "@daybrush/utils";
+import { addClass, removeEvent, addEvent, throttle, getDocument, getWindow } from "@daybrush/utils";
 import EventEmitter from "@scena/event-emitter";
 import { abs } from "./utils";
 
@@ -17,17 +17,20 @@ export default class ScrollBar extends EventEmitter {
     protected isHorizontal = false;
 
     constructor(
+        containerElement: HTMLElement,
         public type: "horizontal" | "vertical",
         container?: HTMLElement,
     ) {
         super();
         const isHorizontal = type === "horizontal";
+        const doc = getDocument(containerElement);
+
         let thumbElement: HTMLElement;
         let barElement: HTMLElement = container;
 
         if (!container) {
-            barElement = document.createElement("div");
-            thumbElement = document.createElement("div");
+            barElement = doc.createElement("div");
+            thumbElement = doc.createElement("div");
 
             barElement.insertBefore(thumbElement, null);
             this.isAppend = true;
@@ -46,7 +49,7 @@ export default class ScrollBar extends EventEmitter {
         this.barElement = barElement;
         this.isHorizontal = isHorizontal;
         this.gesto = new Gesto(barElement, {
-            container: window,
+            container: getWindow(doc),
         }).on(
             "dragStart",
             e => this._onDragStart(e),
