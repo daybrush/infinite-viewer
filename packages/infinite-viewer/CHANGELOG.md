@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.28.1](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.28.0...infinite-viewer@0.28.1) (2023-06-04)
+
+
+### :bug: Bug Fix
+
+* update modules and fix context ([5dfea55](https://github.com/daybrush/infinite-viewer/commit/5dfea55556879d7e6b834215cb2fa0e071db6b5c))
+
+
+### :mega: Other
+
+* publish packages ([851aec9](https://github.com/daybrush/infinite-viewer/commit/851aec94146b7349b0e823256a31ad63cc467555))
+
+
+
 ## [0.28.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.27.1...infinite-viewer@0.28.0) (2023-06-01)
 
 
