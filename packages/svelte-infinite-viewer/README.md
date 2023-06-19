@@ -27,6 +27,10 @@
     <a href="https://github.com/daybrush/scena" target="_blank"><strong>Main Project</strong></a>
 </p>
 
+
+* [Simple Demo](https://stackblitz.com/edit/vitejs-vite-p14cgg?file=src%2Flib%2FCounter.svelte,src%2FApp.svelte&terminal=dev)
+
+
 ## ⚙️ Installation
 ### npm
 ```bash
@@ -34,11 +38,21 @@ $ npm install svelte-infinite-viewer
 ```
 
 ## 🚀 How to use
+* The viewer's class name must be set globally and use `className` prop.
 
 ```html
 <script>
 import InfiniteViewer from "svelte-infinite-viewer";
 </script>
+<style>
+    :global(.viewer) {
+        width: 100%;
+        height: 100%;
+    }
+    .viewport {
+        width: 400px;
+        height: 600px;
+    }
 ```
 ```jsx
 <InfiniteViewer
