@@ -184,6 +184,8 @@ export const PROPERTIES = [
     "useAutoZoom",
     "wheelPinchKey",
     "zoomRange",
+    "zoomRangeX",
+    "zoomRangeY",
     "pinchDirection",
     "useOverflowScroll",
 ] as const;

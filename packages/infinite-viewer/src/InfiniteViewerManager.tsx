@@ -287,8 +287,10 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         }
 
         const [zoomX, zoomY] = isArray(zoom) ? zoom : [zoom, zoom];
-        const nextZoomX = between(zoomX, zoomRange[0], zoomRange[1]);
-        const nextZoomY = between(zoomY, zoomRange[0], zoomRange[1]);
+        const zoomRangeX = this.zoomRangeX || zoomRange;
+        const zoomRangeY = this.zoomRangeY || zoomRange;
+        const nextZoomX = between(zoomX, zoomRangeX[0], zoomRangeX[1]);
+        const nextZoomY = between(zoomY, zoomRangeY[0], zoomRangeY[1]);
         const zoomXPos = convertUnitSize(`${zoomOffsetX}`, this.viewportWidth) * (1 / prevZoomX - 1 / nextZoomX);
         const zoomYPos = convertUnitSize(`${zoomOffsetY}`, this.viewportHeight) * (1 / prevZoomY - 1 / nextZoomY);
 
@@ -1020,6 +1022,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             this._setClientRect();
         }
         const zoomRange = this.zoomRange;
+        const zoomRangeX = this.zoomRangeX || zoomRange;
+        const zoomRangeY = this.zoomRangeY || zoomRange;
         const {
             left,
             top,
@@ -1032,8 +1036,8 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         this.trigger("pinch", {
             ...event,
             zoom: between((zoomX + zoomY) / 2, zoomRange[0], zoomRange[1]),
-            zoomX: between(zoomX, zoomRange[0], zoomRange[1]),
-            zoomY: between(zoomY, zoomRange[0], zoomRange[1]),
+            zoomX: between(zoomX, zoomRangeX[0], zoomRangeX[1]),
+            zoomY: between(zoomY, zoomRangeY[0], zoomRangeY[1]),
             ratioX,
             ratioY,
         });
@@ -1082,7 +1086,7 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
             containerHeight,
             zoomX: prevZoomX,
             zoomY: prevZoomY,
-            zoomRange
+            zoomRange,
         } = this;
         let {
             zoomOffsetX = DEFAULT_OPTIONS.zoomOffsetX,
@@ -1099,8 +1103,10 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         const scrollTop = this.getScrollTop();
 
         const [zoomX, zoomY] = isArray(zoom) ? zoom : [zoom, zoom];
-        const nextZoomX = between(zoomX, zoomRange[0], zoomRange[1]);
-        const nextZoomY = between(zoomY, zoomRange[0], zoomRange[1]);
+        const zoomRangeX = this.zoomRangeX || zoomRange;
+        const zoomRangeY = this.zoomRangeY || zoomRange;
+        const nextZoomX = between(zoomX, zoomRangeX[0], zoomRangeX[1]);
+        const nextZoomY = between(zoomY, zoomRangeY[0], zoomRangeY[1]);
         const options = this.options;
 
         options.zoomX = nextZoomX;

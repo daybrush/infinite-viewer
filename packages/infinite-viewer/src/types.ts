@@ -71,6 +71,14 @@ export interface InfiniteViewerOptions {
      */
     zoomRange: number[];
     /**
+     * Use either zoomRange or zoomRangeX.
+     */
+    zoomRangeX?: number[];
+    /**
+     * Use either zoomRange or zoomRangeY.
+     */
+    zoomRangeY?: number[];
+    /**
      * Whether to use wheel pinch. you can pinch using the ctrl key.
      * @default true
      */
