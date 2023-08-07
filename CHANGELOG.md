@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.0](https://github.com/daybrush/infinite-viewer/compare/0.28.1...0.29.0) (2023-08-07)
+### :sparkles: Packages
+* `infinite-viewer` 0.29.0
+* `lit-infinite-viewer` 0.27.0
+* `preact-infinite-viewer` 0.25.0
+* `react-infinite-viewer` 0.28.0
+* `svelte-infinite-viewer` 0.27.0
+* `vue-infinite-viewer` 0.27.0
+* `vue3-infinite-viewer` 0.17.0
+* `ngx-infinite-viewer` 0.27.0
+
+
+### :rocket: New Features
+
+* `infinite-viewer`
+    * add zoomRangeX, zoomRangeY #59 ([51591f6](https://github.com/daybrush/infinite-viewer/commit/51591f61814135901da4d466e7d6dfd20a7d4b2b))
+
+
+### :bug: Bug Fix
+
+* `svelte-infinite-viewer`, `infinite-viewer`
+    * fix svelte README ([6ddffb7](https://github.com/daybrush/infinite-viewer/commit/6ddffb732ef686da86d6009f62dd13da4573b33d))
+* `ngx-infinite-viewer`
+    * fix angular consts ([403466c](https://github.com/daybrush/infinite-viewer/commit/403466c99839e20ac17f57eec36a874c41d9ff2b))
+
+
+### :mega: Other
+
+* All
+    * publish packages ([ef9b721](https://github.com/daybrush/infinite-viewer/commit/ef9b721f1209dfc57f13cae77e9202d2eaba3868))
+
+
+
 ## [0.28.1](https://github.com/daybrush/infinite-viewer/compare/0.28.0...0.28.1) (2023-06-04)
 ### :sparkles: Packages
 * `infinite-viewer` 0.28.1

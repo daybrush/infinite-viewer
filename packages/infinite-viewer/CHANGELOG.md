@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.0](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.28.1...infinite-viewer@0.29.0) (2023-08-07)
+
+
+### :rocket: New Features
+
+* add zoomRangeX, zoomRangeY #59 ([51591f6](https://github.com/daybrush/infinite-viewer/commit/51591f61814135901da4d466e7d6dfd20a7d4b2b))
+
+
+### :bug: Bug Fix
+
+* fix svelte README ([6ddffb7](https://github.com/daybrush/infinite-viewer/commit/6ddffb732ef686da86d6009f62dd13da4573b33d))
+
+
+### :mega: Other
+
+* publish packages ([ef9b721](https://github.com/daybrush/infinite-viewer/commit/ef9b721f1209dfc57f13cae77e9202d2eaba3868))
+
+
+
 ## [0.28.1](https://github.com/daybrush/infinite-viewer/compare/infinite-viewer@0.28.0...infinite-viewer@0.28.1) (2023-06-04)
 
 
