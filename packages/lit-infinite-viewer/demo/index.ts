@@ -1,5 +1,4 @@
-import { html } from "lit-element";
-import { render } from "lit-html";
+import { html, render } from "lit";
 import "../src/LitInfiniteViewer";
 
 render(html`
