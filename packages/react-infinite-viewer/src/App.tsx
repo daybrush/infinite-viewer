@@ -2,14 +2,23 @@ import React from "react";
 import InfiniteViewer from "./react-infinite-viewer/InfiniteViewer";
 import "./App.css";
 
-class App extends React.Component {
-    public render() {
-        return (
-            <InfiniteViewer className="viewer">
-                <div className="viewport">AA</div>
-            </InfiniteViewer>
-        );
-    }
-}
+function App() {
+    const [visible, setVisible] = React.useState(true);
 
-export default App;
+    return (
+      <InfiniteViewer
+        className="infinite-react"
+        displayHorizontalScroll={visible}
+        displayVerticalScroll={visible}
+      >
+        <div className="wrap">
+          <p style={{ fontSize: "100px", color: "#000" }}>text</p>
+          <button onClick={() => setVisible(!visible)}>
+            <p style={{ fontSize: "100px", color: "#000" }}>버튼</p>
+          </button>
+        </div>
+      </InfiniteViewer>
+    );
+  }
+
+  export default App;
