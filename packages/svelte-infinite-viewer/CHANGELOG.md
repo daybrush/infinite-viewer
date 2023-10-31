@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.27.1](https://github.com/daybrush/infinite-viewer/blob/master/packages/svelte-infinite-viewer/compare/svelte-infinite-viewer@0.27.0...svelte-infinite-viewer@0.27.1) (2023-10-31)
+
+
+### :mega: Other
+
+* publish packages ([8aa5102](https://github.com/daybrush/infinite-viewer/blob/master/packages/svelte-infinite-viewer/commit/8aa5102e5e1a411f55a2812b0ca77ce641ee06ea))
+
+
+
 ## [0.27.0](https://github.com/daybrush/infinite-viewer/blob/master/packages/svelte-infinite-viewer/compare/svelte-infinite-viewer@0.26.1...svelte-infinite-viewer@0.27.0) (2023-08-07)
 
 
