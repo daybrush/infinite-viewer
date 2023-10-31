@@ -830,6 +830,14 @@ class InfiniteViewer extends EventEmitter<InfiniteViewerEvents> {
         wrapperElement.scrollLeft = scrollLeft;
         wrapperElement.scrollTop = scrollTop;
     }
+    private setDisplayVerticalScroll(displayVerticalScroll: boolean) {
+        this.options.displayVerticalScroll = displayVerticalScroll;
+        this.renderScroll();
+    }
+    private setDisplayHorizontalScroll(displayHorizontalScroll: boolean) {
+        this.options.displayHorizontalScroll = displayHorizontalScroll;
+        this.renderScroll();
+    }
     private _onScroll = () => {
         const { scrollLeft, scrollTop } = this.wrapperElement;
         const {
