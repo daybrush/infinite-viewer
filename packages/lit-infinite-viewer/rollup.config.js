@@ -18,12 +18,4 @@ export default buildHelper([
     output: "./dist/infinite-viewer.cjs.js",
     exports: "named",
   },
-  {
-    ...defaultOptions,
-    format: "umd",
-    name: "UMD",
-    output: "./dist/infinite-viewer.umd.js",
-    exports: "named",
-    resolve: true,
-  },
 ]);
